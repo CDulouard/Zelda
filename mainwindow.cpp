@@ -1,27 +1,22 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "link.h"
-#include "Map.h"
-#include "QDebug"
 
 #include <vector>
 
 extern std::vector<QString> currentMap;
 QString lastMove = "right";
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
         QGraphicsScene *scene = new QGraphicsScene();
         ui->graphicsView->setScene(scene);
-         ui->graphicsView->centerOn(0,0);
 
 
         for (unsigned int i = 0 ; i < currentMap.size() ; i++) {
-            for (unsigned int j = 0 ; j < currentMap.size() ; j++){
+            for (unsigned int j = 0 ; j < 20 ; j++){
 
                 if (currentMap[i][j] == "0"){
                     QGraphicsPixmapItem *grass = new QGraphicsPixmapItem();
@@ -38,11 +33,14 @@ MainWindow::MainWindow(QWidget *parent) :
             }
         }
 
-        Link *zelda = new Link();
-        zelda->setPixmap(QPixmap(":/Zelda/Images/Zelda/zelda.png"));
-        scene -> addItem(zelda);
-        zelda->setFlag(QGraphicsItem::ItemIsFocusable);
-        zelda->setFocus();
+        Link *link = new Link();
+        link->setPixmap(QPixmap(":/Zelda/Images/Zelda/zelda_right.png"));
+        link->setPos(50,50);
+        scene -> addItem(link);
+        link->setFlag(QGraphicsItem::ItemIsFocusable);
+        link->setFocus();
+
+
 
 
 

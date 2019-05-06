@@ -39,16 +39,19 @@ void Start() {
     cellTypes["0"] = 0; /*  Ground (can walk on it) */
     cellTypes["x"] = 1; /*  Wall (can't walk on it) */
 
-    currentMap.push_back("xxxxxxxxxx");
-    currentMap.push_back("x00000000x");
-    currentMap.push_back("x00000000x");
-    currentMap.push_back("x00000000x");
-    currentMap.push_back("x00000000x");
-    currentMap.push_back("x00000000x");
-    currentMap.push_back("x00000000x");
-    currentMap.push_back("x00000000x");
-    currentMap.push_back("x00000000x");
-    currentMap.push_back("xxxxxxxxxx");
+    currentMap.push_back("xxxxxxxxxxxxxxxxxxxx");
+    currentMap.push_back("x000000000000000000x");
+    currentMap.push_back("x000000000000000000x");
+    currentMap.push_back("x000000000000000000x");
+    currentMap.push_back("x000000000000000000x");
+    currentMap.push_back("x000000000000000000x");
+    currentMap.push_back("x000000000000000000x");
+    currentMap.push_back("x000000000000000000x");
+    currentMap.push_back("x000000000000000000x");
+    currentMap.push_back("x000000000000000000x");
+    currentMap.push_back("x000000000000000000x");
+    currentMap.push_back("x000000000000000000x");
+    currentMap.push_back("xxxxxxxxxxxxxxxxxxxx");
 
 }
 

@@ -4,8 +4,9 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <QGraphicsPixmapItem>
 
-class Character {
+class Character:public QGraphicsPixmapItem {
 public:
     void Move(char x, char y, std::vector<std::string> *map, std::map<std::string, int> cellTypes);
 

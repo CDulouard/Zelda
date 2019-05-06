@@ -1,11 +1,10 @@
 #include "link.h"
 #include "arrow.h"
-#include "mainwindow.h"
 
 #include<QKeyEvent>
 #include<QDebug>
 #include<QGraphicsScene>
-#include <map>
+
 
 using namespace std;
 
@@ -14,6 +13,7 @@ extern map<QString, int> cellTypes;
 
 Link::Link()
 {
+    //ui->SanteValeur->display(100);
 }
 
 
@@ -22,25 +22,37 @@ void Link::keyPressEvent(QKeyEvent *event)
     // Movements
 
     if ((event->key() == Qt::Key_Left) || (event->key() == Qt::Key_A)){
-        this->setPixmap(QPixmap(":/Zelda/Images/Zelda/zelda.png"));
-        setPos(x()-50,y());
-        lastMove = "left";
+        if(this->x()-50 >= 0){
+            this->setPixmap(QPixmap(":/Zelda/Images/Zelda/zelda.png"));
+            setPos(x()-50,y());
+            lastMove = "left";
+            qDebug() << this->pos();
+        }
     }
 
     if ((event->key() == Qt::Key_Right) || (event->key() == Qt::Key_D)){
-        this->setPixmap(QPixmap(":/Zelda/Images/Zelda/zelda_right.png"));
-        setPos(x()+50,y());
-        lastMove = "right";
+        if(this->x()+50 < 1000){
+            this->setPixmap(QPixmap(":/Zelda/Images/Zelda/zelda_right.png"));
+            this->setPos(x()+50,y());
+            lastMove = "right";
+            qDebug() << this->pos();
+        }
     }
 
     if ((event->key() == Qt::Key_Up) || (event->key() == Qt::Key_W)){
-        setPos(x(),y()-50);
-        lastMove = "up";
+        if(this->y()-50 >=0){
+            this->setPos(x(),y()-50);
+            lastMove = "up";
+            qDebug() << this->pos();
+        }
     }
 
     if ((event->key() == Qt::Key_Down) || (event->key() == Qt::Key_S)){
-        setPos(x(),y()+50);
-        lastMove = "down";
+        if(this->y()+50 <= 600){
+            this->setPos(x(),y()+50);
+            lastMove = "down";
+            qDebug() << this->pos();
+        }
     }
 
     // Attacks
@@ -60,3 +72,5 @@ void Link::keyPressEvent(QKeyEvent *event)
     }
 
 }
+
+

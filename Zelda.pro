@@ -40,9 +40,9 @@ HEADERS += \
     menu.h \
     link.h \
     Debug.h \
-    Map.h \
     Character.h \
-    mainwindow.h
+    mainwindow.h \
+    map.h
 
 FORMS += \
     menu.ui \
