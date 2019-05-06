@@ -32,7 +32,8 @@ SOURCES += \
     menu.cpp \
     link.cpp \
     ReadMap.cpp \
-    Debug.cpp
+    Debug.cpp \
+    Character.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -40,7 +41,8 @@ HEADERS += \
     menu.h \
     link.h \
     Debug.h \
-    Map.h
+    Map.h \
+    Character.h
 
 FORMS += \
         mainwindow.ui \
