@@ -30,8 +30,8 @@ SOURCES += \
         mainwindow.cpp \
     arrow.cpp \
     menu.cpp \
-    map.cpp \
-    link.cpp
+    link.cpp \
+    ReadMap.cpp
 
 HEADERS += \
         mainwindow.h \

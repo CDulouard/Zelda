@@ -3,10 +3,9 @@
 
 #include<QGraphicsPixmapItem>
 
-class Map:public QGraphicsPixmapItem
-{
-public:
-    Map();
-};
+#include <string>
+#include <vector>
+
+std::vector<std::string> ReadMap(const std::string &path);
 
 #endif // MAP_H
