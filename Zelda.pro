@@ -33,7 +33,9 @@ SOURCES += \
     ReadMap.cpp \
     Debug.cpp \
     Character.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    ennemie.cpp \
+    zelda.cpp
 
 HEADERS += \
     arrow.h \
@@ -42,7 +44,9 @@ HEADERS += \
     Debug.h \
     Character.h \
     mainwindow.h \
-    map.h
+    map.h \
+    ennemie.h \
+    zelda.h
 
 FORMS += \
     menu.ui \

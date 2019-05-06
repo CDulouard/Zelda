@@ -14,7 +14,6 @@
 
 
 #include "Debug.h"
-#include "Map.h"
 
 #include <QDebug>
 

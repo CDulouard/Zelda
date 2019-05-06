@@ -15,7 +15,10 @@ public:
 private:
     double _health = 100;
     double _energy = 100;
-    double _arrows = 5;
+    int _arrows = 5;
+    int _damage_arrow = 10;
+    int _damage_sword = 20;
+
 };
 
 #endif

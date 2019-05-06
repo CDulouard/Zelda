@@ -23,7 +23,7 @@ void Link::keyPressEvent(QKeyEvent *event)
 
     if ((event->key() == Qt::Key_Left) || (event->key() == Qt::Key_A)){
         if(this->x()-50 >= 0){
-            this->setPixmap(QPixmap(":/Zelda/Images/Zelda/zelda.png"));
+            this->setPixmap(QPixmap(":/Character/Images/Characters/Link/link_left.png"));
             setPos(x()-50,y());
             lastMove = "left";
             qDebug() << this->pos();
@@ -32,7 +32,7 @@ void Link::keyPressEvent(QKeyEvent *event)
 
     if ((event->key() == Qt::Key_Right) || (event->key() == Qt::Key_D)){
         if(this->x()+50 < 1000){
-            this->setPixmap(QPixmap(":/Zelda/Images/Zelda/zelda_right.png"));
+            this->setPixmap(QPixmap(":/Character/Images/Characters/Link/link_right.png"));
             this->setPos(x()+50,y());
             lastMove = "right";
             qDebug() << this->pos();
