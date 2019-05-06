@@ -1,5 +1,6 @@
 #include "ui_mainwindow.h"
 #include "mainwindow.h"
+#include "Debug.h"
 
 #include "menu.h"
 #include <QSplashScreen>

@@ -31,14 +31,16 @@ SOURCES += \
     arrow.cpp \
     menu.cpp \
     link.cpp \
-    ReadMap.cpp
+    ReadMap.cpp \
+    Debug.cpp
 
 HEADERS += \
         mainwindow.h \
     arrow.h \
     menu.h \
-    map.h \
-    link.h
+    link.h \
+    Debug.h \
+    Map.h
 
 FORMS += \
         mainwindow.ui \

@@ -1,4 +1,4 @@
-#include "map.h"
+#include "Map.h"
 #include "link.h"
 #include "arrow.h"
 #include "mainwindow.h"
