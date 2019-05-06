@@ -1,11 +1,10 @@
-#include "Map.h"
-#include "link.h"
-#include "arrow.h"
-#include "mainwindow.h"
+#include <QApplication>
+#include <QTextEdit>   // Nous allons tout de même afficher le contenu du fichier ^^
+#include <QFile>       // Pour utiliser le fichier
+#include <QString>     // Stocke le contenu du fichier
+#include <QTextStream> // Flux sortant du fichier
 
-#include<QGraphicsPixmapItem>
-#include<QGraphicsView>
-
+#include <QFile>
 
 #include <fstream>
 #include <stdio.h>
@@ -24,6 +23,7 @@
 #include<iostream>
 #include <vector>
 
+#include "debug.h"
 
 std::string GetCurrentWorkingDir() {
     char buff[FILENAME_MAX];
@@ -38,7 +38,6 @@ using namespace std;
 vector<string> ReadMap(const string &path) {
     vector<string> map;
     try {
-
         ifstream mapFile(path);
 
         if (mapFile) {

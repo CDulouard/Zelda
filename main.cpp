@@ -1,14 +1,63 @@
 #include "ui_mainwindow.h"
 #include "mainwindow.h"
 #include "Debug.h"
+#include <QString>
 
 #include "menu.h"
 #include <QSplashScreen>
 
 
+#include <iostream>
+#include <vector>
+#include <chrono>
+#include <map>
+
+
+#include "Debug.h"
+#include "Map.h"
+
+#include <QDebug>
+
+using namespace std;
+
+
+/*  Globals variables    */
+
+static bool keepPlaying = true;
+static vector<QString> currentMap;
+static map<QString, int> cellTypes;
+
+static double DELTATIME;
+
+void Start() {
+    /*  Executed once   */
+    DELTATIME = 0;
+    //currentMap = ReadMap(":/map/save/world.txt");
+
+    /*  Fit the cellTypes map with the type of all cells in the map */
+
+    cellTypes["0"] = 0; /*  Ground (can walk on it) */
+    cellTypes["x"] = 1; /*  Wall (can't walk on it) */
+
+    currentMap.push_back("xxxxxxxxxx");
+    currentMap.push_back("x00000000x");
+    currentMap.push_back("x00000000x");
+    currentMap.push_back("x00000000x");
+    currentMap.push_back("x00000000x");
+    currentMap.push_back("x00000000x");
+    currentMap.push_back("x00000000x");
+    currentMap.push_back("x00000000x");
+    currentMap.push_back("x00000000x");
+    currentMap.push_back("xxxxxxxxxx");
+
+    for (const auto &i : currentMap) {
+        qDebug() << i;
+    }
+}
 
 int main(int argc, char *argv[])
 {
+    Start();
     QApplication a(argc, argv);
 
     //Add Splash Screen
@@ -19,6 +68,7 @@ int main(int argc, char *argv[])
 
     menu menu;
     menu.show();
+
 
     return a.exec();
 }
