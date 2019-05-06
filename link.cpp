@@ -5,20 +5,17 @@
 #include<QKeyEvent>
 #include<QDebug>
 #include<QGraphicsScene>
+#include <map>
+
+using namespace std;
+
+extern QString lastMove;
+extern map<QString, int> cellTypes;
 
 Link::Link()
 {
 }
 
-QString Link::get_lastMove() const
-{
-    return _lastMove;
-}
-
-void Link::set_lastMove(QString lastMove)
-{
-_lastMove = lastMove;
-}
 
 void Link::keyPressEvent(QKeyEvent *event)
 {
@@ -27,27 +24,23 @@ void Link::keyPressEvent(QKeyEvent *event)
     if ((event->key() == Qt::Key_Left) || (event->key() == Qt::Key_A)){
         this->setPixmap(QPixmap(":/Zelda/Images/Zelda/zelda.png"));
         setPos(x()-50,y());
-        set_lastMove("left");
-        qDebug() << get_lastMove();
+        lastMove = "left";
     }
 
     if ((event->key() == Qt::Key_Right) || (event->key() == Qt::Key_D)){
         this->setPixmap(QPixmap(":/Zelda/Images/Zelda/zelda_right.png"));
         setPos(x()+50,y());
-        set_lastMove("right");
-        qDebug() << get_lastMove();
+        lastMove = "right";
     }
 
     if ((event->key() == Qt::Key_Up) || (event->key() == Qt::Key_W)){
         setPos(x(),y()-50);
-        set_lastMove("up");
-        qDebug() << get_lastMove();
+        lastMove = "up";
     }
 
     if ((event->key() == Qt::Key_Down) || (event->key() == Qt::Key_S)){
         setPos(x(),y()+50);
-        set_lastMove("down");
-        qDebug() << get_lastMove();
+        lastMove = "down";
     }
 
     // Attacks
@@ -64,8 +57,6 @@ void Link::keyPressEvent(QKeyEvent *event)
         Arrow *arrow = new Arrow();
         arrow->setPos(x(),y());
         scene()->addItem(arrow);
-
-
     }
 
 }

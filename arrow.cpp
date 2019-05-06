@@ -5,24 +5,24 @@
 #include <QtCore/QThread>
 #include<QDebug>
 
+extern QString lastMove;
+
 Arrow::Arrow()
 {
     setPos(x(),y());
 
     QTimer * timer = new QTimer;
-    QString string = Link().get_lastMove();
-    qDebug() << string;
 
-    if (string == "left"){
+    if (lastMove == "left"){
         connect(timer, SIGNAL(timeout()), this, SLOT(move_left()));
     }
-    if (string == "right"){
+    if (lastMove == "right"){
         connect(timer, SIGNAL(timeout()), this, SLOT(move_right()));
     }
-    if (string == "up"){
+    if (lastMove == "up"){
         connect(timer, SIGNAL(timeout()), this, SLOT(move_up()));
     }
-    if (string == "down"){
+    if (lastMove == "down"){
         connect(timer, SIGNAL(timeout()), this, SLOT(move_down()));
     }
 

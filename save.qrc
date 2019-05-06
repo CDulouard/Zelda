@@ -1,5 +1,3 @@
 <RCC>
-    <qresource prefix="/map">
-        <file>save/world.map</file>
-    </qresource>
+    <qresource prefix="/map"/>
 </RCC>

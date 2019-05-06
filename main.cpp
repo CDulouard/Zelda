@@ -24,8 +24,8 @@ using namespace std;
 /*  Globals variables    */
 
 static bool keepPlaying = true;
-static vector<QString> currentMap;
-static map<QString, int> cellTypes;
+vector<QString> currentMap;
+map<QString, int> cellTypes;
 
 static double DELTATIME;
 
@@ -50,9 +50,6 @@ void Start() {
     currentMap.push_back("x00000000x");
     currentMap.push_back("xxxxxxxxxx");
 
-    for (const auto &i : currentMap) {
-        qDebug() << i;
-    }
 }
 
 int main(int argc, char *argv[])
