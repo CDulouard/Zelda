@@ -1,0 +1,29 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>Images/Icones/FullScreen.png</file>
+        <file>Images/Icones/Menu_Principale.png</file>
+        <file>Images/Icones/NormalScreen.png</file>
+        <file>Images/Icones/Quitter.png</file>
+        <file>Images/Icones/Zelda.png</file>
+    </qresource>
+    <qresource prefix="/Zelda">
+        <file>Images/Zelda/arrow_down.png</file>
+        <file>Images/Zelda/arrow_left.png</file>
+        <file>Images/Zelda/arrow_right.png</file>
+        <file>Images/Zelda/arrow_up.png</file>
+        <file>Images/Zelda/zelda.png</file>
+        <file>Images/Zelda/zelda_right.png</file>
+    </qresource>
+    <qresource prefix="/Menu">
+        <file>Images/SplashScreen.png</file>
+        <file>Images/menu_background.jpg</file>
+        <file>Images/Zelda/zelda.png</file>
+    </qresource>
+    <qresource prefix="/Sounds">
+        <file>Sounds/ThemeSong.mp3</file>
+        <file>Sounds/menu_music.mp3</file>
+    </qresource>
+    <qresource prefix="/terrain">
+        <file>Images/Terrain/Grass.jpg</file>
+    </qresource>
+</RCC>
