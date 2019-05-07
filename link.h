@@ -16,12 +16,14 @@ public:
     void move_right();
     void move_up();
     void move_down();
+    void basic_assault();
+    void strong_assault();
     void shoot();
 
 private:
-    int _arrows = 5;
-    int _damage_arrow = 10;
-    int _damage_sword = 20;
+    int _arrowQuantity;
+    int _arrowDamages = 25;
+    int _swordDamages = 50;
 
 };
 

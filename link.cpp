@@ -17,9 +17,11 @@ Link::Link()
     setPixmap(QPixmap(":/Character/Images/Characters/Link/link_down.png"));
     setPos(50,50);
     this->m_health = 100;
+    //ui->Health_display->display(m_health);  // fait crasher le programme
     this->m_power = 100;
-    //ui->Health_display->display(m_health);  // fait bugger le programme
-    //ui->Power_display->display(m_power);     // fait bugger le programme
+    //ui->Power_display->display(m_power);     // fait crasher le programme
+    this->_arrowQuantity = 5;
+    //ui->Power_display->display(_arrowQuantity);   // fait crasher le programme
 }
 
 
@@ -38,15 +40,15 @@ void Link::keyPressEvent(QKeyEvent *event)
     else if ((event->key() == Qt::Key_Down) || (event->key() == Qt::Key_S))
         move_down();
 
-    // Attacks
-    else if (event->key() == Qt::Key_H){
-        // attaque de base
-    }
+    // Attaque normal
+    else if (event->key() == Qt::Key_H)
+        basic_assault();
 
-    else if (event->key() == Qt::Key_J){
-        // attaque puissante. tout autour. consomme energie
-    }
+    // Attaque puissante (circulaire, consomme energie)
+    else if (event->key() == Qt::Key_J)
+        strong_assault();
 
+    // Tirer une flèche
     else if ((event->key() == Qt::Key_K) || (event->key() == Qt::Key_Space))
         shoot();
 
@@ -92,11 +94,26 @@ void Link::move_down()
     }
 }
 
+void Link::basic_assault()
+{
+}
+
+void Link::strong_assault()
+{
+}
+
 void Link::shoot()
 {
-    Arrow *arrow = new Arrow();
-    arrow->setPos(x(),y());
-    scene()->addItem(arrow);
+    if (ui->Arrows_display->intValue() > 0){
+        Arrow *arrow = new Arrow();
+        arrow->setPos(x(),y());
+        scene()->addItem(arrow);
+        //we remove an arrow
+        _arrowQuantity = ui->Arrows_display->intValue();
+        _arrowQuantity--;
+        ui->Arrows_display->display(_arrowQuantity);
+
+    }
 }
 
 
