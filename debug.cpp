@@ -1,10 +1,11 @@
+#include "debug.h"
+
 #include <iostream>
 #include <string>
 #include <vector>
 
 using namespace std;
 
-#include "Debug.h"
 
 void Debug::Log(const string &msg){
     cout << msg << endl;

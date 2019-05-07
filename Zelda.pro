@@ -31,22 +31,22 @@ SOURCES += \
     menu.cpp \
     link.cpp \
     ReadMap.cpp \
-    Debug.cpp \
-    Character.cpp \
     mainwindow.cpp \
     ennemie.cpp \
-    zelda.cpp
+    zelda.cpp \
+    debug.cpp \
+    character.cpp
 
 HEADERS += \
     arrow.h \
     menu.h \
     link.h \
-    Debug.h \
-    Character.h \
     mainwindow.h \
     map.h \
     ennemie.h \
-    zelda.h
+    zelda.h \
+    debug.h \
+    character.h
 
 FORMS += \
     menu.ui \

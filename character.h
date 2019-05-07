@@ -10,9 +10,9 @@ class Character:public QGraphicsPixmapItem {
 public:
     void Move(char x, char y, std::vector<std::string> *map, std::map<std::string, int> cellTypes);
 
-private:
-    float m_posx;
-    float m_posy;
+protected:
+    float m_posx;   // existe déjà dans la classe parente
+    float m_posy;   // existe déjà dans la classe parente
     float m_size;   /*  size of the character   */
     float m_speed;
     int m_health;

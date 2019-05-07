@@ -12,9 +12,11 @@
         <file>Images/Characters/Link/arrow_down.png</file>
         <file>Images/Characters/Link/arrow_left.png</file>
         <file>Images/Characters/Link/arrow_up.png</file>
+        <file>Images/Characters/Ennemies/ennemie1.png</file>
+        <file>Images/Characters/Link/link_down.png</file>
+        <file>Images/Characters/Link/link_up.png</file>
         <file>Images/Characters/Link/link_left.png</file>
         <file>Images/Characters/Link/link_right.png</file>
-        <file>Images/Characters/Ennemies/ennemie1.png</file>
     </qresource>
     <qresource prefix="/Menu">
         <file>Images/SplashScreen.png</file>
