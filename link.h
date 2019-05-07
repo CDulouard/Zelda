@@ -1,15 +1,14 @@
 #ifndef LINK_H
 #define LINK_H
 
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
 #include "character.h"
 
-class Link:public Character
+class Link:public QObject,public Character
 {
+    Q_OBJECT
+
 public:
     Link();
-    Ui::MainWindow *ui;
 
     void keyPressEvent(QKeyEvent *event);
     void move_left();
@@ -20,10 +19,20 @@ public:
     void strong_assault();
     void shoot();
 
+
+//signals:
+//    void change_health();
+//    void change_power();
+//    void change_arrow_quantity();
+
 private:
     int _arrowQuantity;
-    int _arrowDamages = 25;
-    int _swordDamages = 50;
+    int _arrowDamages;
+    int _swordDamages;
+
+//    void emit_change_health();
+//    void emit_change_power();
+//    void emit_change_arrow_quantity();
 
 };
 

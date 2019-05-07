@@ -14,13 +14,20 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
+
     ~MainWindow();
     void display_map();
     void display_characters();
 
+//public slots:
+//    void change_health();
+//    void change_power();
+//    void change_arrow_quantity();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene = new QGraphicsScene();
+
 };
 
 #endif // MAINWINDOW_H

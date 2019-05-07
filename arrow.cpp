@@ -15,13 +15,13 @@ Arrow::Arrow()
     if (lastMove == "left"){
         connect(timer, SIGNAL(timeout()), this, SLOT(move_left()));
     }
-    if (lastMove == "right"){
+    else if (lastMove == "right"){
         connect(timer, SIGNAL(timeout()), this, SLOT(move_right()));
     }
-    if (lastMove == "up"){
+    else if (lastMove == "up"){
         connect(timer, SIGNAL(timeout()), this, SLOT(move_up()));
     }
-    if (lastMove == "down"){
+    else if (lastMove == "down"){
         connect(timer, SIGNAL(timeout()), this, SLOT(move_down()));
     }
 

@@ -1,5 +1,6 @@
 #include "link.h"
 #include "arrow.h"
+#include "mainwindow.h"
 
 #include<QKeyEvent>
 #include<QGraphicsScene>
@@ -17,11 +18,10 @@ Link::Link()
     setPixmap(QPixmap(":/Character/Images/Characters/Link/link_down.png"));
     setPos(50,50);
     this->m_health = 100;
-    //ui->Health_display->display(m_health);  // fait crasher le programme
     this->m_power = 100;
-    //ui->Power_display->display(m_power);     // fait crasher le programme
     this->_arrowQuantity = 5;
-    //ui->Power_display->display(_arrowQuantity);   // fait crasher le programme
+    this->_arrowDamages = 25;
+    this->_swordDamages = 50;
 }
 
 
@@ -104,16 +104,32 @@ void Link::strong_assault()
 
 void Link::shoot()
 {
-    if (ui->Arrows_display->intValue() > 0){
+    if (_arrowQuantity > 0){
         Arrow *arrow = new Arrow();
         arrow->setPos(x(),y());
         scene()->addItem(arrow);
+
         //we remove an arrow
-        _arrowQuantity = ui->Arrows_display->intValue();
         _arrowQuantity--;
-        ui->Arrows_display->display(_arrowQuantity);
+        //emit_change_arrow_quantity(_arrowQuantity--);
+        //connect(this, SIGNAL(emit_change_arrow_quantity()), MainWindow, SLOT(move_left()));
 
     }
 }
+
+//void Link::emit_change_health()
+//{
+//    emit change_health();
+//}
+
+//void Link::emit_change_power()
+//{
+//    emit change_power();
+//}
+
+//void Link::emit_change_arrow_quantity()
+//{
+//    emit change_arrow_quantity();
+//}
 
 

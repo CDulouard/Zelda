@@ -3,6 +3,7 @@
 #include "link.h"
 #include "ennemie.h"
 #include "zelda.h"
+#include "link.h"
 
 #include <vector>
 
@@ -14,6 +15,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->graphicsView->setScene(scene);
     display_map();
     display_characters();
+
+
 }
 
 MainWindow::~MainWindow()
@@ -61,3 +64,7 @@ void MainWindow::display_characters()
         scene -> addItem(mob);
     }
 }
+
+//void MainWindow::change_arrow_quantity()
+//{
+//}
