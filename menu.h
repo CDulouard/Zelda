@@ -2,6 +2,7 @@
 #define MENU_H
 
 #include <QMainWindow>
+#include<QMediaPlayer>
 
 namespace Ui {
 class menu;
@@ -20,6 +21,7 @@ public slots:
 
 private:
     Ui::menu *ui;
+    QMediaPlayer _menuMusic;
 };
 
 #endif // MENU_H

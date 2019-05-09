@@ -7,21 +7,21 @@
 
 using namespace std;
 
-
+//QString lastMove = "right";
 extern map<QString, int> cellTypes;
-QString lastMove = "right";
+
 
 Link::Link()
 {
-    setPixmap(QPixmap(":/Character/Images/Characters/Link/link_down.png"));
-    setPos(50,50);
+    this->setPixmap(QPixmap(":/Character/Images/Characters/Link/link_down.png"));
+    this->setPos(50,50);
+    this->setFlag(QGraphicsItem::ItemIsFocusable);
+    this->setFocus();
+
     this->m_health = 100;
     this->m_speed = 1;
     this->m_range = 1;
     this->m_energy = 100;
-    this->_arrowQuantity = 5;
-    this->_arrowDamages = 25;
-    this->_swordDamages = 50;
 }
 
 
@@ -31,28 +31,29 @@ void Link::keyPressEvent(QKeyEvent *event)
     if ((event->key() == Qt::Key_Left) || (event->key() == Qt::Key_A)){
         this->setPixmap(QPixmap(":/Character/Images/Characters/Link/link_left.png"));
         move_left();
-        lastMove = "left";
+        set_lastMove("left");
         qDebug() << this->pos();
     }
 
     else if ((event->key() == Qt::Key_Right) || (event->key() == Qt::Key_D)){
         this->setPixmap(QPixmap(":/Character/Images/Characters/Link/link_right.png"));
         move_right();
-        lastMove = "right";
+        set_lastMove("right");
         qDebug() << this->pos();
     }
 
     else if ((event->key() == Qt::Key_Up) || (event->key() == Qt::Key_W)){
         this->setPixmap(QPixmap(":/Character/Images/Characters/Link/link_up.png"));
         move_up();
-        lastMove = "up";
+        set_lastMove("up");
         qDebug() << this->pos();
     }
 
     else if ((event->key() == Qt::Key_Down) || (event->key() == Qt::Key_S)){
         this->setPixmap(QPixmap(":/Character/Images/Characters/Link/link_down.png"));
         move_down();
-        lastMove = "down";
+        set_lastMove("down");
+        //lastMove = "down";
         qDebug() << this->pos();
     }
 
@@ -91,6 +92,16 @@ void Link::shoot()
 
 
     }
+}
+
+QString Link::get_lastMove()
+{
+    return _lastMove;
+}
+
+void Link::set_lastMove(QString lastMove)
+{
+    this->_lastMove = lastMove;
 }
 
 //void Link::emit_change_health()

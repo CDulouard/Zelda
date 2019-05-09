@@ -10,8 +10,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->graphicsView->setScene(scene);
     display_map();
     display_characters();
-
-
 }
 
 MainWindow::~MainWindow()
@@ -45,21 +43,14 @@ void MainWindow::display_characters()
     // Link creation
     Link *link = new Link();
     scene -> addItem(link);
-    link->setFlag(QGraphicsItem::ItemIsFocusable);
-    link->setFocus();
 
     // Zelda creation
     Zelda *zelda = new Zelda();
     scene -> addItem(zelda);
 
     // ennemies creation
-
     for (int i = 0; i < rand()%(10-4) +4 ; i++){
         Ennemie *mob = new Ennemie();
         scene -> addItem(mob);
     }
 }
-
-//void MainWindow::change_arrow_quantity()
-//{
-//}

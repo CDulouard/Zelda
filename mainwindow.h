@@ -13,11 +13,12 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
+    MainWindow(QWidget *parent = nullptr);
 
-    ~MainWindow();
     void display_map();
     void display_characters();
+
+    ~MainWindow();
 
 //public slots:
 //    void change_health();
