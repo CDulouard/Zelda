@@ -17,6 +17,7 @@
         <file>Images/Characters/Link/link_up.png</file>
         <file>Images/Characters/Link/link_left.png</file>
         <file>Images/Characters/Link/link_right.png</file>
+        <file>Images/Characters/heart.png</file>
     </qresource>
     <qresource prefix="/Menu">
         <file>Images/SplashScreen.png</file>

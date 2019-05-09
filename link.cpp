@@ -1,6 +1,4 @@
-#include "link.h"
-#include "arrow.h"
-#include "mainwindow.h"
+#include "headers.h"
 
 #include<QKeyEvent>
 #include<QGraphicsScene>
@@ -9,7 +7,7 @@
 
 using namespace std;
 
-extern QString lastMove;
+
 extern map<QString, int> cellTypes;
 QString lastMove = "right";
 
@@ -18,7 +16,9 @@ Link::Link()
     setPixmap(QPixmap(":/Character/Images/Characters/Link/link_down.png"));
     setPos(50,50);
     this->m_health = 100;
-    this->m_power = 100;
+    this->m_speed = 1;
+    this->m_range = 1;
+    this->m_energy = 100;
     this->_arrowQuantity = 5;
     this->_arrowDamages = 25;
     this->_swordDamages = 50;
@@ -28,17 +28,33 @@ Link::Link()
 void Link::keyPressEvent(QKeyEvent *event)
 {
     // Movements
-    if ((event->key() == Qt::Key_Left) || (event->key() == Qt::Key_A))
+    if ((event->key() == Qt::Key_Left) || (event->key() == Qt::Key_A)){
+        this->setPixmap(QPixmap(":/Character/Images/Characters/Link/link_left.png"));
         move_left();
+        lastMove = "left";
+        qDebug() << this->pos();
+    }
 
-    else if ((event->key() == Qt::Key_Right) || (event->key() == Qt::Key_D))
+    else if ((event->key() == Qt::Key_Right) || (event->key() == Qt::Key_D)){
+        this->setPixmap(QPixmap(":/Character/Images/Characters/Link/link_right.png"));
         move_right();
+        lastMove = "right";
+        qDebug() << this->pos();
+    }
 
-    else if ((event->key() == Qt::Key_Up) || (event->key() == Qt::Key_W))
+    else if ((event->key() == Qt::Key_Up) || (event->key() == Qt::Key_W)){
+        this->setPixmap(QPixmap(":/Character/Images/Characters/Link/link_up.png"));
         move_up();
+        lastMove = "up";
+        qDebug() << this->pos();
+    }
 
-    else if ((event->key() == Qt::Key_Down) || (event->key() == Qt::Key_S))
+    else if ((event->key() == Qt::Key_Down) || (event->key() == Qt::Key_S)){
+        this->setPixmap(QPixmap(":/Character/Images/Characters/Link/link_down.png"));
         move_down();
+        lastMove = "down";
+        qDebug() << this->pos();
+    }
 
     // Attaque normal
     else if (event->key() == Qt::Key_H)
@@ -54,49 +70,7 @@ void Link::keyPressEvent(QKeyEvent *event)
 
 }
 
-void Link::move_left()
-{
-    this->setPixmap(QPixmap(":/Character/Images/Characters/Link/link_left.png"));
-    if(this->x()-50 >= 0){
-        setPos(x()-50,y());
-        lastMove = "left";
-        qDebug() << this->pos();
-    }
-}
 
-void Link::move_right()
-{
-    this->setPixmap(QPixmap(":/Character/Images/Characters/Link/link_right.png"));
-    if(this->x()+50 < 1000){
-        this->setPos(x()+50,y());
-        lastMove = "right";
-        qDebug() << this->pos();
-    }
-}
-
-void Link::move_up()
-{
-    this->setPixmap(QPixmap(":/Character/Images/Characters/Link/link_up.png"));
-    if(this->y()-50 >=0){
-        this->setPos(x(),y()-50);
-        lastMove = "up";
-        qDebug() << this->pos();
-    }
-}
-
-void Link::move_down()
-{
-    this->setPixmap(QPixmap(":/Character/Images/Characters/Link/link_down.png"));
-    if(this->y()+50 <= 600){
-        this->setPos(x(),y()+50);
-        lastMove = "down";
-        qDebug() << this->pos();
-    }
-}
-
-void Link::basic_assault()
-{
-}
 
 void Link::strong_assault()
 {

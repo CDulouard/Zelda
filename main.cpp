@@ -1,6 +1,4 @@
-#include "ui_mainwindow.h"
-#include "mainwindow.h"
-#include "menu.h"
+#include "headers.h"
 
 #include <QSplashScreen>
 #include <QString>
@@ -8,10 +6,6 @@
 #include <vector>
 #include <chrono>
 #include <map>
-
-
-#include "debug.h"
-
 #include <QDebug>
 
 using namespace std;

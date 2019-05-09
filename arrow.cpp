@@ -1,6 +1,4 @@
-#include "arrow.h"
-#include "link.h"
-#include "mainwindow.h"
+#include "headers.h"
 
 #include<QTimer>
 #include <QtCore/QThread>

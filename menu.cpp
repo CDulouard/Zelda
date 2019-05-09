@@ -1,7 +1,4 @@
-#include "menu.h"
-#include "ui_menu.h"
-#include "ui_mainwindow.h"
-#include "mainwindow.h"
+#include "headers.h"
 
 #include<QMediaPlayer>
 
@@ -19,7 +16,7 @@ menu::menu(QWidget *parent) :
     QMediaPlayer *music = new QMediaPlayer();
     music->setMedia(QUrl("qrc:/menu/Sounds/menu_music.mp3"));
     music->play();
-    //music->stop();
+    music->stop();
 
 
     QPixmap bkgnd(":/Menu/Images/menu_background.jpg");

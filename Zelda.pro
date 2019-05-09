@@ -26,6 +26,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+    loot_heal.cpp \
         main.cpp \
     arrow.cpp \
     menu.cpp \
@@ -39,6 +40,8 @@ SOURCES += \
 
 HEADERS += \
     arrow.h \
+    headers.h \
+    loot_heal.h \
     menu.h \
     link.h \
     mainwindow.h \

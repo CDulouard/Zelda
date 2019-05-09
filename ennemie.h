@@ -9,6 +9,7 @@ public:
     Ennemie();
     void move();
     void attack();
+    void die();
 
 private:
     double _sante = 50;

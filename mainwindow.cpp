@@ -1,9 +1,4 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include "link.h"
-#include "ennemie.h"
-#include "zelda.h"
-#include "link.h"
+#include "headers.h"
 
 #include <vector>
 

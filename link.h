@@ -11,11 +11,6 @@ public:
     Link();
 
     void keyPressEvent(QKeyEvent *event);
-    void move_left();
-    void move_right();
-    void move_up();
-    void move_down();
-    void basic_assault();
     void strong_assault();
     void shoot();
 
