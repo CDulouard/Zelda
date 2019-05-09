@@ -4,11 +4,16 @@
 
 #include<QTimer>
 #include <QtCore/QThread>
+#include<QMediaPlayer>
 
 extern QString lastMove;
 
 Arrow::Arrow()
 {
+    QMediaPlayer *arrow_shoot = new QMediaPlayer();
+    arrow_shoot->setMedia(QUrl("qrc:/arrow/Sounds/arrow_shoot.mp3"));
+    arrow_shoot->play();
+
     setPos(x(),y());
     QTimer * timer = new QTimer;
 
@@ -35,8 +40,15 @@ void Arrow::move_left()
     this->setPos(x()-50,y());
     arrow_life_timer++;
 
+    if (arrow_life_timer == 6){
+        QMediaPlayer *arrow_hit = new QMediaPlayer();
+        arrow_hit->setMedia(QUrl("qrc:/arrow/Sounds/arrow_hit.mp3"));
+        arrow_hit->play();
+    }
+
     if(arrow_life_timer == 7)
         delete this;
+
 }
 
 void Arrow::move_right()
@@ -44,6 +56,12 @@ void Arrow::move_right()
     setPixmap(QPixmap(":/Character/Images/Characters/Link/arrow_right.png"));
     this->setPos(x()+50,y());
     arrow_life_timer++;
+
+    if (arrow_life_timer == 6){
+        QMediaPlayer *arrow_hit = new QMediaPlayer();
+        arrow_hit->setMedia(QUrl("qrc:/arrow/Sounds/arrow_hit.mp3"));
+        arrow_hit->play();
+    }
 
     if(arrow_life_timer == 7)
         delete this;
@@ -55,6 +73,12 @@ void Arrow::move_up()
     this->setPos(x(),y()-50);
     arrow_life_timer++;
 
+    if (arrow_life_timer == 6){
+        QMediaPlayer *arrow_hit = new QMediaPlayer();
+        arrow_hit->setMedia(QUrl("qrc:/arrow/Sounds/arrow_hit.mp3"));
+        arrow_hit->play();
+    }
+
     if(arrow_life_timer == 7)
         delete this;
 }
@@ -64,6 +88,12 @@ void Arrow::move_down()
     setPixmap(QPixmap(":/Character/Images/Characters/Link/arrow_down.png"));
     this->setPos(x(),y()+50);
     arrow_life_timer++;
+
+    if (arrow_life_timer == 6){
+        QMediaPlayer *arrow_hit = new QMediaPlayer();
+        arrow_hit->setMedia(QUrl("qrc:/arrow/Sounds/arrow_hit.mp3"));
+        arrow_hit->play();
+    }
 
     if(arrow_life_timer == 7)
         delete this;

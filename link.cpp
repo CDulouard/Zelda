@@ -110,9 +110,11 @@ void Link::shoot()
         scene()->addItem(arrow);
 
         //we remove an arrow
-        _arrowQuantity--;
+        //_arrowQuantity = ui->Arrows_display->intValue();
+        //_arrowQuantity--;
         //emit_change_arrow_quantity(_arrowQuantity--);
         //connect(this, SIGNAL(emit_change_arrow_quantity()), MainWindow, SLOT(move_left()));
+
 
     }
 }

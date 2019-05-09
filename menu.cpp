@@ -17,9 +17,9 @@ menu::menu(QWidget *parent) :
     setWindowTitle("Zelda");
 
     QMediaPlayer *music = new QMediaPlayer();
-    music->setMedia(QUrl("qrc:/Sounds/Sounds/menu_music.mp3"));
-    music->setVolume(100);
+    music->setMedia(QUrl("qrc:/menu/Sounds/menu_music.mp3"));
     music->play();
+    //music->stop();
 
 
     QPixmap bkgnd(":/Menu/Images/menu_background.jpg");
@@ -43,7 +43,6 @@ void menu::openGameWindow()
 {
     MainWindow * gameWindow = new MainWindow();
     gameWindow->show();
-
     this->close();
 }
 

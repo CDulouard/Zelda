@@ -22,10 +22,6 @@
         <file>Images/SplashScreen.png</file>
         <file>Images/menu_background.jpg</file>
     </qresource>
-    <qresource prefix="/Sounds">
-        <file>Sounds/ThemeSong.mp3</file>
-        <file>Sounds/menu_music.mp3</file>
-    </qresource>
     <qresource prefix="/terrain">
         <file>Images/Terrain/Grass.jpg</file>
         <file>Images/Terrain/wall.jpg</file>
