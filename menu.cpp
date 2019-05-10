@@ -22,8 +22,8 @@ menu::menu(QWidget *parent) :
     this->setPalette(palette);
 
     // Sound
-    _menuMusic.setMedia(QUrl("qrc:/menu/Sounds/menu_music.mp3"));
-    _menuMusic.play();
+    menuMusic.setMedia(QUrl("qrc:/menu/Sounds/menu_music.mp3"));
+    menuMusic.play();
 
     connect(ui->playButton, SIGNAL(pressed()), this, SLOT(openGameWindow()));
 
@@ -34,10 +34,11 @@ menu::~menu()
     delete ui;
 }
 
+
 void menu::openGameWindow()
 {
     MainWindow *gameWindow = new MainWindow();
-    _menuMusic.stop();
+    menuMusic.stop();
     gameWindow->show();
     this->close();
 }

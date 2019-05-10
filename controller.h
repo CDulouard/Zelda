@@ -69,6 +69,7 @@ private:
     int statueSon;//pour le son, pour le changer au niveau 2
     int linkAttaqueOuPas;//si zelda a l'animation sword ou epee , on va gerer les probleme de qpixmap null
     int niveauActuel;
+    int levelCounter = 0;
 
 
 

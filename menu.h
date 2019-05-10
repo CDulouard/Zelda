@@ -1,8 +1,6 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include <controller.h>
-
 #include <QMainWindow>
 #include<QMediaPlayer>
 
@@ -23,7 +21,7 @@ public slots:
 
 private:
     Ui::menu *ui;
-    QMediaPlayer _menuMusic;
+    QMediaPlayer menuMusic;
 };
 
 #endif // MENU_H

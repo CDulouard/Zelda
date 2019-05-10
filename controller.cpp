@@ -1,5 +1,9 @@
 #include "controller.h"
 #include "map.h"
+#include "menu.h"
+
+#include <QDebug>
+#include <QMediaPlayer>
 
 using namespace std;
 
@@ -16,6 +20,52 @@ Controller::Controller(Map *view, Model *model)
 
 void Controller::startApplication()
 {
+    qDebug() << "enter the start application";
+    // Lauching
+    if (levelCounter == 0){
+        qDebug() << "enter case 1";
+        menu *menu = new class menu();
+        menu->show();
+        //levelCounter++;
+    }
+
+    //current game
+//    if (levelCounter == 1){
+//        this->view->resetView();
+//        this->view->initialiserScene();
+//        this->view->show();
+////        this->son = new QSound("");
+////        this->son->setLoops(2);
+////        son->play();
+//        this->view->resetView();
+//        this->model->getLink()->setPosX(-this->model->getLink()->getPosX()+250);
+//        this->model->getLink()->setPosY(-this->model->getLink()->getPosY()+250);
+
+//        //on recentre zelda en haut a gauche a chaque niveau
+//        // charger niveau
+//        afficherScene();
+//        //this->view->show();
+//    }
+
+//    // Link die
+//    if (levelCounter == -2){
+//        son->stop();
+//        this->son = new QSound("/Users/alexandremagne/Desktop/Zelda2/Musiques/LOZ/LOZ_Die.wav");
+//        son->play();
+//        this->model->getNiveau()->chargerNiveau(); // on charge la carte correspondant au niveau
+//        this->view->initialiserScene();
+//        this->view->show();
+//    }
+
+//    // victory
+//    if (levelCounter == -1){
+//        son->stop();
+//        this->son = new QSound("/Users/alexandremagne/Desktop/Zelda2/Musiques/intro.wav");
+//        son->play();
+//        this->model->getNiveau()->chargerNiveau(); // on charge la carte correspondant au niveau
+//        this->view->initialiserScene();
+//        this->view->show();
+//    }
 }
 
 
