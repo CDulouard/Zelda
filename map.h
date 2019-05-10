@@ -24,7 +24,8 @@ public:
     Scene *getCameraView() const;
 
   protected:
-    void keyPressEvent(QKeyEvent *event);
+    //MSG : Tu as declaré la fonction KeyPressEvent sans l'implementé -> Crash à l'édition des liens
+    //void keyPressEvent(QKeyEvent *event);
     void setMapScene(QGraphicsScene *value);
     void setCameraView(Scene *value);
     void affichageMenuEnHaut();

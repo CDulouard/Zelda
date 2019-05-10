@@ -7,7 +7,9 @@ class Ennemis:public Character
 {
 public:
     Ennemis(int posXinit, int posYinit, QString direction, QString type_of_monstre);
-    ~Ennemis();
+
+    //MSG : Tu as déclaré un destructeur mais tu ne l'as pas implementé donc le compilateur ne trouvais pas la fonction à l'édition des liens et plantais.
+    //~Ennemis();
 
     void setTilePosition(); // Donne la position de la tile
     void setInit(QString type);
