@@ -1,6 +1,8 @@
 #ifndef MENU_H
 #define MENU_H
 
+#include <controller.h>
+
 #include <QMainWindow>
 #include<QMediaPlayer>
 

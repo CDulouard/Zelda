@@ -1,50 +1,88 @@
-#include "headers.h"
+#include "character.h"
 
-
-
-void Character::Move(char x, char y, std::vector<std::string> *map, std::map<std::string, int> cellTypes)
+Character::Character()
 {
+    this->posX=0;
+    this->posY=0;
+}
+
+void Character::setPosX(int i)
+{
+    if ((i+this->posX)<0)
+        return;
+    else if ((i+this->posX)>1480)
+        return;
+    else
+        this->posX = i+this->posX;
+}
+
+void Character::setPosY(int j)
+{
+    if ((j+this->posY)<0)
+        return;
+    else if ((j+this->posY)>730)
+        return;
+    else
+        this->posY = j+this->posY;
 
 }
 
-void Character::move_left()
+int Character::getPosX()
 {
-    if(this->x()-50 >= 0){
-        setPos(x()-50,y());
-    }
+    return this->posX;
 }
 
-void Character::move_right()
+int Character::getPosY()
 {
-    if(this->x()+50 < 1000){
-        this->setPos(x()+50,y());
-    }
+    return this->posY;
 }
 
-void Character::move_up()
+void Character::setLife(int life)
 {
-    if(this->y()-50 >=0){
-        this->setPos(x(),y()-50);
-    }
+    this->life=life;//si la vie passe en dessous de 0 on met à 0
 }
 
-void Character::move_down()
+float Character::getLife()
 {
-    if(this->y()+50 <= 600){
-        this->setPos(x(),y()+50);
-    }
+    return this->life;
 }
 
-void Character::basic_assault()
+QPixmap Character::getTile()
 {
+    return this->tile;
 }
 
-float Character::get_m_health()
-{
-    return this->m_health;
-}
+//void Character::move_left()
+//{
+//    if(this->x()-50 >= 0){
+//        setPos(x()-50,y());
+//    }
+//}
 
-void Character::set_m_health(float health)
-{
-    this->m_health = health;
-}
+//void Character::move_right()
+//{
+//    if(this->x()+50 < 1000){
+//        this->setPos(x()+50,y());
+//    }
+//}
+
+//void Character::move_up()
+//{
+//    if(this->y()-50 >=0){
+//        this->setPos(x(),y()-50);
+//    }
+//}
+
+//void Character::move_down()
+//{
+//    if(this->y()+50 <= 600){
+//        this->setPos(x(),y()+50);
+//    }
+//}
+
+//void Character::basic_assault()
+//{
+//}
+
+
+

@@ -1,4 +1,4 @@
-#include "headers.h"
+#include "loot_heal.h"
 
 Loot_Heal::Loot_Heal(double x, double y)
 {

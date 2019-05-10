@@ -8,27 +8,38 @@
 
 class Character:public QGraphicsPixmapItem {
 public:
-    void Move(char x, char y, std::vector<std::string> *map, std::map<std::string, int> cellTypes);
-    void move_left();
-    void move_right();
-    void move_up();
-    void move_down();
-    void basic_assault();
+    Character();
+    void setPosX(int i);
+    void setPosY(int j);
+    void setLife(int life);
+    int getPosX();
+    int getPosY();
+    float getLife();
+    QPixmap getTile();
 
-    float get_m_health();
-    void set_m_health(float health);
+//    void Move(char x, char y, std::vector<std::string> *map, std::map<std::string, int> cellTypes);
+//    void move_left();
+//    void move_right();
+//    void move_up();
+//    void move_down();
+//    void basic_assault();
 
 protected:
-    //double m_posx;   // existe déjà dans la classe parente, fonction x()
-    //double m_posy;   // existe déjà dans la classe parente, fonction y()
-    //double m_size;   /*  size of the character   */ je suis parti sur une taille standard de 50x50
+    int posX;//position sur la carte
+    int posY;//
+    float life;//vie du personnage qui doit etre > ou = à 0
 
-
+    QPixmap tile;
     float m_health;
     float m_energy;
     float m_power; /*  amount of damages the character deals  */
     double m_range;  /*  max distance of a a hit */   // inutile je pense
     float m_speed;
+
+
+
+
+
 };
 
 #endif // CHARACTER_H
