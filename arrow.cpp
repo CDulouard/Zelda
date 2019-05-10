@@ -4,9 +4,9 @@
 #include <QtCore/QThread>
 #include<QMediaPlayer>
 
-extern QString lastMove;
+//extern QString lastMove;
 
-Arrow::Arrow()
+Arrow::Arrow(QString lastMove)
 {
     QMediaPlayer *arrow_shoot = new QMediaPlayer();
     arrow_shoot->setMedia(QUrl("qrc:/arrow/Sounds/arrow_shoot.mp3"));
@@ -79,6 +79,7 @@ void Arrow::move_up()
 
     if(arrow_life_timer == 7)
         delete this;
+        //~Arrow();
 }
 
 void Arrow::move_down()
@@ -96,3 +97,8 @@ void Arrow::move_down()
     if(arrow_life_timer == 7)
         delete this;
 }
+
+//Arrow::~Arrow()
+//{
+//    delete this;
+//}

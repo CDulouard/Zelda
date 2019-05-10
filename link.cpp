@@ -15,8 +15,8 @@ Link::Link()
 {
     this->setPixmap(QPixmap(":/Character/Images/Characters/Link/link_down.png"));
     this->setPos(50,50);
-    this->setFlag(QGraphicsItem::ItemIsFocusable);
-    this->setFocus();
+    this->setFlag(QGraphicsItem::ItemIsFocusable); // A bouger dans le mainWindow
+    this->setFocus();                               // pour eviter le bug de perte de link
 
     this->m_health = 100;
     this->m_speed = 1;
@@ -32,6 +32,7 @@ void Link::keyPressEvent(QKeyEvent *event)
         this->setPixmap(QPixmap(":/Character/Images/Characters/Link/link_left.png"));
         move_left();
         set_lastMove("left");
+        //lastMove = "left";
         qDebug() << this->pos();
     }
 
@@ -39,6 +40,7 @@ void Link::keyPressEvent(QKeyEvent *event)
         this->setPixmap(QPixmap(":/Character/Images/Characters/Link/link_right.png"));
         move_right();
         set_lastMove("right");
+        //lastMove = "right";
         qDebug() << this->pos();
     }
 
@@ -46,6 +48,7 @@ void Link::keyPressEvent(QKeyEvent *event)
         this->setPixmap(QPixmap(":/Character/Images/Characters/Link/link_up.png"));
         move_up();
         set_lastMove("up");
+        //lastMove = "up";
         qDebug() << this->pos();
     }
 
@@ -80,16 +83,14 @@ void Link::strong_assault()
 void Link::shoot()
 {
     if (_arrowQuantity > 0){
-        Arrow *arrow = new Arrow();
+        Arrow *arrow = new Arrow(_lastMove);
         arrow->setPos(x(),y());
         scene()->addItem(arrow);
 
         //we remove an arrow
-        //_arrowQuantity = ui->Arrows_display->intValue();
         //_arrowQuantity--;
         //emit_change_arrow_quantity(_arrowQuantity--);
         //connect(this, SIGNAL(emit_change_arrow_quantity()), MainWindow, SLOT(move_left()));
-
 
     }
 }

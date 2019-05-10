@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->graphicsView->setScene(scene);
     display_map();
     display_characters();
+
 }
 
 MainWindow::~MainWindow()
@@ -28,9 +29,15 @@ void MainWindow::display_map()
                 grass->setPos(j*50,i*50);
                 scene -> addItem(grass);
             }
-            if (currentMap[i][j] == "x"){
+            else if (currentMap[i][j] == "x"){
                 QGraphicsPixmapItem *wall = new QGraphicsPixmapItem();
                 wall->setPixmap(QPixmap(":/terrain/Images/Terrain/wall.jpg"));
+                wall->setPos(j*50,i*50);
+                scene -> addItem(wall);
+            }
+            else if (currentMap[i][j] == "w"){
+                QGraphicsPixmapItem *wall = new QGraphicsPixmapItem();
+                wall->setPixmap(QPixmap(":/terrain/Images/Terrain/Water.jpg"));
                 wall->setPos(j*50,i*50);
                 scene -> addItem(wall);
             }

@@ -12,7 +12,6 @@ using namespace std;
 
 
 /*  Globals variables    */
-
 static bool keepPlaying = true;
 vector<QString> currentMap;
 map<QString, int> cellTypes;
@@ -26,21 +25,22 @@ void Start() {
 
     /*  Fit the cellTypes map with the type of all cells in the map */
 
-    cellTypes["0"] = 0; /*  Ground (can walk on it) */
-    cellTypes["x"] = 1; /*  Wall (can't walk on it) */
+    cellTypes["0"] = 1; /*  Ground (can walk on it) */
+    cellTypes["x"] = 0; /*  Wall (can't walk on it) */
+    cellTypes["w"] = 0; /*  Water (can't walk on it) */
 
     currentMap.push_back("xxxxxxxxxxxxxxxxxxxx");
+    currentMap.push_back("x000000000000000w00x");
+    currentMap.push_back("x000000000000000w00x");
+    currentMap.push_back("x000000000000000w00x");
+    currentMap.push_back("x000000000000000w00x");
+    currentMap.push_back("x000000000000000wwwx");
     currentMap.push_back("x000000000000000000x");
     currentMap.push_back("x000000000000000000x");
     currentMap.push_back("x000000000000000000x");
     currentMap.push_back("x000000000000000000x");
-    currentMap.push_back("x000000000000000000x");
-    currentMap.push_back("x000000000000000000x");
-    currentMap.push_back("x000000000000000000x");
-    currentMap.push_back("x000000000000000000x");
-    currentMap.push_back("x000000000000000000x");
-    currentMap.push_back("x000000000000000000x");
-    currentMap.push_back("x000000000000000000x");
+    currentMap.push_back("xww0000000000000000x");
+    currentMap.push_back("xww0000000000000000x");
     currentMap.push_back("xxxxxxxxxxxxxxxxxxxx");
 
 }

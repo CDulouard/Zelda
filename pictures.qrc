@@ -26,5 +26,6 @@
     <qresource prefix="/terrain">
         <file>Images/Terrain/Grass.jpg</file>
         <file>Images/Terrain/wall.jpg</file>
+        <file>Images/Terrain/Water.jpg</file>
     </qresource>
 </RCC>

@@ -4,7 +4,6 @@
 #include <QString>     // Stocke le contenu du fichier
 #include <QTextStream> // Flux sortant du fichier
 
-#include <QFile>
 
 #include <fstream>
 #include <stdio.h>

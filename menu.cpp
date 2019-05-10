@@ -34,7 +34,7 @@ menu::~menu()
 
 void menu::openGameWindow()
 {
-    MainWindow * gameWindow = new MainWindow();
+    MainWindow *gameWindow = new MainWindow();
     _menuMusic.stop();
     gameWindow->show();
     this->close();
