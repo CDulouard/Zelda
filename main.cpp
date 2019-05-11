@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     Model mo;
 
     Controller controller(&ma,&mo);
-    controller.startApplication();
+    controller.startGame();
 
     return a.exec();
 }

@@ -9,6 +9,8 @@ menu::menu(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    this->playButtonPressedOrNot = 0;
+
     // window's general options
     setFixedSize(1500,844);
     setWindowIcon(QIcon(":/icons/Images/Icones/Zelda.png"));
@@ -25,7 +27,7 @@ menu::menu(QWidget *parent) :
     menuMusic.setMedia(QUrl("qrc:/menu/Sounds/menu_music.mp3"));
     menuMusic.play();
 
-    connect(ui->playButton, SIGNAL(pressed()), this, SLOT(openGameWindow()));
+    connect(ui->playButton, SIGNAL(pressed()), this, SLOT(playButtonPressed()));
 
 }
 
@@ -34,12 +36,24 @@ menu::~menu()
     delete ui;
 }
 
-
-void menu::openGameWindow()
+int menu::getPlayButtonPressedOrNot() const
 {
-    MainWindow *gameWindow = new MainWindow();
+    return playButtonPressedOrNot;
+}
+
+void menu::setPlayButtonPressedOrNot(int newValue)
+{
+    this->playButtonPressedOrNot = newValue;
+}
+
+
+int menu::playButtonPressed()
+{
     menuMusic.stop();
-    gameWindow->show();
-    this->close();
+    // renvoit au controller
+    //this->close();
+    //startGame
+    setPlayButtonPressedOrNot(1);
+    return playButtonPressedOrNot;
 }
 

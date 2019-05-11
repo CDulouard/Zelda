@@ -1,7 +1,7 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include <QMainWindow>
+#include "mainwindow.h"
 #include<QMediaPlayer>
 
 namespace Ui {
@@ -16,12 +16,21 @@ public:
     explicit menu(QWidget *parent = nullptr);
     ~menu();
 
-public slots:
-    void openGameWindow();
+    MainWindow *getMainwindow() const;
 
-private:
+    int getLevelCounter() const;
+    void setLevelCounter(int newCounter);
+
+    int getPlayButtonPressedOrNot() const;
+    void setPlayButtonPressedOrNot(int newValue);
+
+public slots:
+    int playButtonPressed();
+
+protected:
     Ui::menu *ui;
     QMediaPlayer menuMusic;
+    int playButtonPressedOrNot;
 };
 
 #endif // MENU_H

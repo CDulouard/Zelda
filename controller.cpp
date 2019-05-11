@@ -2,8 +2,9 @@
 #include "map.h"
 #include "menu.h"
 
+#include "mainwindow.h"
+
 #include <QDebug>
-#include <QMediaPlayer>
 
 using namespace std;
 
@@ -14,38 +15,36 @@ Controller::Controller(Map *view, Model *model)
     this->timer =  new QTimer();
     timer->connect(timer, SIGNAL(timeout()), this, SLOT(afficherScene()));
     view->setControl(this);
-    linkAttaqueOuPas=0;
+    this->linkAttaqueOuPas=0;
     this->statueSon = 0;
+    this->levelCounter = 1;
 }
 
-void Controller::startApplication()
+void Controller::startGame()
 {
-    qDebug() << "enter the start application";
     // Lauching
     if (levelCounter == 0){
-        qDebug() << "enter case 1";
         menu *menu = new class menu();
         menu->show();
-        //levelCounter++;
+        qDebug() << menu->getPlayButtonPressedOrNot();
+        if(menu->getPlayButtonPressedOrNot()){
+            qDebug() << menu->getPlayButtonPressedOrNot();
+            //menu->close();
+        }
     }
 
     //current game
-//    if (levelCounter == 1){
-//        this->view->resetView();
-//        this->view->initialiserScene();
-//        this->view->show();
-////        this->son = new QSound("");
-////        this->son->setLoops(2);
-////        son->play();
-//        this->view->resetView();
-//        this->model->getLink()->setPosX(-this->model->getLink()->getPosX()+250);
-//        this->model->getLink()->setPosY(-this->model->getLink()->getPosY()+250);
+    if (levelCounter == 1){
+        MainWindow *gameWindow = new MainWindow();
+        gameWindow->resetView();
+        gameWindow->initialiserScene();
+        gameWindow->show();
 
-//        //on recentre zelda en haut a gauche a chaque niveau
-//        // charger niveau
-//        afficherScene();
-//        //this->view->show();
-//    }
+        //on recentre link en haut a gauche a chaque niveau
+        // charger niveau
+        afficherScene();
+        //this->view->show();
+    }
 
 //    // Link die
 //    if (levelCounter == -2){
@@ -65,20 +64,20 @@ void Controller::startApplication()
 //        this->model->getNiveau()->chargerNiveau(); // on charge la carte correspondant au niveau
 //        this->view->initialiserScene();
 //        this->view->show();
-//    }
+    //    }
 }
 
 
-void Controller::startGame(){
+//void Controller::startGame(){
 
-    this->view->initialiserScene();
-    this->view->show();
-    this->son = new QSound("/Users/alexandremagne/Desktop/Zelda2/Musiques/intro.wav");
-    son->play();
-    this->son->setLoops(2);
+//    this->view->initialiserScene();
+//    this->view->show();
+//    this->son = new QSound("/Users/alexandremagne/Desktop/Zelda2/Musiques/intro.wav");
+//    son->play();
+//    this->son->setLoops(2);
 
 
-}
+//}
 
 void Controller::afficherScene(){
 

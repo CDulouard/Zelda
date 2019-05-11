@@ -1,6 +1,8 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
+#include "menu.h"
+#include "ui_menu.h"
 #include <model.h>
 #include <ennemis.h>
 
@@ -20,7 +22,8 @@ class Controller : public QWidget
 
 public:
     Controller(Map *view, Model *model);//constructeur
-    void startApplication();
+    Ui::menu *ui;
+
     void startGame();
     void pressKey(std::string key);
 
@@ -69,7 +72,7 @@ private:
     int statueSon;//pour le son, pour le changer au niveau 2
     int linkAttaqueOuPas;//si zelda a l'animation sword ou epee , on va gerer les probleme de qpixmap null
     int niveauActuel;
-    int levelCounter = 0;
+    int levelCounter;
 
 
 

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QGraphicsScene>
+#include <scene.h>
 
 namespace Ui {
 class MainWindow;
@@ -14,11 +15,14 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
+
+    void resetView();
+    void initialiserScene();
 
     void display_map();
     void display_characters();
 
-    ~MainWindow();
 
 //public slots:
 //    void change_health();
@@ -28,6 +32,11 @@ public:
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene = new QGraphicsScene();
+    QGraphicsScene *mapScene;//la map contient une scene:la carte
+    Scene *cameraView;
+
+    std::vector<QString> currentMap;
+    std::map<QString, int> cellTypes;
 
 };
 
