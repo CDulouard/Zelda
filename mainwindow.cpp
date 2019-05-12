@@ -1,6 +1,8 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "game.h"
+//#include "ui_mainwindow.h"
+#include "game.h"
 #include <link.h>
+#include <QKeyEvent>
 
 #include <vector>
 
@@ -8,7 +10,7 @@
 static bool keepPlaying = true;
 static double DELTATIME;
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new MainWindow)
 {
     ui->setupUi(this);
 

@@ -42,16 +42,14 @@ SOURCES += \
 
 HEADERS += \
     arrow.h \
-    controller.h \
     ennemis.h \
     loot_heal.h \
-    menu.h \
     link.h \
-    mainwindow.h \
     model.h \
     scene.h \
     debug.h \
-    character.h
+    character.h \
+    game.h
 
 FORMS += \
     menu.ui \

@@ -1,7 +1,7 @@
-#include "controller.h"
-#include "menu.h"
-
-#include "mainwindow.h"
+#include "game.h"
+#include <QTimer>
+#include<QTime>
+#include<QCoreApplication>
 
 Controller::Controller(menu *menu, MainWindow *gameWindow, Model *model)
 {

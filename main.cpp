@@ -1,9 +1,10 @@
 #include "model.h"
-#include "controller.h"
+#include "game.h"
 
 #include <QApplication>
 #include <QSplashScreen>
 #include <QTimer>
+#include <QTime>
 
 
 void delay(int i) //wait i ms

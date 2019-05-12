@@ -1,17 +1,9 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-//#include <vector>
-//#include <iostream>
-//#include <QGraphicsView>
-//#include <QGraphicsScene>
-//#include <QGraphicsPixmapItem>
-//#include <QLabel>
-//#include <QMovie>
-//#include <QDebug>
-//#include <QKeyEvent>
+#include <QGraphicsScene>
 
-class Scene:QGraphicsScene
+class Scene : QGraphicsScene
 {
 public:
     Scene();

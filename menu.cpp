@@ -1,11 +1,10 @@
-#include "menu.h"
-#include "ui_menu.h"
-#include "mainwindow.h"
+//#include "ui_menu.h"
+#include "game.h"
 
 
 menu::menu(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::menu)
+    ui(new menu)
 {
     ui->setupUi(this);
 
