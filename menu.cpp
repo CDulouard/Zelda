@@ -25,7 +25,6 @@ menu::menu(QWidget *parent) :
 
     // Sound
     menuMusic.setMedia(QUrl("qrc:/menu/Sounds/menu_music.mp3"));
-    menuMusic.play();
 
     connect(ui->playButton, SIGNAL(pressed()), this, SLOT(playButtonPressed()));
 
@@ -49,7 +48,6 @@ void menu::setPlayButtonPressedOrNot(int newValue)
 
 int menu::playButtonPressed()
 {
-    menuMusic.stop();
     // renvoit au controller
     //this->close();
     //startGame

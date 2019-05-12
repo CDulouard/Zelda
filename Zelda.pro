@@ -31,7 +31,6 @@ SOURCES += \
     loot_heal.cpp \
         main.cpp \
     arrow.cpp \
-    map.cpp \
     menu.cpp \
     link.cpp \
     ReadMap.cpp \
@@ -46,11 +45,9 @@ HEADERS += \
     controller.h \
     ennemis.h \
     loot_heal.h \
-    map.h \
     menu.h \
     link.h \
     mainwindow.h \
-    map.h \
     model.h \
     scene.h \
     debug.h \

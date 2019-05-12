@@ -2,6 +2,7 @@
 #define ENNEMIS_H
 
 #include "character.h"
+#include <QString>
 
 class Ennemis:public Character
 {

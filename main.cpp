@@ -1,5 +1,4 @@
 #include "model.h"
-#include "map.h"
 #include "controller.h"
 
 #include <QApplication>
@@ -26,10 +25,11 @@ int main(int argc, char *argv[])
     delay(2000);
     splash->close();
 
-    Map ma;
+    menu me;
+    MainWindow ma;
     Model mo;
 
-    Controller controller(&ma,&mo);
+    Controller controller(&me,&ma,&mo);
     controller.startGame();
 
     return a.exec();

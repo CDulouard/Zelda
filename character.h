@@ -1,9 +1,9 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
-#include <vector>
-#include <map>
-#include <string>
+//#include <vector>
+//#include <map>
+//#include <string>
 #include <QGraphicsPixmapItem>
 
 class Character:public QGraphicsPixmapItem {

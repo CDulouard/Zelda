@@ -61,14 +61,14 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Play</string>
+         <string>Press Enter to Play</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="quitButton">
         <property name="text">
-         <string>Quit</string>
+         <string>Press Escape to Quit</string>
         </property>
        </widget>
       </item>

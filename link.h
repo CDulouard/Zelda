@@ -31,9 +31,8 @@ public:
     int getIsAmoradoOrNot() const;
     void setIsAmoradoOrNot(int value);
 
-//    void keyPressEvent(QKeyEvent *event);
-//    void strong_assault();
-//    void shoot();
+    void strong_assault();
+    void shoot();
 
 
 private:

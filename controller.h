@@ -2,18 +2,18 @@
 #define CONTROLLER_H
 
 #include "menu.h"
-#include "ui_menu.h"
-#include <model.h>
-#include <ennemis.h>
+#include "mainwindow.h"
+#include "model.h"
+#include "ennemis.h"
 
 #include <QWidget>
-#include <QObject>
-#include <QTimer>
-#include <QVBoxLayout>
-#include <QTime>
-#include <QEventLoop>
-#include <QCoreApplication>
-#include <QSound>
+#include <QMediaPlayer>
+
+//#include <QObject>
+//#include <QTimer>
+//#include <QVBoxLayout>
+//#include <QTime>
+//#include <QCoreApplication>
 
 class Map;
 class Controller : public QWidget
@@ -21,11 +21,11 @@ class Controller : public QWidget
     Q_OBJECT
 
 public:
-    Controller(Map *view, Model *model);//constructeur
+    Controller(menu *menu, MainWindow *gameWindow, Model *model);//constructeur
     Ui::menu *ui;
 
     void startGame();
-    void pressKey(std::string key);
+    void pressKey(QString key);
 
     void setModel(Model *value);
     Model *getModel() const;
@@ -65,13 +65,16 @@ public slots:
     void afficherScene();
 
 private:
-    Map *view;//represente la vue, ce que voit l'utilisateur
+    //represente la vue, ce que voit l'utilisateur
+    menu *viewMenu;
+    MainWindow *viewGame;
+
+    // le model
     Model *model;
+
     QTimer *timer;//raffraichissmeent de la scene
-    QSound *son;
-    int statueSon;//pour le son, pour le changer au niveau 2
-    int linkAttaqueOuPas;//si zelda a l'animation sword ou epee , on va gerer les probleme de qpixmap null
-    int niveauActuel;
+    QMediaPlayer son;
+
     int levelCounter;
 
 

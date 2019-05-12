@@ -1,10 +1,10 @@
 <RCC>
-    <qresource prefix="/arrow">
+    <qresource prefix="/game">
         <file>Sounds/arrow_hit.mp3</file>
         <file>Sounds/arrow_shoot.mp3</file>
     </qresource>
-    <qresource prefix="/menu">
+    <qresource prefix="/music">
         <file>Sounds/menu_music.mp3</file>
-        <file>Sounds/ThemeSong.mp3</file>
+        <file>Sounds/game_music.mp3</file>
     </qresource>
 </RCC>
