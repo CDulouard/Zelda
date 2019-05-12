@@ -2,11 +2,9 @@
 #define MAINWINDOW_H
 
 
-//#include <QMainWindow>
-//#include <link.h>
-//#include <QGraphicsScene>
-//#include <scene.h>
-//#include <controller.h>
+#include <QMainWindow>
+#include <link.h>
+#include <scene.h>
 
 namespace Ui {
 class MainWindow;
@@ -24,18 +22,18 @@ public:
 
     void displayMap();
     void displayLink(Link *link);
-    void keyPressEvent(QKeyEvent *event);
 
 private:
     Ui::MainWindow *ui;
-    QGraphicsScene *scene = new QGraphicsScene();
+
+    //Controller *controller;
+
     QGraphicsScene *mapScene;   // scene ou carte
     Scene *cameraView;          // camera
 
     std::vector<QString> currentMap;
     std::map<QString, int> cellTypes;
 
-    Controller *controller;
 
 };
 

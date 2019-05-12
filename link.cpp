@@ -1,6 +1,5 @@
 #include "link.h"
 
-#include<QKeyEvent>
 
 Link::Link()
 {

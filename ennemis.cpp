@@ -4,7 +4,6 @@ Ennemis::Ennemis(int posXinit, int posYinit, QString direction, QString type_of_
 {
     this->setPosX(posXinit);
     this->setPosY(posYinit);
-    setPos(rand()%(20)*50,rand()%(20)*50);
 
     this->posXinitiale = posXinit;
     this->posYinitiale = posYinit;

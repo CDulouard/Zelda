@@ -3,7 +3,6 @@
 #include<QTimer>
 #include <QtCore/QThread>
 #include<QMediaPlayer>
-
 //extern QString lastMove;
 
 Arrow::Arrow(QString lastMove)

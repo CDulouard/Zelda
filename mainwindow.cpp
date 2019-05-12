@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <link.h>
 
 #include <vector>
 
@@ -92,87 +91,4 @@ void MainWindow::displayLink(Link *link)
     this->mapScene->addItem(apparencePersonnage);
 }
 
-void MainWindow::keyPressEvent(QKeyEvent *event)// je gére quand j'appuie sur une touche
-{
 
-    switch ( event->key())
-    {
-    case Qt::Key_Enter:
-    {
-               this->controller->pressKey("enter");
-               break;
-    }
-    case Qt::Key_Escape:
-    {
-               this->controller->pressKey("escape");
-               break;
-    }
-    case Qt::Key_Right:
-    {
-        this->controller->pressKey("right");
-        break;
-    }
-    case Qt::Key_D:
-    {
-        this->controller->pressKey("right");
-        break;
-    }
-    case Qt::Key_Left:
-    {
-        this->controller->pressKey("left");
-        break;
-    }
-    case Qt::Key_A:
-    {
-        this->controller->pressKey("left");
-        break;
-    }
-    case Qt::Key_Down:
-    {
-        this->controller->pressKey("down");
-        break;
-    }
-    case Qt::Key_S:
-    {
-        this->controller->pressKey("down");
-        break;
-    }
-    case Qt::Key_Up:
-    {
-        this->controller->pressKey("up");
-        break;
-    }
-    case Qt::Key_W:
-    {
-        this->controller->pressKey("up");
-        break;
-    }
-    case Qt::Key_H:
-    {
-        if(event->isAutoRepeat())
-            break;
-        else {
-            this->controller->pressKey("h");
-            break;
-        }
-    }
-    case Qt::Key_J:
-    {
-        if(event->isAutoRepeat())
-            break;
-        else {
-            this->controller->pressKey("j");
-            break;
-        }
-    }
-    case Qt::Key_K:
-    {
-        if(event->isAutoRepeat())
-            break;
-        else {
-            this->controller->pressKey("k");
-            break;
-        }
-    }
-    }
-}

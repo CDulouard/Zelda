@@ -5,7 +5,6 @@
 
 class Link:public QObject,public Character
 {
-    Q_OBJECT
 
 public:
     Link();

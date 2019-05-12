@@ -1,7 +1,6 @@
 #include "controller.h"
-#include "menu.h"
 
-#include "mainwindow.h"
+#include <QKeyEvent>
 
 Controller::Controller(menu *menu, MainWindow *gameWindow, Model *model)
 {
@@ -20,10 +19,10 @@ void Controller::startGame()
         viewMenu->show();
         son.setMedia(QUrl("qrc:/music/Sounds/menu_music.mp3"));
         son.play();
-        if(viewMenu->getPlayButtonPressedOrNot()){ // le temps de trouver comment lier la fermeture au controller
-            viewMenu->close();
-            son.stop();
-        }
+//        if(viewMenu->getPlayButtonPressedOrNot()){ // le temps de trouver comment lier la fermeture au controller
+//            viewMenu->close();
+//            son.stop();
+//        }
 
     }
 
@@ -694,6 +693,7 @@ void Controller::pressKey(QString key)
         if (key == "enter" && levelCounter == 0)
         {
             this->son.stop();
+            viewMenu->close();
             levelCounter++;
             this->startGame();
         }
@@ -722,4 +722,91 @@ Model *Controller::getModel() const
 void Controller::setModel(Model *value)
 {
     model = value;
+}
+
+void Controller::keyPressEvent(QKeyEvent *event)// je gére quand j'appuie sur une touche
+{
+
+    qDebug() << ("lol");
+
+    switch ( event->key())
+    {
+    case Qt::Key_Enter:
+    {
+        pressKey("enter");
+        break;
+    }
+    case Qt::Key_Escape:
+    {
+        pressKey("escape");
+        break;
+    }
+    case Qt::Key_Right:
+    {
+        pressKey("right");
+        break;
+    }
+    case Qt::Key_D:
+    {
+        pressKey("right");
+        break;
+    }
+    case Qt::Key_Left:
+    {
+        pressKey("left");
+        break;
+    }
+    case Qt::Key_A:
+    {
+        pressKey("left");
+        break;
+    }
+    case Qt::Key_Down:
+    {
+        pressKey("down");
+        break;
+    }
+    case Qt::Key_S:
+    {
+        pressKey("down");
+        break;
+    }
+    case Qt::Key_Up:
+    {
+        pressKey("up");
+        break;
+    }
+    case Qt::Key_W:
+    {
+        pressKey("up");
+        break;
+    }
+    case Qt::Key_H:
+    {
+        if(event->isAutoRepeat())
+            break;
+        else {
+            pressKey("h");
+            break;
+        }
+    }
+    case Qt::Key_J:
+    {
+        if(event->isAutoRepeat())
+            break;
+        else {
+            pressKey("j");
+            break;
+        }
+    }
+    case Qt::Key_K:
+    {
+        if(event->isAutoRepeat())
+            break;
+        else {
+            pressKey("k");
+            break;
+        }
+    }
+    }
 }

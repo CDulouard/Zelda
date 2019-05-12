@@ -6,14 +6,17 @@
 #include "model.h"
 #include "ennemis.h"
 
-#include <QWidget>
-#include <QMediaPlayer>
+#include <QObject>
+#include <QTimer>
+#include <QTime>
+#include <QCoreApplication>
 
-//#include <QObject>
-//#include <QTimer>
+#include <QDebug>
+
+
+//#include <QWidget>
+//#include <QMediaPlayer>
 //#include <QVBoxLayout>
-//#include <QTime>
-//#include <QCoreApplication>
 
 class Map;
 class Controller : public QWidget
@@ -30,11 +33,11 @@ public:
     void setModel(Model *value);
     Model *getModel() const;
 
+    void keyPressEvent(QKeyEvent *event);
+
 
 protected:
     void delay(int i);
-/*              zelda et element naturel                        */
-    void zelda_va_dans_leau(QString direction);
 
 /*          attaques et Zelda        */
     void attack_function(QString direction);//attaque de l'epee

@@ -1,12 +1,17 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
+#include <vector>
+#include <QGraphicsPixmapItem>
+#include <QPixmap>
+
 //#include <vector>
 //#include <map>
 //#include <string>
-#include <QGraphicsPixmapItem>
+//#include <QGraphicsPixmapItem>
 
-class Character:public QGraphicsPixmapItem {
+class Character
+{
 public:
     Character();
     void setPosX(int i);

@@ -1,7 +1,8 @@
 #include "menu.h"
 #include "ui_menu.h"
-#include "mainwindow.h"
 
+#include <QKeyEvent>
+#include <QDebug>
 
 menu::menu(QWidget *parent) :
     QMainWindow(parent),
@@ -33,6 +34,23 @@ menu::menu(QWidget *parent) :
 menu::~menu()
 {
     delete ui;
+}
+
+void menu::keyPressEvent(QKeyEvent *event)
+{
+    switch ( event->key())
+    {
+    case Qt::Key_Enter:
+    {
+        qDebug() << ("enter");
+        break;
+    }
+    case Qt::Key_Escape:
+    {
+        qDebug() << ("escape");
+        break;
+    }
+    }
 }
 
 int menu::getPlayButtonPressedOrNot() const

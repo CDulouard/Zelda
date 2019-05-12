@@ -2,7 +2,6 @@
 #define MENU_H
 
 #include <QMainWindow>
-#include "mainwindow.h"
 #include<QMediaPlayer>
 
 namespace Ui {
@@ -17,7 +16,7 @@ public:
     explicit menu(QWidget *parent = nullptr);
     ~menu();
 
-    MainWindow *getMainwindow() const;
+    void keyPressEvent(QKeyEvent *event);
 
     int getLevelCounter() const;
     void setLevelCounter(int newCounter);
