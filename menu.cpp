@@ -40,14 +40,15 @@ void menu::keyPressEvent(QKeyEvent *event)
 {
     switch ( event->key())
     {
-    case Qt::Key_Enter:
-    {
-        qDebug() << ("enter");
-        break;
-    }
     case Qt::Key_Escape:
     {
         qDebug() << ("escape");
+        this->close();
+        break;
+    }
+    case Qt::Key_P:
+    {
+        qDebug() << ("enter");
         break;
     }
     }

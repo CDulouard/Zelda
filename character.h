@@ -5,11 +5,6 @@
 #include <QGraphicsPixmapItem>
 #include <QPixmap>
 
-//#include <vector>
-//#include <map>
-//#include <string>
-//#include <QGraphicsPixmapItem>
-
 class Character
 {
 public:
@@ -22,28 +17,16 @@ public:
     float getLife();
     QPixmap getTile();
 
-//    void Move(char x, char y, std::vector<std::string> *map, std::map<std::string, int> cellTypes);
-//    void move_left();
-//    void move_right();
-//    void move_up();
-//    void move_down();
-//    void basic_assault();
-
 protected:
-    int posX;//position sur la carte
-    int posY;//
-    float life;//vie du personnage qui doit etre > ou = à 0
+    int posX;
+    int posY;
+    int life;
 
     QPixmap tile;
-    float m_health;
     float m_energy;
     float m_power; /*  amount of damages the character deals  */
     double m_range;  /*  max distance of a a hit */   // inutile je pense
     float m_speed;
-
-
-
-
 
 };
 

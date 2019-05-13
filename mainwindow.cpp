@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 
 #include <vector>
+#include <QKeyEvent>
+#include <QDebug>
 
 /*  Globals variables    */
 static bool keepPlaying = true;
@@ -89,6 +91,104 @@ void MainWindow::displayLink(Link *link)
     apparencePersonnage->setPos(link->getPosX(),link->getPosY());
     //apparencePersonnage->setZValue(100);//pour etre sur
     this->mapScene->addItem(apparencePersonnage);
+}
+
+
+void MainWindow::keyPressEvent(QKeyEvent *event)// je gére quand j'appuie sur une touche
+{
+    switch ( event->key())
+    {
+    case Qt::Key_Enter:
+    {
+        qDebug() << "enter";
+        //pressKey("enter");
+        break;
+    }
+    case Qt::Key_Escape:
+    {
+        qDebug() << "escape";
+        //pressKey("escape");
+        break;
+    }
+    case Qt::Key_Right:
+    {
+        qDebug() << "right";
+        //pressKey("right");
+        break;
+    }
+    case Qt::Key_D:
+    {
+        qDebug() << "right";
+        //pressKey("right");
+        break;
+    }
+    case Qt::Key_Left:
+    {
+        qDebug() << "left";
+        //pressKey("left");
+        break;
+    }
+    case Qt::Key_A:
+    {
+        qDebug() << "left";
+        //pressKey("left");
+        break;
+    }
+    case Qt::Key_Down:
+    {
+        qDebug() << "down";
+        //pressKey("down");
+        break;
+    }
+    case Qt::Key_S:
+    {
+        qDebug() << "down";
+        //pressKey("down");
+        break;
+    }
+    case Qt::Key_Up:
+    {
+        qDebug() << "up";
+        //pressKey("up");
+        break;
+    }
+    case Qt::Key_W:
+    {
+        qDebug() << "up";
+        //pressKey("up");
+        break;
+    }
+    case Qt::Key_H:
+    {
+        if(event->isAutoRepeat())
+            break;
+        else {
+            qDebug() << "h";
+            //pressKey("h");
+            break;
+        }
+    }
+    case Qt::Key_J:
+    {
+        if(event->isAutoRepeat())
+            break;
+        else {
+            qDebug() << "j";
+            //pressKey("j");
+            break;
+        }
+    }
+    case Qt::Key_K:
+    {
+        if(event->isAutoRepeat())
+            break;
+        else {
+            qDebug() << "k";
+            //pressKey("k");
+            break;
+        }
+    }
+    }
 }
 
 

@@ -6,10 +6,10 @@ Link::Link()
     this->setPosX(0);
     this->setPosY(0);
     this->setLife(8);
-    this->direction = "down";//pour connaitre si il regarde a gauche ou a droite
+    this->direction = "down";
     this->tile = QPixmap(":/Character/Images/Characters/Link/link_down.png"); //image par défaut
     this->isAmoradoOrNot = 0;
-    this->LoadingCircularAttack = 250;//pour avoir les 10 sec
+    this->LoadingCircularAttack = 250;
 }
 
 int Link::arrowCounter()

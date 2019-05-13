@@ -94,51 +94,52 @@ void Ennemis::setInit(QString type)
 }
 
 // fonction appelée toute les 20 ms
-void Ennemis::deplacementEnnemis(Ennemis *ennemis){
+void Ennemis::deplacementEnnemis(Ennemis *ennemis)
+{
     if (ennemis->getType_of_monstre()=="boss_niveau_2_"){
         int diffY = (ennemis->getPosY() - ennemis->getPosYinitiale());
-                    if ((ennemis->getDirection() == "down") && diffY<100){ // déplacement max de 100 px
-                        ennemis->setPosY(ennemis->getSpeed());
-                    } else if ((ennemis->getDirection() == "up") && diffY<111 && diffY >0){
-                        ennemis->setPosY(-ennemis->getSpeed());
-                    } else{
-                            if (ennemis->getDirection() == "up"){
-                                    ennemis->setDirection("down");
-                            }  else ennemis->setDirection("up");
-                    }
-                    ennemis->setTilePosition(); // déplacement (2 images)
+        if ((ennemis->getDirection() == "down") && diffY<100){ // déplacement max de 100 px
+            ennemis->setPosY(ennemis->getSpeed());
+        } else if ((ennemis->getDirection() == "up") && diffY<111 && diffY >0){
+            ennemis->setPosY(-ennemis->getSpeed());
+        } else{
+            if (ennemis->getDirection() == "up"){
+                ennemis->setDirection("down");
+            }  else ennemis->setDirection("up");
+        }
+        ennemis->setTilePosition(); // déplacement (2 images)
 
     }
     else if(ennemis->getType_of_monstre()=="final_boss_"){
-                    //int diffX = (ennemis->getPosX() - ennemis->getPosXinitiale());
-                    //int diffY = (ennemis->getPosY() - ennemis->getPosYinitiale());
-                    int diffMax = ennemis->getDeplacementMax();
+        //int diffX = (ennemis->getPosX() - ennemis->getPosXinitiale());
+        //int diffY = (ennemis->getPosY() - ennemis->getPosYinitiale());
+        int diffMax = ennemis->getDeplacementMax();
 
-                    if ((ennemis->getDirection() == "right") && (diffMax<20)){ // déplacement max de 100 px
-                        ennemis->setPosX(ennemis->getSpeed());
-                        ennemis->deplacementMax=ennemis->deplacementMax+1;
-                    } else if ((ennemis->getDirection() == "left") && (diffMax<20)){
-                        ennemis->setPosX(-ennemis->getSpeed());
-                        ennemis->deplacementMax=ennemis->deplacementMax+1;
-                    } else if ((ennemis->getDirection() == "down") && (diffMax<20)){ // déplacement max de 100 px
-                        ennemis->setPosY(ennemis->getSpeed());
-                        ennemis->deplacementMax=ennemis->deplacementMax+1;
-                    } else if ((ennemis->getDirection() == "up") && (diffMax<20)){
-                        ennemis->setPosY(-ennemis->getSpeed());
-                        ennemis->deplacementMax=ennemis->deplacementMax+1;
-                    } else{
-                        ennemis->deplacementMax=0;
-                                    if(ennemis->direction=="right"){
-                                        ennemis->setDirection("down");
-                                    }else if(ennemis->direction=="down"){
-                                        ennemis->setDirection("left");
-                                    }else if(ennemis->direction=="left"){
-                                        ennemis->setDirection("up");
-                                    }else if(ennemis->direction=="up"){
-                                        ennemis->setDirection("right");
-                                    }
-            ennemis->setTilePosition(); // déplacement (2 images)
+        if ((ennemis->getDirection() == "right") && (diffMax<20)){ // déplacement max de 100 px
+            ennemis->setPosX(ennemis->getSpeed());
+            ennemis->deplacementMax=ennemis->deplacementMax+1;
+        } else if ((ennemis->getDirection() == "left") && (diffMax<20)){
+            ennemis->setPosX(-ennemis->getSpeed());
+            ennemis->deplacementMax=ennemis->deplacementMax+1;
+        } else if ((ennemis->getDirection() == "down") && (diffMax<20)){ // déplacement max de 100 px
+            ennemis->setPosY(ennemis->getSpeed());
+            ennemis->deplacementMax=ennemis->deplacementMax+1;
+        } else if ((ennemis->getDirection() == "up") && (diffMax<20)){
+            ennemis->setPosY(-ennemis->getSpeed());
+            ennemis->deplacementMax=ennemis->deplacementMax+1;
+        } else{
+            ennemis->deplacementMax=0;
+            if(ennemis->direction=="right"){
+                ennemis->setDirection("down");
+            }else if(ennemis->direction=="down"){
+                ennemis->setDirection("left");
+            }else if(ennemis->direction=="left"){
+                ennemis->setDirection("up");
+            }else if(ennemis->direction=="up"){
+                ennemis->setDirection("right");
             }
+            ennemis->setTilePosition(); // déplacement (2 images)
+        }
 
     }else if(ennemis->getType_of_monstre() =="zelda"){
         ennemis->setTilePosition();
@@ -146,34 +147,34 @@ void Ennemis::deplacementEnnemis(Ennemis *ennemis){
     else if (ennemis->getType_of_monstre() != "boule_de_feu_" && ennemis->getType_of_monstre() != "lambeau_boss_niveau_2_"){
         int diffMax = ennemis->getDeplacementMax();
 
-                           if ((ennemis->getDirection() == "right") && (diffMax<40)){ // déplacement max de 100 px
-                               ennemis->setPosX(ennemis->getSpeed());
-                               ennemis->deplacementMax=ennemis->deplacementMax+1;
-                           } else if ((ennemis->getDirection() == "left") && (diffMax<40)){
-                               ennemis->setPosX(-ennemis->getSpeed());
-                               ennemis->deplacementMax=ennemis->deplacementMax+1;
-                           } else if ((ennemis->getDirection() == "down") && (diffMax<40)){ // déplacement max de 100 px
-                               ennemis->setPosY(ennemis->getSpeed());
-                               ennemis->deplacementMax=ennemis->deplacementMax+1;
-                           } else if ((ennemis->getDirection() == "up") && (diffMax<40)){
-                               ennemis->setPosY(-ennemis->getSpeed());
-                               ennemis->deplacementMax=ennemis->deplacementMax+1;
-                           } else{
-                                           //attribut une nouvelle direction aléatoirement
-                                           ennemis->setDirectionAleatoire(rand() % 4); // 0, 1, 2, ou 3
-                                           ennemis->deplacementMax=0;
-                                           if(ennemis->getDirectionAleatoire()==0){
-                                               ennemis->setDirection("right");
-                                           } else if (ennemis->getDirectionAleatoire()==1){
-                                               ennemis->setDirection("left");
-                                           } else if (ennemis->getDirectionAleatoire()==2){
-                                               ennemis->setDirection("up");
-                                           } else if (ennemis->getDirectionAleatoire()==3){
-                                               ennemis->setDirection("down");
-                                           }
-                           }
-                   ennemis->setTilePosition(); // déplacement (2 images)
-               }
+        if ((ennemis->getDirection() == "right") && (diffMax<40)){ // déplacement max de 100 px
+            ennemis->setPosX(ennemis->getSpeed());
+            ennemis->deplacementMax=ennemis->deplacementMax+1;
+        } else if ((ennemis->getDirection() == "left") && (diffMax<40)){
+            ennemis->setPosX(-ennemis->getSpeed());
+            ennemis->deplacementMax=ennemis->deplacementMax+1;
+        } else if ((ennemis->getDirection() == "down") && (diffMax<40)){ // déplacement max de 100 px
+            ennemis->setPosY(ennemis->getSpeed());
+            ennemis->deplacementMax=ennemis->deplacementMax+1;
+        } else if ((ennemis->getDirection() == "up") && (diffMax<40)){
+            ennemis->setPosY(-ennemis->getSpeed());
+            ennemis->deplacementMax=ennemis->deplacementMax+1;
+        } else{
+            //attribut une nouvelle direction aléatoirement
+            ennemis->setDirectionAleatoire(rand() % 4); // 0, 1, 2, ou 3
+            ennemis->deplacementMax=0;
+            if(ennemis->getDirectionAleatoire()==0){
+                ennemis->setDirection("right");
+            } else if (ennemis->getDirectionAleatoire()==1){
+                ennemis->setDirection("left");
+            } else if (ennemis->getDirectionAleatoire()==2){
+                ennemis->setDirection("up");
+            } else if (ennemis->getDirectionAleatoire()==3){
+                ennemis->setDirection("down");
+            }
+        }
+        ennemis->setTilePosition(); // déplacement (2 images)
+    }
 }
 
 

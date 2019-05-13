@@ -61,7 +61,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Press Enter to Play</string>
+         <string>Press P to Play</string>
         </property>
        </widget>
       </item>

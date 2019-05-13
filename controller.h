@@ -33,7 +33,7 @@ public:
     void setModel(Model *value);
     Model *getModel() const;
 
-    void keyPressEvent(QKeyEvent *event);
+    void mooveEnnemis();
 
 
 protected:
@@ -76,7 +76,8 @@ private:
     Model *model;
 
     QTimer *timer;//raffraichissmeent de la scene
-    QMediaPlayer son;
+    QMediaPlayer generalSound;
+    QMediaPlayer gameSound;
 
     int levelCounter;
 

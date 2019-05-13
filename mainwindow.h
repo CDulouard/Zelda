@@ -23,6 +23,8 @@ public:
     void displayMap();
     void displayLink(Link *link);
 
+    void keyPressEvent(QKeyEvent *event);
+
 private:
     Ui::MainWindow *ui;
 

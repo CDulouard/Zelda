@@ -1,7 +1,5 @@
 #include "controller.h"
 
-#include <QKeyEvent>
-
 Controller::Controller(menu *menu, MainWindow *gameWindow, Model *model)
 {
     this->model = model; // on fait le lien avec le model
@@ -9,7 +7,7 @@ Controller::Controller(menu *menu, MainWindow *gameWindow, Model *model)
     this->viewGame = gameWindow; // on fait le lien avec la view
     this->timer =  new QTimer();
     timer->connect(timer, SIGNAL(timeout()), this, SLOT(afficherScene()));
-    this->levelCounter = 0; // normalement initialiser à 0 mais là on test la game d`abord
+    this->levelCounter = 1; // normalement initialiser à 0 mais là on test la game d`abord
 }
 
 void Controller::startGame()
@@ -17,19 +15,14 @@ void Controller::startGame()
     // Lauching
     if (levelCounter == 0){
         viewMenu->show();
-        son.setMedia(QUrl("qrc:/music/Sounds/menu_music.mp3"));
-        son.play();
-//        if(viewMenu->getPlayButtonPressedOrNot()){ // le temps de trouver comment lier la fermeture au controller
-//            viewMenu->close();
-//            son.stop();
-//        }
-
+        generalSound.setMedia(QUrl("qrc:/music/Sounds/menu_music.mp3"));
+        generalSound.play(); // ne marche pas
     }
 
     //current game
     if (levelCounter == 1){
-        son.setMedia(QUrl("qrc:/music/Sounds/game_music.mp3"));
-        son.play(); // ne marche pas
+        generalSound.setMedia(QUrl("qrc:/music/Sounds/game_music.mp3"));
+        generalSound.play(); // ne marche pas
 
         //on recentre link en haut a gauche a chaque niveau
         this->model->getLink()->setPosX(50);
@@ -39,46 +32,37 @@ void Controller::startGame()
         this->viewGame->show();
     }
 
-//    // Link die
-//    if (levelCounter == -2){
-//        son->stop();
-//        this->son = new QSound("/Users/alexandremagne/Desktop/Zelda2/Musiques/LOZ/LOZ_Die.wav");
-//        son->play();
-//        this->model->getNiveau()->chargerNiveau(); // on charge la carte correspondant au niveau
-//        this->view->initialiserScene();
-//        this->view->show();
-//    }
+    // Link die
+    if (levelCounter == -2){
+        generalSound.stop();
+        //this->son = new QSound("/Users/alexandremagne/Desktop/Zelda2/Musiques/LOZ/LOZ_Die.wav");
+        generalSound.play();
+        //this->model->getNiveau()->chargerNiveau(); // on charge la carte correspondant au niveau
+        //this->view->initialiserScene();
+        //this->view->show();
+    }
 
-//    // victory
-//    if (levelCounter == -1){
-//        son->stop();
-//        this->son = new QSound("/Users/alexandremagne/Desktop/Zelda2/Musiques/intro.wav");
-//        son->play();
-//        this->model->getNiveau()->chargerNiveau(); // on charge la carte correspondant au niveau
-//        this->view->initialiserScene();
-//        this->view->show();
-    //    }
+    // victory
+    if (levelCounter == -1){
+        generalSound.stop();
+        //this->son = new QSound("/Users/alexandremagne/Desktop/Zelda2/Musiques/intro.wav");
+        generalSound.play();
+        //this->model->getNiveau()->chargerNiveau(); // on charge la carte correspondant au niveau
+        //this->view->initialiserScene();
+        //this->view->show();
+    }
 }
 
-
-//}
 
 void Controller::afficherScene(){
 
     this->viewGame->displayMap();//affiche la carte
-
     this->viewGame->displayLink(this->getModel()->getLink());//affiche link
-
     //this->viewGame->afficherItemsMap(this->model->getNiveau()->getMapItems());
-
     //checkCollisionItemsWithZelda();
-
     //mooveEnnemis();//fait bouger et affiche les ennemeis
-
     //faireAvancerArrow();//fais avancer la fleche et supprime l'ennemi en cas de collision
-
     linkCircularAttack();//pour faire link attaque circulaire
-
 
     if (this->model->getLink()->getLife() > 0)
         timer->start(20);
@@ -119,7 +103,7 @@ void Controller::afficherScene(){
 //    }}
 //}
 
-//pour checker la collision de zelda avec les ennemis
+////pour checker la collision de zelda avec les ennemis
 //void Controller::checkCollisionEnnemis(Ennemis *ennemis)
 //{
 //    //check avec zelda et le monstre et retire des PV à zelda
@@ -131,20 +115,19 @@ void Controller::afficherScene(){
 
 //                if(ennemis->getType_of_monstre()=="zelda"){
 //                   ennemis->setDirection("rencontre");
-//                   this->model->getLink()->getEnnemi()->deplacementEnnemis(ennemis);
+//                   //this->model->getLink()->getEnnemi()->deplacementEnnemis(ennemis);
 //                }
 
 //                else{
-//                    QSound::play("/Users/alexandremagne/Desktop/Zelda2/Musiques/LOZ/LOZ_Hurt.wav");
+//                    gameSound.setMedia(QUrl("un son de blessure"));
+//                    gameSound.play();
 //                    this->model->getLink()->setLife(this->model->getLink()->getLife() - 1);
-//                    this->model->getLink()->setInvincibilité(1);
 //                    if(ennemis->getType_of_monstre() == "boule_de_feu_" ) {
 //                        this->collisionZeldaBouleDeFeu();
 //                    }
 //                    if(ennemis->getType_of_monstre() == "lambeau_boss_niveau_2_"){
 //                        this->collisionZeldaLambeau();
 //                    }
-//                    this->model->getLink()->setTilePosition(this->model->getLink()->getDirection());
 //                }
 
 //            }
@@ -692,13 +675,15 @@ void Controller::pressKey(QString key)
     {
         if (key == "enter" && levelCounter == 0)
         {
-            this->son.stop();
+            this->generalSound.stop();
             viewMenu->close();
             levelCounter++;
             this->startGame();
         }
-        else if(key == "escape" && levelCounter == 0)
+        else if(key == "enter" && levelCounter == 0)
         {
+            this->generalSound.stop();
+            viewMenu->close();
             this->close();
         }
     }
@@ -724,89 +709,3 @@ void Controller::setModel(Model *value)
     model = value;
 }
 
-void Controller::keyPressEvent(QKeyEvent *event)// je gére quand j'appuie sur une touche
-{
-
-    qDebug() << ("lol");
-
-    switch ( event->key())
-    {
-    case Qt::Key_Enter:
-    {
-        pressKey("enter");
-        break;
-    }
-    case Qt::Key_Escape:
-    {
-        pressKey("escape");
-        break;
-    }
-    case Qt::Key_Right:
-    {
-        pressKey("right");
-        break;
-    }
-    case Qt::Key_D:
-    {
-        pressKey("right");
-        break;
-    }
-    case Qt::Key_Left:
-    {
-        pressKey("left");
-        break;
-    }
-    case Qt::Key_A:
-    {
-        pressKey("left");
-        break;
-    }
-    case Qt::Key_Down:
-    {
-        pressKey("down");
-        break;
-    }
-    case Qt::Key_S:
-    {
-        pressKey("down");
-        break;
-    }
-    case Qt::Key_Up:
-    {
-        pressKey("up");
-        break;
-    }
-    case Qt::Key_W:
-    {
-        pressKey("up");
-        break;
-    }
-    case Qt::Key_H:
-    {
-        if(event->isAutoRepeat())
-            break;
-        else {
-            pressKey("h");
-            break;
-        }
-    }
-    case Qt::Key_J:
-    {
-        if(event->isAutoRepeat())
-            break;
-        else {
-            pressKey("j");
-            break;
-        }
-    }
-    case Qt::Key_K:
-    {
-        if(event->isAutoRepeat())
-            break;
-        else {
-            pressKey("k");
-            break;
-        }
-    }
-    }
-}

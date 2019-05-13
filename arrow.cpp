@@ -96,8 +96,3 @@ void Arrow::move_down()
     if(arrow_life_timer == 7)
         delete this;
 }
-
-//Arrow::~Arrow()
-//{
-//    delete this;
-//}

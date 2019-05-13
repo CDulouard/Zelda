@@ -9,7 +9,7 @@ class Link:public QObject,public Character
 public:
     Link();
 
-    int arrowCounter();//pour savoir le nombre de fleche de zelda
+    int arrowCounter();
 
     QString getlastMove();
     void setlastMove(QString lastMove);

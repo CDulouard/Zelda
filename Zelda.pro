@@ -28,7 +28,6 @@ CONFIG += c++11
 SOURCES += \
     controller.cpp \
     ennemis.cpp \
-    loot_heal.cpp \
         main.cpp \
     arrow.cpp \
     menu.cpp \
@@ -44,7 +43,6 @@ HEADERS += \
     arrow.h \
     controller.h \
     ennemis.h \
-    loot_heal.h \
     menu.h \
     link.h \
     mainwindow.h \
