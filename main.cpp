@@ -1,9 +1,12 @@
 #include "model.h"
+#include "mainwindow.h"
+#include "menu.h"
 #include "controller.h"
 
 #include <QApplication>
 #include <QSplashScreen>
 #include <QTimer>
+#include <QDebug>
 
 
 void delay(int i) //wait i ms
@@ -25,12 +28,13 @@ int main(int argc, char *argv[])
     delay(2000);
     splash->close();
 
+    Model mo;
     menu me;
     MainWindow ma;
-    Model mo;
 
-    Controller controller(&me,&ma,&mo);
-    controller.startGame();
+    Controller *controller = new Controller(&me,&ma,&mo);
+    controller->startGame();
+    qDebug() << &controller;
 
     return a.exec();
 }

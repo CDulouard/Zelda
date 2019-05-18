@@ -1,4 +1,7 @@
 #include "controller.h"
+#include "mainwindow.h"
+#include "menu.h"
+#include "model.h"
 
 Controller::Controller(menu *menu, MainWindow *gameWindow, Model *model)
 {
@@ -7,7 +10,7 @@ Controller::Controller(menu *menu, MainWindow *gameWindow, Model *model)
     this->viewGame = gameWindow; // on fait le lien avec la view
     this->timer =  new QTimer();
     timer->connect(timer, SIGNAL(timeout()), this, SLOT(afficherScene()));
-    this->levelCounter = 1; // normalement initialiser à 0 mais là on test la game d`abord
+    this->levelCounter = 0; // normalement initialiser à 0 mais là on test la game d`abord
 }
 
 void Controller::startGame()
@@ -675,6 +678,7 @@ void Controller::pressKey(QString key)
     {
         if (key == "enter" && levelCounter == 0)
         {
+            qDebug() << "enter2";
             this->generalSound.stop();
             viewMenu->close();
             levelCounter++;

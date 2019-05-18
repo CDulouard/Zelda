@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "controller.h"
+
 #include <vector>
 #include <QKeyEvent>
 #include <QDebug>
@@ -100,62 +102,52 @@ void MainWindow::keyPressEvent(QKeyEvent *event)// je gére quand j'appuie sur u
     {
     case Qt::Key_Enter:
     {
-        qDebug() << "enter";
-        //pressKey("enter");
+        this->controller->pressKey("enter");
         break;
     }
     case Qt::Key_Escape:
     {
-        qDebug() << "escape";
-        //pressKey("escape");
+        this->controller->pressKey("escape");
         break;
     }
     case Qt::Key_Right:
     {
-        qDebug() << "right";
-        //pressKey("right");
+        this->controller->pressKey("right");
         break;
     }
     case Qt::Key_D:
     {
-        qDebug() << "right";
-        //pressKey("right");
+        this->controller->pressKey("right");
         break;
     }
     case Qt::Key_Left:
     {
-        qDebug() << "left";
-        //pressKey("left");
+        this->controller->pressKey("left");
         break;
     }
     case Qt::Key_A:
     {
-        qDebug() << "left";
-        //pressKey("left");
+        this->controller->pressKey("left");
         break;
     }
     case Qt::Key_Down:
     {
-        qDebug() << "down";
-        //pressKey("down");
+        this->controller->pressKey("down");
         break;
     }
     case Qt::Key_S:
     {
-        qDebug() << "down";
-        //pressKey("down");
+        this->controller->pressKey("down");
         break;
     }
     case Qt::Key_Up:
     {
-        qDebug() << "up";
-        //pressKey("up");
+        this->controller->pressKey("up");
         break;
     }
     case Qt::Key_W:
     {
-        qDebug() << "up";
-        //pressKey("up");
+        this->controller->pressKey("up");
         break;
     }
     case Qt::Key_H:
@@ -163,8 +155,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)// je gére quand j'appuie sur u
         if(event->isAutoRepeat())
             break;
         else {
-            qDebug() << "h";
-            //pressKey("h");
+            this->controller->pressKey("h");
             break;
         }
     }
@@ -173,8 +164,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)// je gére quand j'appuie sur u
         if(event->isAutoRepeat())
             break;
         else {
-            qDebug() << "j";
-            //pressKey("j");
+            this->controller->pressKey("j");
             break;
         }
     }
@@ -183,8 +173,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)// je gére quand j'appuie sur u
         if(event->isAutoRepeat())
             break;
         else {
-            qDebug() << "k";
-            //pressKey("k");
+            this->controller->pressKey("k");
             break;
         }
     }

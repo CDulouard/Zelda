@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <controller.h>
 
 #include <QMainWindow>
 #include <link.h>
@@ -28,7 +29,7 @@ public:
 private:
     Ui::MainWindow *ui;
 
-    //Controller *controller;
+    Controller *controller;
 
     QGraphicsScene *mapScene;   // scene ou carte
     Scene *cameraView;          // camera

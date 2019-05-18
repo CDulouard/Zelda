@@ -1,12 +1,11 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include "menu.h"
-#include "mainwindow.h"
-#include "model.h"
 #include "ennemis.h"
 
 #include <QObject>
+#include <QWidget>
+#include <QMediaPlayer>
 #include <QTimer>
 #include <QTime>
 #include <QCoreApplication>
@@ -14,18 +13,14 @@
 #include <QDebug>
 
 
-//#include <QWidget>
-//#include <QMediaPlayer>
-//#include <QVBoxLayout>
-
 class Map;
 class Controller : public QWidget
 {
     Q_OBJECT
 
 public:
-    Controller(menu *menu, MainWindow *gameWindow, Model *model);//constructeur
-    Ui::menu *ui;
+    Controller(class menu *menu, class MainWindow *gameWindow, class Model *model);//constructeur
+    //Ui::menu *ui;
 
     void startGame();
     void pressKey(QString key);

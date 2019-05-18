@@ -42,13 +42,13 @@ void menu::keyPressEvent(QKeyEvent *event)
     {
     case Qt::Key_Escape:
     {
-        qDebug() << ("escape");
         this->close();
         break;
     }
     case Qt::Key_P:
     {
-        qDebug() << ("enter");
+        qDebug() << &controller;
+        this->controller->pressKey("enter");
         break;
     }
     }
