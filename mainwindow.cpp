@@ -5,9 +5,8 @@
 
 #include <vector>
 #include <QKeyEvent>
-#include <QDebug>
 
-/*  Globals variables    */
+extern Controller *pointeurControlleur;
 static bool keepPlaying = true;
 static double DELTATIME;
 
@@ -17,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     this->mapScene = new QGraphicsScene();
     this->cameraView = new Scene(); // "la camera mobile"
+
 }
 
 MainWindow::~MainWindow()
@@ -91,7 +91,6 @@ void MainWindow::displayLink(Link *link)
 {
     QGraphicsPixmapItem *apparencePersonnage =  new QGraphicsPixmapItem(link->getTile());
     apparencePersonnage->setPos(link->getPosX(),link->getPosY());
-    //apparencePersonnage->setZValue(100);//pour etre sur
     this->mapScene->addItem(apparencePersonnage);
 }
 
@@ -102,52 +101,52 @@ void MainWindow::keyPressEvent(QKeyEvent *event)// je gére quand j'appuie sur u
     {
     case Qt::Key_Enter:
     {
-        this->controller->pressKey("enter");
+        pointeurControlleur->pressKey("enter");
         break;
     }
     case Qt::Key_Escape:
     {
-        this->controller->pressKey("escape");
+        pointeurControlleur->pressKey("escape");
         break;
     }
     case Qt::Key_Right:
     {
-        this->controller->pressKey("right");
+        pointeurControlleur->pressKey("right");
         break;
     }
     case Qt::Key_D:
     {
-        this->controller->pressKey("right");
+        pointeurControlleur->pressKey("right");
         break;
     }
     case Qt::Key_Left:
     {
-        this->controller->pressKey("left");
+        pointeurControlleur->pressKey("left");
         break;
     }
     case Qt::Key_A:
     {
-        this->controller->pressKey("left");
+        pointeurControlleur->pressKey("left");
         break;
     }
     case Qt::Key_Down:
     {
-        this->controller->pressKey("down");
+        pointeurControlleur->pressKey("down");
         break;
     }
     case Qt::Key_S:
     {
-        this->controller->pressKey("down");
+        pointeurControlleur->pressKey("down");
         break;
     }
     case Qt::Key_Up:
     {
-        this->controller->pressKey("up");
+        pointeurControlleur->pressKey("up");
         break;
     }
     case Qt::Key_W:
     {
-        this->controller->pressKey("up");
+        pointeurControlleur->pressKey("up");
         break;
     }
     case Qt::Key_H:
@@ -155,7 +154,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)// je gére quand j'appuie sur u
         if(event->isAutoRepeat())
             break;
         else {
-            this->controller->pressKey("h");
+            pointeurControlleur->pressKey("h");
             break;
         }
     }
@@ -164,7 +163,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)// je gére quand j'appuie sur u
         if(event->isAutoRepeat())
             break;
         else {
-            this->controller->pressKey("j");
+            pointeurControlleur->pressKey("j");
             break;
         }
     }
@@ -173,7 +172,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)// je gére quand j'appuie sur u
         if(event->isAutoRepeat())
             break;
         else {
-            this->controller->pressKey("k");
+            pointeurControlleur->pressKey("k");
             break;
         }
     }

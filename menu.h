@@ -1,8 +1,6 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include "controller.h"
-
 #include <QMainWindow>
 #include<QMediaPlayer>
 
@@ -20,20 +18,8 @@ public:
 
     void keyPressEvent(QKeyEvent *event);
 
-    int getLevelCounter() const;
-    void setLevelCounter(int newCounter);
-
-    int getPlayButtonPressedOrNot() const;
-    void setPlayButtonPressedOrNot(int newValue);
-
-public slots:
-    int playButtonPressed();
-
-protected:
+private:
     Ui::menu *ui;
-    Controller *controller;
-    QMediaPlayer menuMusic;
-    int playButtonPressedOrNot;
 };
 
 #endif // MENU_H

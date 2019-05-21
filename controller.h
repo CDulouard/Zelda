@@ -1,7 +1,6 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include "ennemis.h"
 
 #include <QObject>
 #include <QWidget>
@@ -10,8 +9,6 @@
 #include <QTime>
 #include <QCoreApplication>
 
-#include <QDebug>
-
 
 class Map;
 class Controller : public QWidget
@@ -19,8 +16,8 @@ class Controller : public QWidget
     Q_OBJECT
 
 public:
-    Controller(class menu *menu, class MainWindow *gameWindow, class Model *model);//constructeur
-    //Ui::menu *ui;
+    Controller(class menu *menu, class MainWindow *gameWindow, class Model *model);
+    ~Controller();
 
     void startGame();
     void pressKey(QString key);
@@ -44,7 +41,7 @@ protected:
     void game_finished_procedure();
     void linkCircularAttack();//toutes les 2 seconde le coup du hammer
 /*          Ennemis et Zelda        */
-    void toucheEnnemisQuandZeldaAttaque(Ennemis *ennemi);
+    void toucheEnnemisQuandZeldaAttaque(class Ennemis *ennemi);
     void gestionApparitionExplosionToucheEnnemi();//si ya une explosion ca gere l'animation de l'explosion
     void checkCollisionEnnemis(Ennemis *ennemis);//collision zelda ennemi
     void checkCollisionDecortWithEnnemi(Ennemis *ennemis);
@@ -71,8 +68,7 @@ private:
     Model *model;
 
     QTimer *timer;//raffraichissmeent de la scene
-    QMediaPlayer generalSound;
-    QMediaPlayer gameSound;
+    QMediaPlayer sound;
 
     int levelCounter;
 

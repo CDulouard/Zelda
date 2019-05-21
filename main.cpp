@@ -8,6 +8,8 @@
 #include <QTimer>
 #include <QDebug>
 
+Controller *pointeurControlleur;
+
 
 void delay(int i) //wait i ms
 {
@@ -32,9 +34,9 @@ int main(int argc, char *argv[])
     menu me;
     MainWindow ma;
 
-    Controller *controller = new Controller(&me,&ma,&mo);
-    controller->startGame();
-    qDebug() << &controller;
+    Controller controller(&me,&ma,&mo);
+    pointeurControlleur = &controller;
+    controller.startGame();
 
     return a.exec();
 }

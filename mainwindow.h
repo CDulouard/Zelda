@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <controller.h>
+#include <QMediaPlayer>
 
 #include <QMainWindow>
 #include <link.h>
@@ -29,11 +29,9 @@ public:
 private:
     Ui::MainWindow *ui;
 
-    Controller *controller;
-
+    class Controller *controller;
     QGraphicsScene *mapScene;   // scene ou carte
     Scene *cameraView;          // camera
-
     std::vector<QString> currentMap;
     std::map<QString, int> cellTypes;
 

@@ -2,6 +2,7 @@
 #include "mainwindow.h"
 #include "menu.h"
 #include "model.h"
+#include "ennemis.h"
 
 Controller::Controller(menu *menu, MainWindow *gameWindow, Model *model)
 {
@@ -13,19 +14,27 @@ Controller::Controller(menu *menu, MainWindow *gameWindow, Model *model)
     this->levelCounter = 0; // normalement initialiser à 0 mais là on test la game d`abord
 }
 
+Controller::~Controller()
+{
+    delete this->model;
+    delete this->viewMenu;
+    delete this->viewGame;
+}
+
 void Controller::startGame()
 {
     // Lauching
     if (levelCounter == 0){
-        viewMenu->show();
-        generalSound.setMedia(QUrl("qrc:/music/Sounds/menu_music.mp3"));
-        generalSound.play(); // ne marche pas
+        sound.setMedia(QUrl("qrc:/music/Sounds/menu_music.mp3"));
+        sound.play();
+        this->viewMenu->show();
     }
 
     //current game
     if (levelCounter == 1){
-        generalSound.setMedia(QUrl("qrc:/music/Sounds/game_music.mp3"));
-        generalSound.play(); // ne marche pas
+
+        sound.setMedia(QUrl("qrc:/music/Sounds/game_music.mp3"));
+        sound.play(); // ne marche pas
 
         //on recentre link en haut a gauche a chaque niveau
         this->model->getLink()->setPosX(50);
@@ -37,9 +46,9 @@ void Controller::startGame()
 
     // Link die
     if (levelCounter == -2){
-        generalSound.stop();
+        sound.stop();
         //this->son = new QSound("/Users/alexandremagne/Desktop/Zelda2/Musiques/LOZ/LOZ_Die.wav");
-        generalSound.play();
+        sound.play();
         //this->model->getNiveau()->chargerNiveau(); // on charge la carte correspondant au niveau
         //this->view->initialiserScene();
         //this->view->show();
@@ -47,9 +56,9 @@ void Controller::startGame()
 
     // victory
     if (levelCounter == -1){
-        generalSound.stop();
+        sound.stop();
         //this->son = new QSound("/Users/alexandremagne/Desktop/Zelda2/Musiques/intro.wav");
-        generalSound.play();
+        sound.play();
         //this->model->getNiveau()->chargerNiveau(); // on charge la carte correspondant au niveau
         //this->view->initialiserScene();
         //this->view->show();
@@ -463,8 +472,8 @@ void Controller::game_finished_procedure()
 
 void Controller::pressKey(QString key)
 {
-//    if(levelCounter == 1)
-//    {
+    if(levelCounter == 1)
+    {
 //        if(key=="right")
 //        {
 //            //On vérifie la COLLISION
@@ -673,20 +682,25 @@ void Controller::pressKey(QString key)
 //                this->model->getLink()->setTilePosition(this->model->getLink()->getDirection());//on affiche link
 //            }
 //        }
-//    }
-//    else
+         if(key == "escape")
+        {
+            this->sound.stop();
+            viewGame->close();
+            this->close();
+        }
+    }
+    else
     {
         if (key == "enter" && levelCounter == 0)
         {
-            qDebug() << "enter2";
-            this->generalSound.stop();
+            this->sound.stop();
             viewMenu->close();
             levelCounter++;
             this->startGame();
         }
-        else if(key == "enter" && levelCounter == 0)
+        else if(key == "escape" && levelCounter == 0)
         {
-            this->generalSound.stop();
+            this->sound.stop();
             viewMenu->close();
             this->close();
         }

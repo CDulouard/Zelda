@@ -32,11 +32,9 @@ SOURCES += \
     arrow.cpp \
     menu.cpp \
     link.cpp \
-    ReadMap.cpp \
     mainwindow.cpp \
     model.cpp \
     scene.cpp \
-    debug.cpp \
     character.cpp
 
 HEADERS += \
@@ -48,7 +46,6 @@ HEADERS += \
     mainwindow.h \
     model.h \
     scene.h \
-    debug.h \
     character.h
 
 FORMS += \
