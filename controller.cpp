@@ -4,13 +4,15 @@
 #include "model.h"
 #include "ennemis.h"
 
+#include <QDebug>
+
 Controller::Controller(menu *menu, MainWindow *gameWindow, Model *model)
 {
     this->model = model; // on fait le lien avec le model
     this->viewMenu = menu; // on fait le lien avec la view
     this->viewGame = gameWindow; // on fait le lien avec la view
     this->timer =  new QTimer();
-    timer->connect(timer, SIGNAL(timeout()), this, SLOT(afficherScene()));
+    timer->connect(timer, SIGNAL(timeout()), this, SLOT(displayScene()));
     this->levelCounter = 0; // normalement initialiser à 0 mais là on test la game d`abord
 }
 
@@ -40,7 +42,7 @@ void Controller::startGame()
         this->model->getLink()->setPosX(50);
         this->model->getLink()->setPosY(50);
         // charger niveau
-        afficherScene();
+        displayScene();
         this->viewGame->show();
     }
 
@@ -66,7 +68,7 @@ void Controller::startGame()
 }
 
 
-void Controller::afficherScene(){
+void Controller::displayScene(){
 
     this->viewGame->displayMap();//affiche la carte
     this->viewGame->displayLink(this->getModel()->getLink());//affiche link
@@ -77,12 +79,12 @@ void Controller::afficherScene(){
     linkCircularAttack();//pour faire link attaque circulaire
 
     if (this->model->getLink()->getLife() > 0)
-        timer->start(20);
+        timer->start(1);
     else
         game_over_procedure();
 }
 
-//pour faire bouger les ennemis et les afficher
+////pour faire bouger les ennemis et les afficher
 //void Controller::mooveEnnemis(){
 //    //pour afficher les ennemis et le boules de feu
 //    if (this->model->getNiveau()->getMonstres().size() != 0){
@@ -145,7 +147,7 @@ void Controller::afficherScene(){
 //            }
 //}
 
-//void Controller::checkCollisionDecortWithEnnemi(Ennemis *ennemis)
+////void Controller::checkCollisionDecortWithEnnemi(Ennemis *ennemis)
 //{
 //    if(ennemis->getDirection()=="right"){
 //            // pour la colision à droite
@@ -207,7 +209,8 @@ void Controller::afficherScene(){
 //    }
 //}
 
-//void Controller::lootAleatoireDesEnnemis(Ennemis *ennemis)
+
+////void Controller::lootAleatoireDesEnnemis(Ennemis *ennemis)
 //{
 //    if(ennemis->getType_of_monstre() == "final_boss_"){
 //        //si boss final on laisse une clef par terre
@@ -220,7 +223,8 @@ void Controller::afficherScene(){
 //    }
 //}
 
-//faire bouger les flèches
+
+////faire bouger les flèches
 //void Controller::faireAvancerArrow()
 //{
 //    if(this->model->getNiveau()->getMapItems().size()>0){
@@ -237,7 +241,7 @@ void Controller::afficherScene(){
 
 
 
-//voir si les fleches touche les ennemis
+////voir si les fleches touche les ennemis
 //void Controller::checkCollisionArrowsWithEnnemis()
 //{
 //    if (this->model->getNiveau()->getMonstres().size() != 0 && this->model->getNiveau()->getMapItems().size() !=0){
@@ -268,7 +272,7 @@ void Controller::afficherScene(){
 //    }
 //}
 
-//attquer avec l'épée
+////attquer avec l'épée
 //void Controller::attack_function(QString direction){
 // if (this->model->getNiveau()->getMonstres().size() != 0){
 
@@ -292,7 +296,7 @@ void Controller::afficherScene(){
 // }
 //}
 
-//void Controller::attaque_hammer_function()
+////void Controller::attaque_hammer_function()
 //{
 //  {
 //        this->model->getLink()->setZeldaRechargeAttaqueHammerOuPas(0);//pour remettre le compteur
@@ -474,150 +478,65 @@ void Controller::pressKey(QString key)
 {
     if(levelCounter == 1)
     {
-//        if(key=="right")
-//        {
+        if(key=="right")
+        {
+            this->model->getLink()->setTile("right");
 //            //On vérifie la COLLISION
 //            if ((this->viewGame->getMapScene()->itemAt(this->model->getLink()->getPosX()+this->model->getLink()->getTile().width(), this->model->getLink()->getPosY()+this->model->getLink()->getTile().height()-10, QTransform())->zValue() == 5)||(this->view->getMapScene()->itemAt(this->model->getLink()->getPosX()+this->model->getLink()->getTile().width(), this->model->getLink()->getPosY(),QTransform())->zValue() == 5))
 //            {
 //                //si il ya collision avec un objet on fait rien
 //            }
-//            else if((this->viewGame->getMapScene()->itemAt(this->model->getLink()->getPosX(), this->model->getLink()->getPosY(), QTransform())->zValue() == 1)){
-//                //pour nager
-//                this->zelda_va_dans_leau("right");
+//            else {
+                this->model->getLink()->setPosX(this->model->getLink()->getPosX() + this->model->getLink()->getSpeed());
+                this->viewGame->getCameraView()->setPosX(this->model->getLink()->getSpeed());
 //            }
-//            else if ((this->viewGame->getMapScene()->itemAt(this->model->getLink()->getPosX()+30, this->model->getLink()->getPosY()+20, QTransform())->zValue() == 3)||(this->view->getMapScene()->itemAt(this->model->getLink()->getPosX()+30, this->model->getLink()->getPosY(),QTransform())->zValue() == 3))
-//            {
-//                //si il ya collision avec les flammes de l'enfer !!!!!!
 
-//                if (this->model->getLink()->getInvincibilité() == 0){
-//                    QSound::play("/Users/alexandremagne/Desktop/zelda2/Musiques/LOZ/LOZ_Scream_Burning.wav");
-//                    this->model->getLink()->setLifeStatue(this->model->getLink()->getLifeStatue() - 2); // ATTENTION ZELDA PERD 2 VIES
-//                    this->model->getLink()->setInvincibilité(1);
-//                    this->model->getLink()->setIsBurningOrNot(1);
-//                    this->model->getLink()->getMyMonture()->setIsRidingOrNot(0);
-//                    this->model->getLink()->setTilePosition(this->model->getLink()->getDirection());
-//                }
-//                this->model->getLink()->setIsSwimmingOrNot(0);//on indique que zelda ne nage nage pas
-//                this->model->getLink()->setPosX(this->model->getLink()->getSpeed());
-//                if ((this->model->getLink()->getPosX() - this->viewGame->getCameraView()->getPosX())>240)
-//                    this->view->getCameraView()->setPosX(this->model->getLink()->getSpeed());
-//            }else {
-//                this->model->getLink()->setIsSwimmingOrNot(0);//on indique que zelda ne nage nage pas
-//                this->model->getLink()->setPosX(this->model->getLink()->getSpeed());
-//                if ((this->model->getLink()->getPosX() - this->viewGame->getCameraView()->getPosX())>240)
-//                    this->view->getCameraView()->setPosX(this->model->getLink()->getSpeed());
-//            }
-//        }
-//        else if(key=="left")
-//        {
-//            if(zeldaAttaqueOuPas == 0)this->model->getLink()->setTilePosition("left");
+
+        }
+
+        else if(key=="left")
+        {
+            this->model->getLink()->setTile("left");
 //            if ((this->viewGame->getMapScene()->itemAt(this->model->getLink()->getPosX(),this->model->getLink()->getPosY(),QTransform())->zValue() == 5)||(this->view->getMapScene()->itemAt(this->model->getLink()->getPosX()-10,this->model->getLink()->getPosY()+this->model->getLink()->getTile().height()-10,QTransform())->zValue() == 5))
 //            {
 //                //si il ya collision avec un objet on fait rien
-//            }else if((this->viewGame->getMapScene()->itemAt(this->model->getLink()->getPosX(),this->model->getLink()->getPosY(),QTransform())->zValue() == 1))
-//            {
-//                //pour nager
-//                this->zelda_va_dans_leau("left");
-//            }else if ((this->viewGame->getMapScene()->itemAt(this->model->getLink()->getPosX(),this->model->getLink()->getPosY(),QTransform())->zValue() == 3)||(this->view->getMapScene()->itemAt(this->model->getLink()->getPosX()-10,this->model->getLink()->getPosY()+20,QTransform())->zValue() == 3))
-//            {
-//                //si il ya collision avec les flammes de l'enfer !!!!!!
-
-//                if (this->model->getLink()->getInvincibilité() == 0){
-//                    QSound::play("/Users/alexandremagne/Desktop/zelda2/Musiques/LOZ/LOZ_Scream_Burning.wav");
-//                    this->model->getLink()->setLifeStatue(this->model->getLink()->getLife() - 2); // ATTENTION ZELDA PERD 2 VIES
-//                    this->model->getLink()->setInvincibilité(1);
-//                    this->model->getLink()->setIsBurningOrNot(1);
-//                    this->model->getLink()->getMyMonture()->setIsRidingOrNot(0);
-//                    this->model->getLink()->setTilePosition(this->model->getLink()->getDirection());
-//                }
-
-//                this->model->getLink()->setIsSwimmingOrNot(0);//on indique que zelda ne nage nage pas
-//                this->model->getLink()->setPosX(-this->model->getLink()->getSpeed());
-//                if ((this->model->getLink()->getPosX() - this->viewGame->getCameraView()->getPosX())<260)
-//                    this->viewGame->getCameraView()->setPosX(-this->model->getLink()->getSpeed());
 //            }
 //            else{
-//                this->model->getLink()->setIsSwimmingOrNot(0);//on indique que zelda ne nage nage pas
-//                this->model->getLink()->setPosX(-this->model->getLink()->getSpeed());
-//                if ((this->model->getLink()->getPosX() - this->viewGame->getCameraView()->getPosX())<260)
-//                    this->viewGame->getCameraView()->setPosX(-this->model->getLink()->getSpeed());
+                this->model->getLink()->setPosX(this->model->getLink()->getPosX() - this->model->getLink()->getSpeed());
+                this->viewGame->getCameraView()->setPosX(this->model->getLink()->getPosX() - this->model->getLink()->getSpeed());
 //            }
 
-//        }
-//        else if(key == "down")
-//        {
-//            if(zeldaAttaqueOuPas == 0)this->model->getLink()->setTilePosition("down");
+        }
+
+        else if(key == "down")
+        {
+            this->model->getLink()->setTile("down");
 //            if ((this->viewGame->getMapScene()->itemAt(this->model->getZegetLinklda()->getPosX()+this->model->getLink()->getTile().width()/1.5,this->model->getLink()->getPosY()+this->model->getLink()->getTile().height(),QTransform())->zValue() == 5)||(this->view->getMapScene()->itemAt(this->model->getLink()->getPosX(),this->model->getLink()->getPosY()+this->model->getLink()->getTile().height(),QTransform())->zValue() == 5)){
 //                //si il ya collision avec un objet on fait rien
-//            }else if ((this->viewGame->getMapScene()->itemAt(this->model->getLink()->getPosX(),this->model->getLink()->getPosY(),QTransform())->zValue() == 1))
-//            {
-
-//                //pour nager
-//                this->zelda_va_dans_leau("down");
-
-//            }
-//            else if((this->viewGame->getMapScene()->itemAt(this->model->getLink()->getPosX()+20,this->model->getLink()->getPosY()+30,QTransform())->zValue() == 3)||(this->view->getMapScene()->itemAt(this->model->getLink()->getPosX(),this->model->getLink()->getPosY()+30,QTransform())->zValue() == 3))
-//            {
-//                //si il ya collision avec les flammes de l'enfer !!!!!!
-
-//                if (this->model->getLink()->getInvincibilité() == 0){
-//                    QSound::play("/Users/alexandremagne/Desktop/zelda2/Musiques/LOZ/LOZ_Scream_Burning.wav");
-//                    this->model->getLink()->setLifeStatue(this->model->getLink()->getLifeStatue() - 2); // ATTENTION ZELDA PERD 2 VIES
-//                    this->model->getLink()->setInvincibilité(1);
-//                    this->model->getLink()->setIsBurningOrNot(1);
-//                    this->model->getLink()->getMyMonture()->setIsRidingOrNot(0);
-//                    this->model->getLink()->setTilePosition(this->model->getLink()->getDirection());
-//                }
-
-//                this->model->getLink()->setIsSwimmingOrNot(0);//on indique que zelda ne nage nage pas
-//                this->model->getLink()->setPosY(this->model->getLink()->getSpeed());
-//                if ((this->model->getLink()->getPosY() - this->viewGame->getCameraView()->getPosY())>240)
-//                    this->viewGame->getCameraView()->setPosY(this->model->getLink()->getSpeed());
-
 //            }
 //            else{
-//                this->model->getLink()->setIsSwimmingOrNot(0);//on indique que zelda ne nage nage pas
-//                this->model->getLink()->setPosY(this->model->getLink()->getSpeed());
-//                if ((this->model->getLink()->getPosY() - this->viewGame->getCameraView()->getPosY())>240)
-//                    this->viewGame->getCameraView()->setPosY(this->model->getLink()->getSpeed());
+                this->model->getLink()->setPosY(this->model->getLink()->getPosY() + this->model->getLink()->getSpeed());
+                this->viewGame->getCameraView()->setPosY(this->model->getLink()->getPosY() + this->model->getLink()->getSpeed());
 //            }
-//        }
-//        else if(key == "up")
-//        {
-//            if(zeldaAttaqueOuPas == 0) this->model->getLink()->setTilePosition("up");
+
+        }
+
+
+        else if(key == "up")
+        {
+            this->model->getLink()->setTile("up");
 //            if ((this->viewGame->getMapScene()->itemAt(this->model->getLink()->getPosX()+this->model->getLink()->getTile().width()/1.5,this->model->getLink()->getPosY()-10,QTransform())->zValue() == 5)||(this->view->getMapScene()->itemAt(this->model->getLink()->getPosX(),this->model->getLink()->getPosY()-10,QTransform())->zValue() == 5)){
 //                //si il ya collision avec un objet on fait rien
-//            }else if ((this->viewGame->getMapScene()->itemAt(this->model->getLink()->getPosX(),this->model->getLink()->getPosY(),QTransform())->zValue() == 1))
-//            {
-//                //zelda nage
-//                this->zelda_va_dans_leau("up");
-
-//            }else if ((this->viewGame->getMapScene()->itemAt(this->model->getLink()->getPosX()+20,this->model->getLink()->getPosY()-10,QTransform())->zValue() == 3)||(this->view->getMapScene()->itemAt(this->model->getLink()->getPosX(),this->model->getLink()->getPosY()-10,QTransform())->zValue() == 3))
-//            {
-//                //si il ya collision avec les flammes de l'enfer !!!!!!
-
-//                if (this->model->getLink()->getInvincibilité() == 0){
-//                    QSound::play("/Users/alexandremagne/Desktop/zelda2/Musiques/LOZ/LOZ_Scream_Burning.wav");
-//                    this->model->getLink()->setLifeStatue(this->model->getLink()->getLifeStatue() - 2); // ATTENTION ZELDA PERD 2 VIES
-//                    this->model->getLink()->setInvincibilité(1);
-//                    this->model->getLink()->setIsBurningOrNot(1);
-//                    this->model->getLink()->getMyMonture()->setIsRidingOrNot(0);
-//                    this->model->getLink()->setTilePosition(this->model->getLink()->getDirection());
-//                }
-
-//                this->model->getLink()->setIsSwimmingOrNot(0);//on indique que zelda ne nage nage pas
-//                this->model->getLink()->setPosY(-this->model->getLink()->getSpeed());
-//                if ((this->model->getLink()->getPosY() - this->view->getCameraView()->getPosY())<260)
-//                    this->viewGame->getCameraView()->setPosY(-this->model->getLink()->getSpeed());
 //            }
 //            else
 //            {
-//                this->model->getLink()->setIsSwimmingOrNot(0);//on indique que zelda ne nage nage pas
-//                this->model->getLink()->setPosY(-this->model->getLink()->getSpeed());
-//                if ((this->model->getLink()->getPosY() - this->viewGame->getCameraView()->getPosY())<260)
-//                    this->viewGame->getCameraView()->setPosY(-this->model->getLink()->getSpeed());
+                this->model->getLink()->setPosY(this->model->getLink()->getPosY() - this->model->getLink()->getSpeed());
+                this->viewGame->getCameraView()->setPosY(this->model->getLink()->getPosY() - this->model->getLink()->getSpeed());
 //            }
-//        }
+
+        }
+
+
 //        else if(key=="h")
 //        {
 //            if(this->model->getLink()->getSword()!=NULL){
@@ -682,7 +601,7 @@ void Controller::pressKey(QString key)
 //                this->model->getLink()->setTilePosition(this->model->getLink()->getDirection());//on affiche link
 //            }
 //        }
-         if(key == "escape")
+        else if(key == "escape")
         {
             this->sound.stop();
             viewGame->close();

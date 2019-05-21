@@ -16,6 +16,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     this->mapScene = new QGraphicsScene();
     this->cameraView = new Scene(); // "la camera mobile"
+    this->cameraView->setPosX(0);
+    this->cameraView->setPosY(0);
 
 }
 
@@ -177,6 +179,16 @@ void MainWindow::keyPressEvent(QKeyEvent *event)// je gére quand j'appuie sur u
         }
     }
     }
+}
+
+Scene *MainWindow::getCameraView() const
+{
+    return cameraView;
+}
+
+void MainWindow::setCameraView(Scene *value)
+{
+    cameraView = value;
 }
 
 

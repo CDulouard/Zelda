@@ -57,7 +57,7 @@ protected:
 
 public slots:
     //void mooveEnnemis();
-    void afficherScene();
+    void displayScene();
 
 private:
     //represente la vue, ce que voit l'utilisateur

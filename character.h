@@ -9,24 +9,32 @@ class Character
 {
 public:
     Character();
-    void setPosX(int i);
-    void setPosY(int j);
-    void setLife(int life);
+
     int getPosX();
+    void setPosX(int i);
+
     int getPosY();
+    void setPosY(int j);
+
     float getLife();
+    void setLife(int life);
+
+    int getSpeed() const;
+    void setSpeed(int value);
+
     QPixmap getTile();
+
 
 protected:
     int posX;
     int posY;
     int life;
+    int speed;
 
     QPixmap tile;
     float m_energy;
     float m_power; /*  amount of damages the character deals  */
     double m_range;  /*  max distance of a a hit */   // inutile je pense
-    float m_speed;
 
 };
 

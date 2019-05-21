@@ -20,8 +20,7 @@ public:
     QString getDirection() const;
     void setDirection(const QString &value);
 
-    int getSpeed() const;
-    void setSpeed(int value);
+    void setTile(QString direction);
 
     int getLoadingCircularAttack() const;
     void setLoadingCircularAttack(int value);
@@ -42,7 +41,6 @@ private:
 
     int number;//pour la position de l'image
     QString direction;
-    int speed;
 
     int isAmoradoOrNot;//pour quand zelda touche zelda
     int LoadingCircularAttack;//pour savoir si zelda peut utiliser ou non le marteau (on va dire 10 seconde de recharge)

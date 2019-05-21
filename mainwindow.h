@@ -26,10 +26,12 @@ public:
 
     void keyPressEvent(QKeyEvent *event);
 
+    Scene *getCameraView() const;
+    void setCameraView(Scene *value);
+
 private:
     Ui::MainWindow *ui;
 
-    class Controller *controller;
     QGraphicsScene *mapScene;   // scene ou carte
     Scene *cameraView;          // camera
     std::vector<QString> currentMap;

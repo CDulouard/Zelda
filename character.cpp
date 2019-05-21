@@ -13,7 +13,7 @@ void Character::setPosX(int i)
     else if ((i+this->posX)>1480)
         return;
     else
-        this->posX = i+this->posX;
+        this->posX = i;
 }
 
 void Character::setPosY(int j)
@@ -23,7 +23,7 @@ void Character::setPosY(int j)
     else if ((j+this->posY)>730)
         return;
     else
-        this->posY = j+this->posY;
+        this->posY = j;
 
 }
 
@@ -45,6 +45,16 @@ void Character::setLife(int life)
 float Character::getLife()
 {
     return this->life;
+}
+
+int Character::getSpeed() const
+{
+    return speed;
+}
+
+void Character::setSpeed(int value)
+{
+    speed = value;
 }
 
 QPixmap Character::getTile()
