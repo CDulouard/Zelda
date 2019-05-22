@@ -29,5 +29,9 @@
         <file>Images/Terrain/Grass.jpg</file>
         <file>Images/Terrain/wall.jpg</file>
         <file>Images/Terrain/Water.jpg</file>
+        <file>Images/Terrain/dirt.jpg</file>
+        <file>Images/Terrain/house.jpg</file>
+        <file>Images/Terrain/Sand.jpg</file>
+        <file>Images/Terrain/tree.jpg</file>
     </qresource>
 </RCC>

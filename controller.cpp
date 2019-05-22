@@ -68,7 +68,6 @@ void Controller::startGame()
 void Controller::displayScene(){
 
     this->viewGame->resetView();
-
     this->viewGame->displayMap();
     this->viewGame->getCameraView()->setPosX(this->model->getLink()->getPosX()-250);
     this->viewGame->getCameraView()->setPosY(this->model->getLink()->getPosY()-250);
