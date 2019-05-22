@@ -66,7 +66,11 @@ private:
     MainWindow *viewGame;
 
     QTimer *timer;//raffraichissmeent de la scene
-    QMediaPlayer sound;
+
+    QMediaPlayer generalSound;
+    QMediaPlayer hurtSound;
+    QMediaPlayer swordSound;
+    QMediaPlayer bowSound;
 
     int levelCounter;
 

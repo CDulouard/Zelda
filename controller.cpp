@@ -17,8 +17,10 @@ Controller::Controller(menu *menu, MainWindow *gameWindow, Model *model)
     this->timer =  new QTimer();
     timer->connect(timer, SIGNAL(timeout()), this, SLOT(displayScene()));
     this->levelCounter = 0;
-    this->model->getZelda()->setPosX((this->viewGame->getCurrentMap()[0].size() - 12) * 50);
-    this->model->getZelda()->setPosY(int(this->viewGame->getCurrentMap().size() - 8) * 50);
+
+    this->hurtSound.setMedia(QUrl("qrc:/game/Sounds/link_hurt.mp3"));
+    this->swordSound.setMedia(QUrl("qrc:/game/Sounds/sword_attack.mp3"));
+    this->bowSound.setMedia(QUrl("qrc:/game/Sounds/arrow_shoot.mp3"));
 
 }
 
@@ -38,43 +40,27 @@ void Controller::delay(int i)//attend un nombre de MS
 
 void Controller::startGame()
 {
+    this->model->getZelda()->setPosX((this->viewGame->getCurrentMap()[0].size() - 12) * 50);
+    this->model->getZelda()->setPosY(int(this->viewGame->getCurrentMap().size() - 8) * 50);
+
+
     // Lauching
     if (levelCounter == 0){
         this->viewGame->close();
-        sound.setMedia(QUrl("qrc:/music/Sounds/menu_music.mp3"));
-        sound.play();
+        generalSound.setMedia(QUrl("qrc:/music/Sounds/menu_music.mp3"));
+        generalSound.play();
         this->viewMenu->show();
     }
 
     //current game
     else if (levelCounter == 1){
-
-        sound.setMedia(QUrl("qrc:/music/Sounds/game_music.mp3"));
-        sound.play(); // ne marche pas
+        generalSound.stop();
+        generalSound.setMedia(QUrl("qrc:/music/Sounds/game_music.mp3"));
+        generalSound.play();
 
         // charger niveau
         displayScene();
         this->viewGame->show();
-    }
-
-    // Link die
-    if (levelCounter == -2){
-        sound.stop();
-        //this->son = new QSound("/Users/alexandremagne/Desktop/Zelda2/Musiques/LOZ/LOZ_Die.wav");
-        sound.play();
-        //this->model->getNiveau()->chargerNiveau(); // on charge la carte correspondant au niveau
-        //this->view->initialiserScene();
-        //this->view->show();
-    }
-
-    // victory
-    if (levelCounter == -1){
-        sound.stop();
-        //this->son = new QSound("/Users/alexandremagne/Desktop/Zelda2/Musiques/intro.wav");
-        sound.play();
-        //this->model->getNiveau()->chargerNiveau(); // on charge la carte correspondant au niveau
-        //this->view->initialiserScene();
-        //this->view->show();
     }
 }
 
@@ -162,28 +148,27 @@ void Controller::mooveEnnemis(){
     }
 }
 
-//pour checker la collision de link avec les ennemis
+
 void Controller::checkCollisionEnnemis()
 {
     if (this->viewGame->getEnnemisList().size() != 0)
     {
         for (unsigned long i=0; i<this->viewGame->getEnnemisList().size(); i++){
             if((this->viewGame->getEnnemisList()[i]->getPosX() == this->model->getLink()->getPosX()) && (this->viewGame->getEnnemisList()[i]->getPosY() == this->model->getLink()->getPosY())){
-                //sound.setMedia(QUrl("un son de blessure"));
-                //sound.play();
+                hurtSound.play();
                 this->model->getLink()->setLife(int(this->model->getLink()->getLife()) - 1);
 
                 if(this->model->getLink()->getDirection() == "left")
-                    this->model->getLink()->setPosX(this->model->getLink()->getPosX() +100);
+                    this->model->getLink()->setPosX(this->model->getLink()->getPosX() +50);
 
                 else if(this->model->getLink()->getDirection() == "right")
-                    this->model->getLink()->setPosX(this->model->getLink()->getPosX() -100);
+                    this->model->getLink()->setPosX(this->model->getLink()->getPosX() -50);
 
                 else if(this->model->getLink()->getDirection() == "up")
-                    this->model->getLink()->setPosY(this->model->getLink()->getPosY() +100);
+                    this->model->getLink()->setPosY(this->model->getLink()->getPosY() +50);
 
                 else if(this->model->getLink()->getDirection() == "down")
-                    this->model->getLink()->setPosY(this->model->getLink()->getPosY() -100);
+                    this->model->getLink()->setPosY(this->model->getLink()->getPosY() -50);
 
             }
         }
@@ -616,8 +601,7 @@ void Controller::pressKey(QString key)
         {
             if(this->model->getLink()->getEnergy() > 0)
             {
-                sound.setMedia(QUrl("qrc:/game/Sounds/sword_attack.mp3"));
-                sound.play();
+                swordSound.play();
                 this->model->getLink()->setEnergy(this->model->getLink()->getEnergy()-1);
 
                 if(this->model->getLink()->getDirection() == "left"){
@@ -657,8 +641,7 @@ void Controller::pressKey(QString key)
         else if(key=="j")
         {
             if(this->model->getLink()->getArrowQuantity()>0){
-                sound.setMedia(QUrl("qrc:/game/Sounds/arrow_shoot.mp3"));
-                sound.play();
+                bowSound.play();
                 this->model->getLink()->setArrowQuantity(this->model->getLink()->getArrowQuantity()-1);
                 Arrow *arrow = new Arrow(this->model->getLink()->getDirection());
                 arrow->setPos(x(),y());
@@ -669,7 +652,7 @@ void Controller::pressKey(QString key)
 
         else if(key == "escape")
         {
-            this->sound.stop();
+            this->generalSound.stop();
             viewGame->close();
             this->close();
         }
@@ -678,14 +661,14 @@ void Controller::pressKey(QString key)
     {
         if (key == "enter" && levelCounter == 0)
         {
-            this->sound.stop();
+            this->generalSound.stop();
             viewMenu->close();
             levelCounter++;
             this->startGame();
         }
         else if(key == "escape" && levelCounter == 0)
         {
-            this->sound.stop();
+            this->generalSound.stop();
             viewMenu->close();
             this->close();
         }

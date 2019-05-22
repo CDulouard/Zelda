@@ -11,8 +11,6 @@
 using namespace std;
 
 extern Controller *pointeurControlleur;
-static bool keepPlaying = true;
-static double DELTATIME;
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {

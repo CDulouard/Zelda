@@ -3,6 +3,7 @@
         <file>Sounds/arrow_hit.mp3</file>
         <file>Sounds/arrow_shoot.mp3</file>
         <file>Sounds/sword_attack.mp3</file>
+        <file>Sounds/link_hurt.mp3</file>
     </qresource>
     <qresource prefix="/music">
         <file>Sounds/menu_music.mp3</file>
