@@ -44,7 +44,7 @@ protected:
 
 /*          Ennemis et Link        */
     void toucheEnnemisQuandZeldaAttaque(class Ennemis *ennemi);
-    void checkCollisionEnnemis(Ennemis *ennemis);
+    void checkCollisionEnnemis();
     void checkCollisionDecortWithEnnemi(Ennemis *ennemis);
     void lootAleatoireDesEnnemis(Ennemis *ennemis);
 

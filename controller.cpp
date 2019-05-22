@@ -76,7 +76,7 @@ void Controller::displayScene(){
     this->viewGame->getCameraView()->setPosX(this->model->getLink()->getPosX()-250);
     this->viewGame->getCameraView()->setPosY(this->model->getLink()->getPosY()-250);
     this->viewGame->displayLink(this->getModel()->getLink());
-
+    //this->viewGame->afficherItemsMap(this->model->getNiveau()->getMapItems());
     if (this->viewGame->getMonstres().size() != 0){
         for(unsigned long i = 0; i<this->viewGame->getMonstres().size(); i++)
         {
@@ -85,10 +85,8 @@ void Controller::displayScene(){
     }
 
     mooveEnnemis();
-
-    //this->viewGame->afficherItemsMap(this->model->getNiveau()->getMapItems());
-
-    //checkCollisionItemsWithZelda();
+    checkCollisionEnnemis();
+    qDebug() << this->model->getLink()->getLife();
 
     //faireAvancerArrow(); //fais avancer la fleche et supprime l'ennemi en cas de collision
 
@@ -115,25 +113,25 @@ void Controller::mooveEnnemis(){
                 case (0):
                 {
                     if(this->viewGame->getMonstres()[i]->getPosX() > 50)
-                        this->viewGame->getMonstres()[i]->mooveEnnemis("left");
+                        this->viewGame->getMonstres()[i]->moove("left");
                     break;
                 }
                 case (1):
                 {
                     if(this->viewGame->getMonstres()[i]->getPosX() < this->viewGame->currentMap[0].size()*50 -100)
-                        this->viewGame->getMonstres()[i]->mooveEnnemis("right");
+                        this->viewGame->getMonstres()[i]->moove("right");
                     break;
                 }
                 case (2):
                 {
                     if(this->viewGame->getMonstres()[i]->getPosY() > 50)
-                        this->viewGame->getMonstres()[i]->mooveEnnemis("up");
+                        this->viewGame->getMonstres()[i]->moove("up");
                     break;
                 }
                 case (3):
                 {
                     if(this->viewGame->getMonstres()[i]->getPosY() < this->viewGame->currentMap.size()*50 -100)
-                        this->viewGame->getMonstres()[i]->mooveEnnemis("down");
+                        this->viewGame->getMonstres()[i]->moove("down");
                     break;
                 }
                 default:
@@ -141,33 +139,35 @@ void Controller::mooveEnnemis(){
                 }
             }
         }
-
-
     }
 }
 
 //pour checker la collision de link avec les ennemis
-void Controller::checkCollisionEnnemis(Ennemis *ennemis)
+void Controller::checkCollisionEnnemis()
 {
-    //check avec link et le monstre et retire des PV à zelda
-    int diffX = (this->model->getLink()->getPosX() - ennemis->getPosX());
-    int diffY = (this->model->getLink()->getPosY() - ennemis->getPosY());
+    if (this->viewGame->getMonstres().size() != 0)
+    {
+        for (unsigned long i=0; i<this->viewGame->getMonstres().size(); i++){
+            if((this->viewGame->getMonstres()[i]->getPosX() == this->model->getLink()->getPosX()) && (this->viewGame->getMonstres()[i]->getPosY() == this->model->getLink()->getPosY())){
+                //sound.setMedia(QUrl("un son de blessure"));
+                //sound.play();
+                this->model->getLink()->setLife(this->model->getLink()->getLife() - 1);
 
-            if ((diffX<0 && diffX>-30 && diffY>-20 && diffY<20)||(diffX>0 && diffX<20 && diffY>-20 && diffY<20)||(diffX>-20 && diffX<20 && diffY>0 && diffY<25)||(diffX>-20 && diffX<20 && diffY<0 && diffY>-20))
-            {
+                if(this->model->getLink()->getDirection() == "left")
+                    this->model->getLink()->setPosX(this->model->getLink()->getPosX() +100);
 
-//                if(ennemis->getType_of_monstre()=="zelda"){
-//                   ennemis->setDirection("rencontre");
-//                   //this->model->getLink()->getEnnemi()->deplacementEnnemis(ennemis);
-//                }
+                else if(this->model->getLink()->getDirection() == "right")
+                    this->model->getLink()->setPosX(this->model->getLink()->getPosX() -100);
 
-//                else{
-//                    sound.setMedia(QUrl("un son de blessure"));
-//                    sound.play();
-                    this->model->getLink()->setLife(this->model->getLink()->getLife() - 1);
-//                }
+                else if(this->model->getLink()->getDirection() == "up")
+                    this->model->getLink()->setPosY(this->model->getLink()->getPosY() +100);
+
+                else if(this->model->getLink()->getDirection() == "down")
+                    this->model->getLink()->setPosY(this->model->getLink()->getPosY() -100);
 
             }
+        }
+    }
 }
 
 
@@ -415,7 +415,7 @@ void Controller::linkCircularAttack()
 //}
 
 
-////fonction pour check la collision de Zelda avec les objets sur la map
+////fonction pour check la collision de Link avec les objets sur la map
 //void Controller::checkCollisionItemsWithLink()
 //{
 //    vector<item*> vec = this->model->getNiveau()->getMapItems();//plus simple à gérer
@@ -505,6 +505,7 @@ void Controller::pressKey(QString key)
         if(key=="left")
         {
             this->model->getLink()->setTile("left");
+            this->model->getLink()->setDirection("left");
 
             if(this->model->getLink()->getPosX() > 50)
             {
@@ -513,8 +514,7 @@ void Controller::pressKey(QString key)
                 //                //si il ya collision avec un objet on fait rien
                 //            }
                 //            else{
-                this->model->getLink()->setPosX(this->model->getLink()->getPosX() - this->model->getLink()->getSpeed());
-                //this->viewGame->getCameraView()->setPosX(this->model->getLink()->getPosX() - this->model->getLink()->getSpeed());
+                this->model->getLink()->moove("left");
                 //            }
             }
         }
@@ -522,6 +522,7 @@ void Controller::pressKey(QString key)
         else if(key=="right")
         {
             this->model->getLink()->setTile("right");
+            this->model->getLink()->setDirection("right");
 
             if(this->model->getLink()->getPosX() < this->viewGame->currentMap[0].size()*50 -100)
             {
@@ -531,8 +532,7 @@ void Controller::pressKey(QString key)
                 //                //si il ya collision avec un objet on fait rien
                 //            }
                 //            else {
-                this->model->getLink()->setPosX(this->model->getLink()->getPosX() + this->model->getLink()->getSpeed());
-                //this->viewGame->getCameraView()->setPosX(this->model->getLink()->getSpeed());
+                this->model->getLink()->moove("right");
                 //            }
             }
         }
@@ -540,6 +540,8 @@ void Controller::pressKey(QString key)
         else if(key == "up")
         {
             this->model->getLink()->setTile("up");
+            this->model->getLink()->setDirection("up");
+
             if(this->model->getLink()->getPosY() > 50)
             {
                 //            if ((this->viewGame->getMapScene()->itemAt(this->model->getLink()->getPosX()+this->model->getLink()->getTile().width()/1.5,this->model->getLink()->getPosY()-10,QTransform())->zValue() == 5)||(this->view->getMapScene()->itemAt(this->model->getLink()->getPosX(),this->model->getLink()->getPosY()-10,QTransform())->zValue() == 5)){
@@ -547,8 +549,7 @@ void Controller::pressKey(QString key)
                 //            }
                 //            else
                 //            {
-                this->model->getLink()->setPosY(this->model->getLink()->getPosY() - this->model->getLink()->getSpeed());
-                //this->viewGame->getCameraView()->setPosY(this->model->getLink()->getPosY() - this->model->getLink()->getSpeed());
+                this->model->getLink()->moove("up");
                 //            }
             }
 
@@ -557,14 +558,15 @@ void Controller::pressKey(QString key)
         else if(key == "down")
         {
             this->model->getLink()->setTile("down");
+            this->model->getLink()->setDirection("down");
+
             if(this->model->getLink()->getPosY() < this->viewGame->currentMap.size()*50 -100)
             {
                 //            if ((this->viewGame->getMapScene()->itemAt(this->model->getZegetLinklda()->getPosX()+this->model->getLink()->getTile().width()/1.5,this->model->getLink()->getPosY()+this->model->getLink()->getTile().height(),QTransform())->zValue() == 5)||(this->view->getMapScene()->itemAt(this->model->getLink()->getPosX(),this->model->getLink()->getPosY()+this->model->getLink()->getTile().height(),QTransform())->zValue() == 5)){
                 //                //si il ya collision avec un objet on fait rien
                 //            }
                 //            else{
-                this->model->getLink()->setPosY(this->model->getLink()->getPosY() + this->model->getLink()->getSpeed());
-                //this->viewGame->getCameraView()->setPosY(this->model->getLink()->getPosY() + this->model->getLink()->getSpeed());
+                this->model->getLink()->moove("down");
                 //            }
             }
 

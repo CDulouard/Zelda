@@ -17,9 +17,6 @@ public:
     int getNumber() const;
     void setNumber(int value);
 
-    QString getDirection() const;
-    void setDirection(const QString &value);
-
     void setTile(QString direction);
 
     int getLoadingCircularAttack() const;
@@ -40,7 +37,6 @@ private:
 //    QString _lastMove = "right";
 
     int number;//pour la position de l'image
-    QString direction;
 
     int isAmoradoOrNot;//pour quand zelda touche zelda
     int LoadingCircularAttack;//pour savoir si zelda peut utiliser ou non le marteau (on va dire 10 seconde de recharge)

@@ -9,8 +9,6 @@ class Ennemis:public Character
 public:
     Ennemis(int posXinit, int posYinit);
 
-    void mooveEnnemis(QString direction);
-
     int getPosXinitiale() const;
     void setPosXinitiale(int value);
 
@@ -21,7 +19,6 @@ public:
     void setSpeed(int value);
 
 private:
-
     int posXinitiale;
     int posYinitiale;
 

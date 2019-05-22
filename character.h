@@ -22,19 +22,22 @@ public:
     int getSpeed() const;
     void setSpeed(int value);
 
+    QString getDirection() const;
+    void setDirection(const QString &value);
+
     QPixmap getTile();
+
+    void moove(QString direction);
 
 
 protected:
     int posX;
     int posY;
     int life;
-    int speed;
 
     QPixmap tile;
-    float m_energy;
-    float m_power; /*  amount of damages the character deals  */
-    double m_range;  /*  max distance of a a hit */   // inutile je pense
+    QString direction;
+
 
 };
 

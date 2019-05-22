@@ -7,7 +7,6 @@ Link::Link()
     this->setPosY(0);
     this->setLife(8);
     this->direction = "down";
-    this->speed = 50;
     this->tile = QPixmap(":/Character/Images/Characters/Link/link_down.png"); //image par défaut
     this->isAmoradoOrNot = 0;
     this->LoadingCircularAttack = 250;
@@ -28,15 +27,7 @@ void Link::setNumber(int value)
 {
     number = value;
 }
-QString Link::getDirection() const
-{
-    return direction;
-}
 
-void Link::setDirection(const QString &value)
-{
-    direction = value;
-}
 
 int Link::getLoadingCircularAttack() const
 {

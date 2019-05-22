@@ -36,17 +36,33 @@ float Character::getLife()
     return this->life;
 }
 
-int Character::getSpeed() const
-{
-    return speed;
-}
-
-void Character::setSpeed(int value)
-{
-    speed = value;
-}
-
 QPixmap Character::getTile()
 {
     return this->tile;
+}
+
+QString Character::getDirection() const
+{
+    return direction;
+}
+
+void Character::setDirection(const QString &value)
+{
+    direction = value;
+}
+
+void Character::moove(QString direction)
+{
+    if(direction == "left"){
+        this->setPosX(this->getPosX()-50);
+    }
+    else if(direction == "right"){
+        this->setPosX(this->getPosX()+50);
+    }
+    else if(direction == "up"){
+        this->setPosY(this->getPosY()-50);
+    }
+    else if(direction == "down"){
+        this->setPosY(this->getPosY()+50);
+    }
 }
