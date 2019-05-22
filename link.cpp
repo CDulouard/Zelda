@@ -6,7 +6,6 @@ Link::Link()
     this->setLife(5);
     this->direction = "down";
     this->tile = QPixmap(":/Character/Images/Characters/Link/link_down.png");
-
 }
 
 int Link::getArrowQuantity() const

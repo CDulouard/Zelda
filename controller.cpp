@@ -451,6 +451,9 @@ void Controller::game_over_procedure()
     delay(2000);
     splash->close();
 
+    this->viewGame->resetView();
+    this->model->resetModel();
+
     levelCounter--;
     this->startGame();
 }
@@ -466,6 +469,9 @@ void Controller::game_finished_procedure()
     splash->show();
     delay(2000);
     splash->close();
+
+    this->viewGame->resetView();
+    this->model->resetModel();
 
     levelCounter--;
     this->startGame();
