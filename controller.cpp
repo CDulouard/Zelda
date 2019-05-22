@@ -13,7 +13,10 @@ Controller::Controller(menu *menu, MainWindow *gameWindow, Model *model)
     this->viewGame = gameWindow; // on fait le lien avec la view
     this->timer =  new QTimer();
     timer->connect(timer, SIGNAL(timeout()), this, SLOT(displayScene()));
-    this->levelCounter = 0; // normalement initialiser à 0 mais là on test la game d`abord
+    this->levelCounter = 0;
+    this->model->getLink()->setPosX(50);
+    this->model->getLink()->setPosY(50);
+
 }
 
 Controller::~Controller()
@@ -38,9 +41,6 @@ void Controller::startGame()
         sound.setMedia(QUrl("qrc:/music/Sounds/game_music.mp3"));
         sound.play(); // ne marche pas
 
-        //on recentre link en haut a gauche a chaque niveau
-        this->model->getLink()->setPosX(50);
-        this->model->getLink()->setPosY(50);
         // charger niveau
         displayScene();
         this->viewGame->show();
@@ -70,16 +70,23 @@ void Controller::startGame()
 
 void Controller::displayScene(){
 
-    this->viewGame->displayMap();//affiche la carte
-    this->viewGame->displayLink(this->getModel()->getLink());//affiche link
+    this->viewGame->displayMap();
+    this->viewGame->displayLink(this->getModel()->getLink());
+
+    this->viewGame->getCameraView()->setPosX(this->model->getLink()->getPosX()-250);
+    this->viewGame->getCameraView()->setPosY(this->model->getLink()->getPosY()-250);
+
     //this->viewGame->afficherItemsMap(this->model->getNiveau()->getMapItems());
+
     //checkCollisionItemsWithZelda();
+
     //mooveEnnemis();//fait bouger et affiche les ennemeis
+
     //faireAvancerArrow();//fais avancer la fleche et supprime l'ennemi en cas de collision
-    linkCircularAttack();//pour faire link attaque circulaire
+
 
     if (this->model->getLink()->getLife() > 0)
-        timer->start(1);
+        timer->start(20);
     else
         game_over_procedure();
 }
@@ -391,8 +398,8 @@ void Controller::linkCircularAttack()
 //}
 
 
-//fonction pour check la collision de Zelda avec les objets sur la map
-//void Controller::checkCollisionItemsWithZelda()
+////fonction pour check la collision de Zelda avec les objets sur la map
+//void Controller::checkCollisionItemsWithLink()
 //{
 //    vector<item*> vec = this->model->getNiveau()->getMapItems();//plus simple à gérer
 //    for (unsigned long i=0; i<vec.size();i++){
@@ -452,7 +459,7 @@ void Controller::game_finished_procedure()
 }
 
 
-//void Controller::zeldaRammasseUnCoeur(int i)
+////void Controller::zeldaRammasseUnCoeur(int i)
 //{
 //    if(this->model->getLink()->getLife()<10){
 //        QSound::play("/Users/alexandremagne/Desktop/Zelda2/Musiques/LOZ/LOZ_Get_Heart.wav");
@@ -462,7 +469,7 @@ void Controller::game_finished_procedure()
 //    }
 //}
 
-//void Controller::zeldaRammasseUneFleche(int i)
+////void Controller::zeldaRammasseUneFleche(int i)
 //{
 //    int compteurFleche = this->model->getLink()->arrowCounter();
 //    if (compteurFleche<7){//zelda ne peut pas avoir plus de 7 fleche
@@ -488,7 +495,7 @@ void Controller::pressKey(QString key)
 //            }
 //            else {
                 this->model->getLink()->setPosX(this->model->getLink()->getPosX() + this->model->getLink()->getSpeed());
-                this->viewGame->getCameraView()->setPosX(this->model->getLink()->getSpeed());
+                //this->viewGame->getCameraView()->setPosX(this->model->getLink()->getSpeed());
 //            }
 
 
@@ -503,7 +510,7 @@ void Controller::pressKey(QString key)
 //            }
 //            else{
                 this->model->getLink()->setPosX(this->model->getLink()->getPosX() - this->model->getLink()->getSpeed());
-                this->viewGame->getCameraView()->setPosX(this->model->getLink()->getPosX() - this->model->getLink()->getSpeed());
+                //this->viewGame->getCameraView()->setPosX(this->model->getLink()->getPosX() - this->model->getLink()->getSpeed());
 //            }
 
         }
@@ -516,7 +523,7 @@ void Controller::pressKey(QString key)
 //            }
 //            else{
                 this->model->getLink()->setPosY(this->model->getLink()->getPosY() + this->model->getLink()->getSpeed());
-                this->viewGame->getCameraView()->setPosY(this->model->getLink()->getPosY() + this->model->getLink()->getSpeed());
+                //this->viewGame->getCameraView()->setPosY(this->model->getLink()->getPosY() + this->model->getLink()->getSpeed());
 //            }
 
         }
@@ -531,7 +538,7 @@ void Controller::pressKey(QString key)
 //            else
 //            {
                 this->model->getLink()->setPosY(this->model->getLink()->getPosY() - this->model->getLink()->getSpeed());
-                this->viewGame->getCameraView()->setPosY(this->model->getLink()->getPosY() - this->model->getLink()->getSpeed());
+                //this->viewGame->getCameraView()->setPosY(this->model->getLink()->getPosY() - this->model->getLink()->getSpeed());
 //            }
 
         }

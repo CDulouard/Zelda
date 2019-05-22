@@ -8,23 +8,12 @@ Character::Character()
 
 void Character::setPosX(int i)
 {
-    if ((i+this->posX)<0)
-        return;
-    else if ((i+this->posX)>1480)
-        return;
-    else
-        this->posX = i;
+    this->posX = i;
 }
 
 void Character::setPosY(int j)
 {
-    if ((j+this->posY)<0)
-        return;
-    else if ((j+this->posY)>730)
-        return;
-    else
-        this->posY = j;
-
+    this->posY = j;
 }
 
 int Character::getPosX()

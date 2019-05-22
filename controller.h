@@ -36,20 +36,20 @@ protected:
     void attaque_hammer_function();//attaque du marteau
     void checkCollisionArrowsWithEnnemis();//pour checker la collision flech ennemie
     void faireAvancerArrow();//pour que les flechent se deplacent
+
 /*          Jeu et Zelda        */
     void game_over_procedure();//en cas de game over
     void game_finished_procedure();
     void linkCircularAttack();//toutes les 2 seconde le coup du hammer
+
 /*          Ennemis et Zelda        */
     void toucheEnnemisQuandZeldaAttaque(class Ennemis *ennemi);
-    void gestionApparitionExplosionToucheEnnemi();//si ya une explosion ca gere l'animation de l'explosion
-    void checkCollisionEnnemis(Ennemis *ennemis);//collision zelda ennemi
+    void checkCollisionEnnemis(Ennemis *ennemis);
     void checkCollisionDecortWithEnnemi(Ennemis *ennemis);
     void lootAleatoireDesEnnemis(Ennemis *ennemis);
-    void collisionZeldaBouleDeFeu();//action quand zelda se pred une boule de feu
-    void collisionZeldaLambeau();//pareil avec lambeau
+
 /*          Item et Zelda        */
-    void checkCollisionItemsWithZelda();//collision item zelda
+    void checkCollisionItemsWithLink();//collision item link
     void zeldaRammasseUnCoeur(int i);//si zelda ramasse un coeur
     void zeldaRammasseUneFleche(int i);//si zelda ramasse une fleche
     void zeldaRammasseLaSword(int i);
