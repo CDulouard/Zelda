@@ -218,7 +218,7 @@ p, li { white-space: pre-wrap; }
             </widget>
            </item>
            <item>
-            <widget class="QLCDNumber" name="Power_display">
+            <widget class="QLCDNumber" name="Energy_display">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>

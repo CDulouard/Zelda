@@ -23,25 +23,37 @@ public:
 
     void displayMap();
     void displayLink(Link *link);
+    void displayEnnemis(class Ennemis *ennemi);
+    void displayZelda(class Zelda *Zelda);
+
+    void displayStats(int health, int arrowNmber, int energy);
 
     void keyPressEvent(QKeyEvent *event);
+
+    QGraphicsScene *getMapScene() const;
 
     Scene *getCameraView() const;
     void setCameraView(Scene *value);
 
-    std::vector<class Ennemis*> getMonstres() const;
-    void setMonstres(const std::vector<Ennemis*> &value);
+    std::vector<Ennemis*> getEnnemisList() const;
+    void setEnnemisList(const std::vector<Ennemis*> &value);
 
-    void displayEnnemis(Ennemis *ennemi);
+    void ajouterItem(int posX,int posY, QString s);
 
     std::vector<QString> currentMap;
 
 protected:
     Ui::MainWindow *ui;
+
     QGraphicsScene *mapScene;   // scene ou carte
     Scene *cameraView;          // camera
+
     std::map<QString, int> cellTypes;
-    std::vector<Ennemis*> monstres;
+
+    std::vector<Ennemis*> ennemisList;
+    Zelda *princessZelda;
+
+    std::vector<class Item *> mapItems;
 
 
 };

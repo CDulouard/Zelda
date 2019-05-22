@@ -3,50 +3,30 @@
 
 Link::Link()
 {
-    this->setPosX(0);
-    this->setPosY(0);
-    this->setLife(8);
+    this->setLife(5);
     this->direction = "down";
-    this->tile = QPixmap(":/Character/Images/Characters/Link/link_down.png"); //image par défaut
-    this->isAmoradoOrNot = 0;
-    this->LoadingCircularAttack = 250;
+    this->tile = QPixmap(":/Character/Images/Characters/Link/link_down.png");
+
 }
 
-int Link::arrowCounter()
+int Link::getArrowQuantity() const
 {
-    return _arrowQuantity;
+    return arrowQuantity;
 }
 
-
-int Link::getNumber() const
+void Link::setArrowQuantity(int value)
 {
-    return number;
+    arrowQuantity = value;
 }
 
-void Link::setNumber(int value)
+int Link::getEnergy() const
 {
-    number = value;
+    return energy;
 }
 
-
-int Link::getLoadingCircularAttack() const
+void Link::setEnergy(int value)
 {
-    return LoadingCircularAttack;
-}
-
-void Link::setLoadingCircularAttack(int value)
-{
-    LoadingCircularAttack = value;
-}
-
-int Link::getIsAmoradoOrNot() const
-{
-    return isAmoradoOrNot;
-}
-
-void Link::setIsAmoradoOrNot(int value)
-{
-    isAmoradoOrNot = value;
+    energy = value;
 }
 
 void Link::setTile(QString direction)

@@ -25,6 +25,7 @@ public:
     void setModel(Model *value);
     Model *getModel() const;
 
+    void displayStats(int health, int arrowNumber, int energy);
     void mooveEnnemis();
 
 
@@ -33,47 +34,39 @@ protected:
 
 /*          attaques et Link        */
     void attack_function(QString direction);//attaque de l'epee
-    void attaque_hammer_function();//attaque du marteau
-    void checkCollisionArrowsWithEnnemis();//pour checker la collision flech ennemie
+    void checkCollisionArrowsWithEnnemis();//pour checker la collision fleche ennemie
     void faireAvancerArrow();//pour que les flechent se deplacent
 
 /*          Jeu et Link        */
     void game_over_procedure();//en cas de game over
     void game_finished_procedure();
-    void linkCircularAttack();//toutes les 2 seconde le coup du hammer
 
-/*          Ennemis et Link        */
+/*          objets et Link        */
     void toucheEnnemisQuandZeldaAttaque(class Ennemis *ennemi);
     void checkCollisionEnnemis();
     void checkCollisionDecortWithEnnemi(Ennemis *ennemis);
     void lootAleatoireDesEnnemis(Ennemis *ennemis);
+    void checkCollisionLinKZelda();
 
-/*          Item et Zelda        */
+/*          Item et Link        */
     void checkCollisionItemsWithLink();//collision item link
     void zeldaRammasseUnCoeur(int i);//si zelda ramasse un coeur
     void zeldaRammasseUneFleche(int i);//si zelda ramasse une fleche
-    void zeldaRammasseLaSword(int i);
-    void zeldaRammasseLaKey(int i);
+
+
 
 public slots:
-    //void mooveEnnemis();
     void displayScene();
 
 private:
-    //represente la vue, ce que voit l'utilisateur
+    Model *model;
     menu *viewMenu;
     MainWindow *viewGame;
-
-    // le model
-    Model *model;
 
     QTimer *timer;//raffraichissmeent de la scene
     QMediaPlayer sound;
 
     int levelCounter;
-
-
-
 
 };
 

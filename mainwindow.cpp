@@ -1,7 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <ennemis.h>
 #include "controller.h"
+#include "ennemis.h"
+#include "zelda.h"
+#include "item.h"
 
 #include <vector>
 #include <QKeyEvent>
@@ -38,14 +40,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     currentMap.push_back("xww0000000000000000x");
     currentMap.push_back("xxxxxxxxxxxxxxxxxxxx");
 
-    this->monstres.push_back(new Ennemis(150,150));
-    this->monstres.push_back(new Ennemis(400,250));
-    this->monstres.push_back(new Ennemis(250,400));
-    this->monstres.push_back(new Ennemis(500,400));
-    this->monstres.push_back(new Ennemis(400,400));
-    this->monstres.push_back(new Ennemis(300,430));
-    this->monstres.push_back(new Ennemis(250,460));
-    this->monstres.push_back(new Ennemis(800,250));
+    this->ennemisList.push_back(new Ennemis(150,150));
+    this->ennemisList.push_back(new Ennemis(400,250));
+    this->ennemisList.push_back(new Ennemis(250,400));
+    this->ennemisList.push_back(new Ennemis(500,400));
+    this->ennemisList.push_back(new Ennemis(400,400));
+    this->ennemisList.push_back(new Ennemis(300,430));
+    this->ennemisList.push_back(new Ennemis(250,460));
+    this->ennemisList.push_back(new Ennemis(800,250));
 
 }
 
@@ -102,6 +104,22 @@ void MainWindow::displayEnnemis(Ennemis *ennemi)
     QGraphicsPixmapItem *tileEnnemi =  new QGraphicsPixmapItem(ennemi->getTile());
     tileEnnemi->setPos(ennemi->getPosX(),ennemi->getPosY());
     this->mapScene->addItem(tileEnnemi);
+}
+
+void MainWindow::displayZelda(Zelda *Zelda)
+{
+    Zelda->setPosX(this->currentMap[0].size()*50 - 100);
+    Zelda->setPosY(this->currentMap.size() * 50 - 100);
+    QGraphicsPixmapItem *tileZelda =  new QGraphicsPixmapItem(Zelda->getTile());
+    tileZelda->setPos(Zelda->getPosX(),Zelda->getPosY());
+    this->mapScene->addItem(tileZelda);
+}
+
+void MainWindow::displayStats(int health, int arrowNmber, int energy)
+{
+    this->ui->Health_display->display(health);
+    this->ui->Arrows_display->display(arrowNmber);
+    this->ui->Energy_display->display(energy);
 }
 
 
@@ -189,6 +207,11 @@ void MainWindow::keyPressEvent(QKeyEvent *event)// je gére quand j'appuie sur u
     }
 }
 
+QGraphicsScene *MainWindow::getMapScene() const
+{
+    return mapScene;
+}
+
 Scene *MainWindow::getCameraView() const
 {
     return cameraView;
@@ -199,13 +222,18 @@ void MainWindow::setCameraView(Scene *value)
     cameraView = value;
 }
 
-vector<Ennemis *> MainWindow::getMonstres() const
+vector<Ennemis *> MainWindow::getEnnemisList() const
 {
-    return monstres;
+    return ennemisList;
 }
 
-void MainWindow::setMonstres(const vector<Ennemis*> &value)
+void MainWindow::setEnnemisList(const vector<Ennemis*> &value)
 {
-    monstres = value;
+    ennemisList = value;
+}
+
+void MainWindow::ajouterItem(int posX, int posY, QString s)
+{
+    this->mapItems.push_back(new Item(posX, posY, s));
 }
 

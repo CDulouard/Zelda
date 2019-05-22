@@ -28,6 +28,7 @@ CONFIG += c++11
 SOURCES += \
     controller.cpp \
     ennemis.cpp \
+    item.cpp \
         main.cpp \
     arrow.cpp \
     menu.cpp \
@@ -35,18 +36,21 @@ SOURCES += \
     mainwindow.cpp \
     model.cpp \
     scene.cpp \
-    character.cpp
+    character.cpp \
+    zelda.cpp
 
 HEADERS += \
     arrow.h \
     controller.h \
     ennemis.h \
+    item.h \
     menu.h \
     link.h \
     mainwindow.h \
     model.h \
     scene.h \
-    character.h
+    character.h \
+    zelda.h
 
 FORMS += \
     menu.ui \

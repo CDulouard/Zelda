@@ -9,10 +9,14 @@ public:
     class Link *getLink() const;
     void setLink(Link *value);
 
+    class Zelda *getZelda() const;
+    void setZelda(Zelda *value);
+
     void resetModel();
 
 private:
     Link *link;
+    Zelda *zelda;
 
 };
 

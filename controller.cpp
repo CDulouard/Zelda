@@ -2,9 +2,12 @@
 #include "mainwindow.h"
 #include "menu.h"
 #include "model.h"
+#include "zelda.h"
 #include "ennemis.h"
+#include "arrow.h"
 
 #include <QDebug>
+#include <QSplashScreen>
 
 Controller::Controller(menu *menu, MainWindow *gameWindow, Model *model)
 {
@@ -26,10 +29,18 @@ Controller::~Controller()
     delete this->viewGame;
 }
 
+void Controller::delay(int i)//attend un nombre de MS
+{
+    QTime dieTime= QTime::currentTime().addMSecs(i);
+    while( QTime::currentTime() < dieTime )
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+}
+
 void Controller::startGame()
 {
     // Lauching
     if (levelCounter == 0){
+        this->viewGame->close();
         sound.setMedia(QUrl("qrc:/music/Sounds/menu_music.mp3"));
         sound.play();
         this->viewMenu->show();
@@ -77,16 +88,18 @@ void Controller::displayScene(){
     this->viewGame->getCameraView()->setPosY(this->model->getLink()->getPosY()-250);
     this->viewGame->displayLink(this->getModel()->getLink());
     //this->viewGame->afficherItemsMap(this->model->getNiveau()->getMapItems());
-    if (this->viewGame->getMonstres().size() != 0){
-        for(unsigned long i = 0; i<this->viewGame->getMonstres().size(); i++)
-        {
-            this->viewGame->displayEnnemis(this->viewGame->getMonstres()[i]);
+    if (this->viewGame->getEnnemisList().size() != 0){
+        for(unsigned long i = 0; i<this->viewGame->getEnnemisList().size(); i++){
+            this->viewGame->displayEnnemis(this->viewGame->getEnnemisList()[i]);
         }
     }
+    this->viewGame->displayZelda(this->getModel()->getZelda());
+
+    displayStats(this->model->getLink()->getLife(), this->model->getLink()->getArrowQuantity(), this->model->getLink()->getEnergy());
 
     mooveEnnemis();
     checkCollisionEnnemis();
-    qDebug() << this->model->getLink()->getLife();
+    checkCollisionLinKZelda();
 
     //faireAvancerArrow(); //fais avancer la fleche et supprime l'ennemi en cas de collision
 
@@ -98,11 +111,11 @@ void Controller::displayScene(){
 
 
 void Controller::mooveEnnemis(){
-    if (this->viewGame->getMonstres().size() != 0)
+    if (this->viewGame->getEnnemisList().size() != 0)
     {
-        //this->checkCollisionEnnemis(this->viewGame->getMonstres()[i]);
+        //this->checkCollisionEnnemis(this->viewGame->getEnnemisList()[i]);
 
-        for (unsigned long i=0; i<this->viewGame->getMonstres().size(); i++){
+        for (unsigned long i=0; i<this->viewGame->getEnnemisList().size(); i++){
 
             int randomNumber = rand()%30;
             int randomNumber2 = rand()%4;
@@ -112,26 +125,26 @@ void Controller::mooveEnnemis(){
                 {
                 case (0):
                 {
-                    if(this->viewGame->getMonstres()[i]->getPosX() > 50)
-                        this->viewGame->getMonstres()[i]->moove("left");
+                    if(this->viewGame->getEnnemisList()[i]->getPosX() > 50)
+                        this->viewGame->getEnnemisList()[i]->moove("left");
                     break;
                 }
                 case (1):
                 {
-                    if(this->viewGame->getMonstres()[i]->getPosX() < this->viewGame->currentMap[0].size()*50 -100)
-                        this->viewGame->getMonstres()[i]->moove("right");
+                    if(this->viewGame->getEnnemisList()[i]->getPosX() < this->viewGame->currentMap[0].size()*50 -100)
+                        this->viewGame->getEnnemisList()[i]->moove("right");
                     break;
                 }
                 case (2):
                 {
-                    if(this->viewGame->getMonstres()[i]->getPosY() > 50)
-                        this->viewGame->getMonstres()[i]->moove("up");
+                    if(this->viewGame->getEnnemisList()[i]->getPosY() > 50)
+                        this->viewGame->getEnnemisList()[i]->moove("up");
                     break;
                 }
                 case (3):
                 {
-                    if(this->viewGame->getMonstres()[i]->getPosY() < this->viewGame->currentMap.size()*50 -100)
-                        this->viewGame->getMonstres()[i]->moove("down");
+                    if(this->viewGame->getEnnemisList()[i]->getPosY() < this->viewGame->currentMap.size()*50 -100)
+                        this->viewGame->getEnnemisList()[i]->moove("down");
                     break;
                 }
                 default:
@@ -145,10 +158,10 @@ void Controller::mooveEnnemis(){
 //pour checker la collision de link avec les ennemis
 void Controller::checkCollisionEnnemis()
 {
-    if (this->viewGame->getMonstres().size() != 0)
+    if (this->viewGame->getEnnemisList().size() != 0)
     {
-        for (unsigned long i=0; i<this->viewGame->getMonstres().size(); i++){
-            if((this->viewGame->getMonstres()[i]->getPosX() == this->model->getLink()->getPosX()) && (this->viewGame->getMonstres()[i]->getPosY() == this->model->getLink()->getPosY())){
+        for (unsigned long i=0; i<this->viewGame->getEnnemisList().size(); i++){
+            if((this->viewGame->getEnnemisList()[i]->getPosX() == this->model->getLink()->getPosX()) && (this->viewGame->getEnnemisList()[i]->getPosY() == this->model->getLink()->getPosY())){
                 //sound.setMedia(QUrl("un son de blessure"));
                 //sound.play();
                 this->model->getLink()->setLife(this->model->getLink()->getLife() - 1);
@@ -170,8 +183,14 @@ void Controller::checkCollisionEnnemis()
     }
 }
 
+void Controller::checkCollisionLinKZelda()
+{
+    if((this->model->getLink()->getPosX() == this->model->getZelda()->getPosX()) && (this->model->getLink()->getPosY() == this->model->getZelda()->getPosY()))
+        game_finished_procedure();
+}
 
-//void Controller::checkCollisionDecortWithEnnemi(Ennemis *ennemis)
+
+////void Controller::checkCollisionDecortWithEnnemi(Ennemis *ennemis)
 //{
 //    if(ennemis->getDirection()=="right"){
 //            // pour la colision à droite
@@ -268,23 +287,23 @@ void Controller::checkCollisionEnnemis()
 ////voir si les fleches touche les ennemis
 //void Controller::checkCollisionArrowsWithEnnemis()
 //{
-//    if (this->model->getNiveau()->getMonstres().size() != 0 && this->model->getNiveau()->getMapItems().size() !=0){
+//    if (this->model->getNiveau()->getEnnemisList().size() != 0 && this->model->getNiveau()->getMapItems().size() !=0){
 //        //on verifie toujours si les vecteurs existent
 //        for (unsigned long i=0;i<this->model->getNiveau()->getMapItems().size();i++){
 //            if (this->model->getNiveau()->getMapItems()[i]->getType_of_item() == "arrow_right"||this->model->getNiveau()->getMapItems()[i]->getType_of_item() == "arrow_left"||this->model->getNiveau()->getMapItems()[i]->getType_of_item() == "arrow_down"||this->model->getNiveau()->getMapItems()[i]->getType_of_item() == "arrow_up")
 //            {//si on parle d'une Arrow (fleche)
-//               for (unsigned long j = 0; j<this->model->getNiveau()->getMonstres().size(); j++){
+//               for (unsigned long j = 0; j<this->model->getNiveau()->getEnnemisList().size(); j++){
 //                    //pour tous les monstres on regarde si ca touche avec la fleche en question
-//                   int diffX = (this->model->getNiveau()->getMapItems()[i]->getPosXactuel() - this->model->getNiveau()->getMonstres()[j]->getPosX());
-//                   int diffY = (this->model->getNiveau()->getMapItems()[i]->getPosYactuel() - this->model->getNiveau()->getMonstres()[j]->getPosY());
+//                   int diffX = (this->model->getNiveau()->getMapItems()[i]->getPosXactuel() - this->model->getNiveau()->getEnnemisList()[j]->getPosX());
+//                   int diffY = (this->model->getNiveau()->getMapItems()[i]->getPosYactuel() - this->model->getNiveau()->getEnnemisList()[j]->getPosY());
 //                   if((this->model->getNiveau()->getMapItems()[i]->getType_of_item() == "arrow_right" && diffX<0 && diffX>-30 && diffY>-20 && diffY<20) || (this->model->getNiveau()->getMapItems()[i]->getType_of_item() == "arrow_left" && diffX>0 && diffX<30 && diffY>-20 && diffY<20) || (this->model->getNiveau()->getMapItems()[i]->getType_of_item() == "arrow_up" && diffX>-20 && diffX<20 && diffY>0 && diffY<30) || (this->model->getNiveau()->getMapItems()[i]->getType_of_item() == "arrow_down" && diffX>-20 && diffX<20 && diffY<0 && diffY>-30))
 //                   {
 //                       QSound::play("/Users/alexandremagne/Desktop/Zelda2/Musiques/LOZ/LOZ_Hit.wav");
-//                       this->model->getNiveau()->ajouterItem(this->model->getNiveau()->getMonstres()[j]->getPosX(),this->model->getNiveau()->getMonstres()[j]->getPosY(),"explosion");
-//                       this->model->getNiveau()->getMonstres()[j]->setLifeStatue(this->model->getNiveau()->getMonstres()[j]->getLifeStatue()-1);
-//                       this->toucheEnnemisQuandZeldaAttaque(this->model->getNiveau()->getMonstres()[j]);
-//                       if(this->model->getNiveau()->getMonstres()[j]->getLifeStatue()==0){
-//                          this->lootAleatoireDesEnnemis(this->model->getNiveau()->getMonstres()[j]);
+//                       this->model->getNiveau()->ajouterItem(this->model->getNiveau()->getEnnemisList()[j]->getPosX(),this->model->getNiveau()->getEnnemisList()[j]->getPosY(),"explosion");
+//                       this->model->getNiveau()->getEnnemisList()[j]->setLifeStatue(this->model->getNiveau()->getEnnemisList()[j]->getLifeStatue()-1);
+//                       this->toucheEnnemisQuandZeldaAttaque(this->model->getNiveau()->getEnnemisList()[j]);
+//                       if(this->model->getNiveau()->getEnnemisList()[j]->getLifeStatue()==0){
+//                          this->lootAleatoireDesEnnemis(this->model->getNiveau()->getEnnemisList()[j]);
 //                           this->model->getNiveau()->deleteMonstre(j);
 //                        }
 //                       this->model->getNiveau()->deleteItem(i);
@@ -298,20 +317,20 @@ void Controller::checkCollisionEnnemis()
 
 ////attquer avec l'épée
 //void Controller::attack_function(QString direction){
-// if (this->model->getNiveau()->getMonstres().size() != 0){
+// if (this->model->getNiveau()->getEnnemisList().size() != 0){
 
-//        for (unsigned long i = 0; i<this->model->getNiveau()->getMonstres().size(); i++){
+//        for (unsigned long i = 0; i<this->model->getNiveau()->getEnnemisList().size(); i++){
 
-//            int diffX = (this->model->getLink()->getPosX() - this->model->getNiveau()->getMonstres()[i]->getPosX());
-//            int diffY = (this->model->getLink()->getPosY() - this->model->getNiveau()->getMonstres()[i]->getPosY());
+//            int diffX = (this->model->getLink()->getPosX() - this->model->getNiveau()->getEnnemisList()[i]->getPosX());
+//            int diffY = (this->model->getLink()->getPosY() - this->model->getNiveau()->getEnnemisList()[i]->getPosY());
 //            if((direction == "right" && diffX<0 && diffX>-60 && diffY>-20 && diffY<20) || (direction == "left" && diffX>0 && diffX<50 && diffY>-20 && diffY<20) || (direction == "up" && diffX>-20 && diffX<20 && diffY>0 && diffY<50) || (direction == "down" && diffX>-20 && diffX<20 && diffY<0 && diffY>-60))
 //            {
-//                this->model->getNiveau()->ajouterItem(this->model->getNiveau()->getMonstres()[i]->getPosX(),this->model->getNiveau()->getMonstres()[i]->getPosY(),"explosion");
-//                this->model->getNiveau()->getMonstres()[i]->setLifeStatue(this->model->getNiveau()->getMonstres()[i]->getLifeStatue()-1);
-//                this->toucheEnnemisQuandZeldaAttaque(this->model->getNiveau()->getMonstres()[i]);
+//                this->model->getNiveau()->ajouterItem(this->model->getNiveau()->getEnnemisList()[i]->getPosX(),this->model->getNiveau()->getEnnemisList()[i]->getPosY(),"explosion");
+//                this->model->getNiveau()->getEnnemisList()[i]->setLifeStatue(this->model->getNiveau()->getEnnemisList()[i]->getLifeStatue()-1);
+//                this->toucheEnnemisQuandZeldaAttaque(this->model->getNiveau()->getEnnemisList()[i]);
 //                 QSound::play("/Users/alexandremagne/Desktop/Zelda2/Musiques/LOZ/LOZ_Hit.wav");
-//                if(this->model->getNiveau()->getMonstres()[i]->getLifeStatue()==0){
-//                   this->lootAleatoireDesEnnemis(this->model->getNiveau()->getMonstres()[i]);
+//                if(this->model->getNiveau()->getEnnemisList()[i]->getLifeStatue()==0){
+//                   this->lootAleatoireDesEnnemis(this->model->getNiveau()->getEnnemisList()[i]);
 //                    this->model->getNiveau()->deleteMonstre(i);
 //                    return;
 //                }
@@ -320,44 +339,8 @@ void Controller::checkCollisionEnnemis()
 // }
 //}
 
-////void Controller::attaque_hammer_function()
-//{
-//  {
-//        this->model->getLink()->setZeldaRechargeAttaqueHammerOuPas(0);//pour remettre le compteur
-//        this->model->getNiveau()->ajouterItem(this->model->getLink()->getPosX()-15,this->model->getLink()->getPosY()-10,"hammer_hole");
-//        if (this->model->getNiveau()->getMonstres().size() != 0){
 
-//               for (unsigned long i = 0; i<this->model->getNiveau()->getMonstres().size(); i++){
-
-//                   int diffX = (this->model->getLink()->getPosX() - this->model->getNiveau()->getMonstres()[i]->getPosX());
-//                   int diffY = (this->model->getLink()->getPosY() - this->model->getNiveau()->getMonstres()[i]->getPosY());
-//                   if(diffX<100 && diffX>-100 && diffY>-100 && diffY<100)
-//                   {
-//                       this->model->getNiveau()->ajouterItem(this->model->getNiveau()->getMonstres()[i]->getPosX(),this->model->getNiveau()->getMonstres()[i]->getPosY(),"explosion");
-//                       this->model->getNiveau()->getMonstres()[i]->setLifeStatue(this->model->getNiveau()->getMonstres()[i]->getLifeStatue()-2);
-//                       this->toucheEnnemisQuandZeldaAttaque(this->model->getNiveau()->getMonstres()[i]);
-//                        QSound::play("/Users/alexandremagne/Desktop/Zelda2/Musiques/LOZ/LOZ_Hit.wav");
-//                       if(this->model->getNiveau()->getMonstres()[i]->getLifeStatue()<=0){
-//                          this->lootAleatoireDesEnnemis(this->model->getNiveau()->getMonstres()[i]);
-//                           this->model->getNiveau()->deleteMonstre(i);
-//                          this->attaque_hammer_function();
-//                          return;
-//                       }
-//                   }
-//               }
-//        }
-//    }
-//}
-
-
-void Controller::linkCircularAttack()
-{
-    if(this->model->getLink()->getLoadingCircularAttack() < 250){
-        this->model->getLink()->setLoadingCircularAttack(this->model->getLink()->getLoadingCircularAttack() +1);
-    }else return;
-}
-
-//void Controller::toucheEnnemisQuandZeldaAttaque(Ennemis *ennemi)
+////void Controller::toucheEnnemisQuandZeldaAttaque(Ennemis *ennemi)
 //{
 //    if(ennemi->getType_of_monstre() == "final_boss_"){
 //        if (ennemi->getLife() >=8 && ennemi->getLife() <=10)
@@ -456,23 +439,36 @@ void Controller::linkCircularAttack()
 //}
 
 
-//fonction appelee quand zelda n'a plus de vie
 void Controller::game_over_procedure()
 {
-         qDebug()<<"game over";
-         timer->stop();
-         this->viewGame->resetView();
-         this->model->resetModel();
-         this->startGame();
+    timer->stop();
+    qDebug()<<"game over";
+
+    //Add Splash Screen
+    QSplashScreen *splash = new QSplashScreen;
+    splash->setPixmap(QPixmap(":/Menu/Images/game-over.jpg"));
+    splash->show();
+    delay(2000);
+    splash->close();
+
+    levelCounter--;
+    this->startGame();
 }
 
 void Controller::game_finished_procedure()
-    {
-             qDebug()<<"game finished";
-             timer->stop();
-             this->viewGame->resetView();
-             this->model->resetModel();
-             this->startGame();
+{
+    timer->stop();
+    qDebug()<<"game finished";
+
+    //Add Splash Screen
+    QSplashScreen *splash = new QSplashScreen;
+    splash->setPixmap(QPixmap(":/Menu/Images/victory.jpg"));
+    splash->show();
+    delay(2000);
+    splash->close();
+
+    levelCounter--;
+    this->startGame();
 }
 
 
@@ -573,70 +569,61 @@ void Controller::pressKey(QString key)
         }
 
 
-//        else if(key=="h")
-//        {
-//            if(this->model->getLink()->getSword()!=NULL){
-//                QSound::play("/Users/alexandremagne/Desktop/Zelda2/Musiques/LOZ/LOZ_Sword.wav");
-//                this->model->getLink()->setNumber(1);
-//                this->attack_function(this->model->getLink()->getDirection());
-//                zeldaAttaqueOuPas=1;
-//                for(int i = 0;i<6;i++){
+        else if(key=="h")
+        {
+            if(this->model->getLink()->getEnergy() > 0)
+            {
+                sound.setMedia(QUrl("qrc:/game/Sounds/sword_attack.mp3"));
+                sound.play();
+                this->model->getLink()->setEnergy(this->model->getLink()->getEnergy()-1);
 
-//                    this->model->getLink()->setTilePosition("a");
-//                    delay(25);
-//                }
-//                zeldaAttaqueOuPas=0;
-//                this->model->getLink()->setNumber(1);
-//                this->model->getLink()->getMyMonture()->setIsRidingOrNot(0);
-//                this->model->getLink()->setTilePosition(this->model->getLink()->getDirection());
-//            }
-//        }
-//        else if(key=="j")
-//        {
-//            if(this->model->getLink()->compteurDeFleche()>0){
-//                QSound::play("/Users/alexandremagne/Desktop/Zelda2/Musiques/LOZ/LOZ_Arrow.wav");
-//                this->model->getLink()->deleteItem("arrow_item");
-//                this->model->getNiveau()->ajouterItem(this->model->getLink()->getPosX(),this->model->getLink()->getPosY(),"arrow_"+this->model->getLink()->getDirection());
-//                //QSound::play("/Users/alexandremagne/Desktop/Zelda2/Musiques/LOZ/LOZ_Sword.wav");
-//                this->model->getLink()->setNumber(1);
-//                // this->attack_function(this->model->getLink()->getDirection());
-//                zeldaAttaqueOuPas=1;
-//                for(int i = 0;i<6;i++){
-//                    this->model->getLink()->setTilePosition("z");
-//                    delay(25);
-//                }
-//                zeldaAttaqueOuPas=0;
-//                this->model->getLink()->setNumber(1);//pour affichage
-//                this->model->getLink()->getMyMonture()->setIsRidingOrNot(0);//pour supprimer la monture, pour pas quil remonte sur le cheval
-//                this->model->getLink()->setTilePosition(this->model->getLink()->getDirection());//pour affichage zelda
-//            }
-//        }
-//        else if(key=="k" &&  this->model->getLink()->getLoadingCircularAttack() == 250)
-//        {
-//            this->model->getLink()->setNumber(1);
-//            this->zeldaAttaqueOuPas=1;
+                if(this->model->getLink()->getDirection() == "left"){
+                    for (unsigned long i=0; i<this->viewGame->getEnnemisList().size(); i++){
+                        if(this->viewGame->getEnnemisList()[i]->getPosX() == this->model->getLink()->getPosX() - 50)
+                            delete this->viewGame->getEnnemisList()[i];
+                            //this->viewGame->getEnnemisList().erase(this->viewGame->getEnnemisList().begin()+i);
+                    }
+                }
 
-//            for(int i = 0;i<12;i++){
-//                this->model->getLink()->setTilePosition("e");
-//                delay(50);
-//            }QSound::play("/Users/alexandremagne/Desktop/Zelda2/Musiques/LOZ/LOZ_Hammer.wav");
-//            this->attaque_hammer_function();
-//            zeldaAttaqueOuPas=0;
-//            this->model->getLink()->setNumber(1);//pour affichage
-//            this->model->getLink()->getMyMonture()->setIsRidingOrNot(0);//pour supprimer la monture, pour pas quil remonte sur le cheval
-//            this->model->getLink()->setTilePosition(this->model->getLink()->getDirection());//pour affichage zelda
+                if(this->model->getLink()->getDirection() == "right"){
+                    for (unsigned long i=0; i<this->viewGame->getEnnemisList().size(); i++){
+                        if(this->viewGame->getEnnemisList()[i]->getPosX() == this->model->getLink()->getPosX() + 50)
+                            delete this->viewGame->getEnnemisList()[i];
+                            //this->viewGame->getEnnemisList().erase(this->viewGame->getEnnemisList().begin()+i);
+                    }
+                }
 
-//        }
-//        else if(key == "b" && zeldaAttaqueOuPas == 0  && this->check_quete()==0)
-//        {
-//            if(this->model->getLink()->getMyMonture()!=NULL){//si il y a une monture
-//                this->model->getLink()->setNumber(1);//pour remettre a 0 le compteur dimage
-//                if (this->model->getLink()->getMyMonture()->getIsRidingOrNot() == 0)//si pas montee
-//                    this->model->getLink()->getMyMonture()->setIsRidingOrNot(1);//on le monte
-//                else this->model->getLink()->getMyMonture()->setIsRidingOrNot(0);//sinon on le decen
-//                this->model->getLink()->setTilePosition(this->model->getLink()->getDirection());//on affiche link
-//            }
-//        }
+                if(this->model->getLink()->getDirection() == "up"){
+                    for (unsigned long i=0; i<this->viewGame->getEnnemisList().size(); i++){
+                        if(this->viewGame->getEnnemisList()[i]->getPosY() == this->model->getLink()->getPosY() - 50)
+                            delete this->viewGame->getEnnemisList()[i];
+                            //this->viewGame->getEnnemisList().erase(this->viewGame->getEnnemisList().begin()+i);
+                    }
+                }
+
+                if(this->model->getLink()->getDirection() == "down"){
+                    for (unsigned long i=0; i<this->viewGame->getEnnemisList().size(); i++){
+                        if(this->viewGame->getEnnemisList()[i]->getPosY() == this->model->getLink()->getPosY() + 50)
+                            delete this->viewGame->getEnnemisList()[i];
+                            //this->viewGame->getEnnemisList().erase(this->viewGame->getEnnemisList().begin()+i);
+                    }
+                }
+
+            }
+        }
+        else if(key=="j")
+        {
+            if(this->model->getLink()->getArrowQuantity()>0){
+                sound.setMedia(QUrl("qrc:/game/Sounds/arrow_shoot.mp3"));
+                sound.play();
+                this->model->getLink()->setArrowQuantity(this->model->getLink()->getArrowQuantity()-1);
+                Arrow *arrow = new Arrow(this->model->getLink()->getDirection());
+                arrow->setPos(x(),y());
+                this->viewGame->getMapScene()->addItem(arrow);
+                this->viewGame->ajouterItem(this->model->getLink()->getPosX(),this->model->getLink()->getPosY(),"arrow_"+this->model->getLink()->getDirection());
+            }
+        }
+
         else if(key == "escape")
         {
             this->sound.stop();
@@ -662,20 +649,14 @@ void Controller::pressKey(QString key)
     }
 }
 
-
-
-
-void Controller::delay(int i)//attend un nombre de MS
-{
-    QTime dieTime= QTime::currentTime().addMSecs(i);
-    while( QTime::currentTime() < dieTime )
-        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
-}
-
-
 Model *Controller::getModel() const
 {
     return model;
+}
+
+void Controller::displayStats(int health, int arrowNumber, int energy)
+{
+    this->viewGame->displayStats(health, arrowNumber, energy);
 }
 void Controller::setModel(Model *value)
 {

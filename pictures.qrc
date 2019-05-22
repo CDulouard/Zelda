@@ -22,6 +22,8 @@
     <qresource prefix="/Menu">
         <file>Images/SplashScreen.png</file>
         <file>Images/menu_background.jpg</file>
+        <file>Images/game-over.jpg</file>
+        <file>Images/victory.jpg</file>
     </qresource>
     <qresource prefix="/terrain">
         <file>Images/Terrain/Grass.jpg</file>
