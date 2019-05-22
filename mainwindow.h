@@ -29,13 +29,19 @@ public:
     Scene *getCameraView() const;
     void setCameraView(Scene *value);
 
-private:
-    Ui::MainWindow *ui;
+    std::vector<class Ennemis*> getMonstres() const;
+    void setMonstres(const std::vector<Ennemis*> &value);
 
+    void displayEnnemis(Ennemis *ennemi);
+
+    std::vector<QString> currentMap;
+
+protected:
+    Ui::MainWindow *ui;
     QGraphicsScene *mapScene;   // scene ou carte
     Scene *cameraView;          // camera
-    std::vector<QString> currentMap;
     std::map<QString, int> cellTypes;
+    std::vector<Ennemis*> monstres;
 
 
 };

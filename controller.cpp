@@ -36,7 +36,7 @@ void Controller::startGame()
     }
 
     //current game
-    if (levelCounter == 1){
+    else if (levelCounter == 1){
 
         sound.setMedia(QUrl("qrc:/music/Sounds/game_music.mp3"));
         sound.play(); // ne marche pas
@@ -70,20 +70,27 @@ void Controller::startGame()
 
 void Controller::displayScene(){
 
-    this->viewGame->displayMap();
-    this->viewGame->displayLink(this->getModel()->getLink());
+    this->viewGame->resetView();
 
+    this->viewGame->displayMap();
     this->viewGame->getCameraView()->setPosX(this->model->getLink()->getPosX()-250);
     this->viewGame->getCameraView()->setPosY(this->model->getLink()->getPosY()-250);
+    this->viewGame->displayLink(this->getModel()->getLink());
+
+    if (this->viewGame->getMonstres().size() != 0){
+        for(unsigned long i = 0; i<this->viewGame->getMonstres().size(); i++)
+        {
+            this->viewGame->displayEnnemis(this->viewGame->getMonstres()[i]);
+        }
+    }
+
+    mooveEnnemis();
 
     //this->viewGame->afficherItemsMap(this->model->getNiveau()->getMapItems());
 
     //checkCollisionItemsWithZelda();
 
-    //mooveEnnemis();//fait bouger et affiche les ennemeis
-
-    //faireAvancerArrow();//fais avancer la fleche et supprime l'ennemi en cas de collision
-
+    //faireAvancerArrow(); //fais avancer la fleche et supprime l'ennemi en cas de collision
 
     if (this->model->getLink()->getLife() > 0)
         timer->start(20);
@@ -91,48 +98,63 @@ void Controller::displayScene(){
         game_over_procedure();
 }
 
-////pour faire bouger les ennemis et les afficher
-//void Controller::mooveEnnemis(){
-//    //pour afficher les ennemis et le boules de feu
-//    if (this->model->getNiveau()->getMonstres().size() != 0){
-//        for(unsigned long i = 0; i<this->model->getNiveau()->getMonstres().size(); i++)
-//        {
-//            this->view->afficherEnnemis(this->model->getNiveau()->getMonstres()[i]);
-//        }
-//    }
 
-//    //pour faire bouger les ennemis
-//    if (this->model->getNiveau()->getMonstres().size() != 0){ // si il reste encore des monstres
-//        for (unsigned long i=0; i<this->model->getNiveau()->getMonstres().size(); i++){
+void Controller::mooveEnnemis(){
+    if (this->viewGame->getMonstres().size() != 0)
+    {
+        //this->checkCollisionEnnemis(this->viewGame->getMonstres()[i]);
 
-//            this->checkCollisionEnnemis(this->model->getNiveau()->getMonstres()[i]);
-//            if (this->model->getNiveau()->getMonstres().size() != 0){ // si il reste encore des monstres
-//                {
-//            if (this->model->getNiveau()->getMonstres()[i]->getType_of_monstre()!="boule_de_feu_" && this->model->getNiveau()->getMonstres()[i]->getType_of_monstre()!="lambeau_boss_niveau_2_")
-//            {
-//                this->checkCollisionDecortWithEnnemi(this->model->getNiveau()->getMonstres()[i]);
-//            }
-//            this->model->getNiveau()->ajouterProjectileLancerParUnMonstre(this->model->getNiveau()->getMonstres()[i]);
-//            int statueProjectile = this->model->getNiveau()->getEnnemi()->deplacementProjectile(this->model->getNiveau()->getMonstres()[i]);
+        for (unsigned long i=0; i<this->viewGame->getMonstres().size(); i++){
 
-//            if(statueProjectile==1) {
-//              this->model->getNiveau()->deleteMonstre(i);
-//              return;
-//            }
-//                }
-//        }
-//    }}
-//}
+            int randomNumber = rand()%30;
+            int randomNumber2 = rand()%4;
 
-////pour checker la collision de zelda avec les ennemis
-//void Controller::checkCollisionEnnemis(Ennemis *ennemis)
-//{
-//    //check avec zelda et le monstre et retire des PV à zelda
-//    int diffX = (this->model->getLink()->getPosX() - ennemis->getPosX());
-//    int diffY = (this->model->getLink()->getPosY() - ennemis->getPosY());
+            if(randomNumber == 0){
+                switch (randomNumber2)
+                {
+                case (0):
+                {
+                    if(this->viewGame->getMonstres()[i]->getPosX() > 50)
+                        this->viewGame->getMonstres()[i]->mooveEnnemis("left");
+                    break;
+                }
+                case (1):
+                {
+                    if(this->viewGame->getMonstres()[i]->getPosX() < this->viewGame->currentMap[0].size()*50 -100)
+                        this->viewGame->getMonstres()[i]->mooveEnnemis("right");
+                    break;
+                }
+                case (2):
+                {
+                    if(this->viewGame->getMonstres()[i]->getPosY() > 50)
+                        this->viewGame->getMonstres()[i]->mooveEnnemis("up");
+                    break;
+                }
+                case (3):
+                {
+                    if(this->viewGame->getMonstres()[i]->getPosY() < this->viewGame->currentMap.size()*50 -100)
+                        this->viewGame->getMonstres()[i]->mooveEnnemis("down");
+                    break;
+                }
+                default:
+                    break;
+                }
+            }
+        }
 
-//            if ((diffX<0 && diffX>-30 && diffY>-20 && diffY<20)||(diffX>0 && diffX<20 && diffY>-20 && diffY<20)||(diffX>-20 && diffX<20 && diffY>0 && diffY<25)||(diffX>-20 && diffX<20 && diffY<0 && diffY>-20))
-//            {
+
+    }
+}
+
+//pour checker la collision de link avec les ennemis
+void Controller::checkCollisionEnnemis(Ennemis *ennemis)
+{
+    //check avec link et le monstre et retire des PV à zelda
+    int diffX = (this->model->getLink()->getPosX() - ennemis->getPosX());
+    int diffY = (this->model->getLink()->getPosY() - ennemis->getPosY());
+
+            if ((diffX<0 && diffX>-30 && diffY>-20 && diffY<20)||(diffX>0 && diffX<20 && diffY>-20 && diffY<20)||(diffX>-20 && diffX<20 && diffY>0 && diffY<25)||(diffX>-20 && diffX<20 && diffY<0 && diffY>-20))
+            {
 
 //                if(ennemis->getType_of_monstre()=="zelda"){
 //                   ennemis->setDirection("rencontre");
@@ -140,73 +162,68 @@ void Controller::displayScene(){
 //                }
 
 //                else{
-//                    gameSound.setMedia(QUrl("un son de blessure"));
-//                    gameSound.play();
-//                    this->model->getLink()->setLife(this->model->getLink()->getLife() - 1);
-//                    if(ennemis->getType_of_monstre() == "boule_de_feu_" ) {
-//                        this->collisionZeldaBouleDeFeu();
-//                    }
-//                    if(ennemis->getType_of_monstre() == "lambeau_boss_niveau_2_"){
-//                        this->collisionZeldaLambeau();
-//                    }
+//                    sound.setMedia(QUrl("un son de blessure"));
+//                    sound.play();
+                    this->model->getLink()->setLife(this->model->getLink()->getLife() - 1);
 //                }
 
-//            }
-//}
+            }
+}
 
-////void Controller::checkCollisionDecortWithEnnemi(Ennemis *ennemis)
+
+//void Controller::checkCollisionDecortWithEnnemi(Ennemis *ennemis)
 //{
 //    if(ennemis->getDirection()=="right"){
 //            // pour la colision à droite
-//        if ((this->view->getMapScene()->itemAt(ennemis->getPosX()+30,ennemis->getPosY()+20, QTransform())->zValue() == 5)||(this->view->getMapScene()->itemAt(ennemis->getPosX()+30, ennemis->getPosY(),QTransform())->zValue() == 5))
+//        if ((this->viewGame->getMapScene()->itemAt(ennemis->getPosX()+30,ennemis->getPosY()+20, QTransform())->zValue() == 5)||(this->viewGame->getMapScene()->itemAt(ennemis->getPosX()+30, ennemis->getPosY(),QTransform())->zValue() == 5))
 //        { // un mur
 //            ennemis->setDirection("left");
 //            this->model->getNiveau()->getEnnemi()->deplacementEnnemis(ennemis);
-//        }else if((this->view->getMapScene()->itemAt(ennemis->getPosX()+30,ennemis->getPosY()+20, QTransform())->zValue() == 1)||(this->view->getMapScene()->itemAt(ennemis->getPosX()+30, ennemis->getPosY(),QTransform())->zValue() == 1))
+//        }else if((this->viewGame->getMapScene()->itemAt(ennemis->getPosX()+30,ennemis->getPosY()+20, QTransform())->zValue() == 1)||(this->viewGame->getMapScene()->itemAt(ennemis->getPosX()+30, ennemis->getPosY(),QTransform())->zValue() == 1))
 //        {
 //            // de l'eau
 //            ennemis->setDirection("left");
-//            this->model->getNiveau()->getEnnemi()->deplacementEnnemis(ennemis);
+//            this->viewGame->getEnnemi()->deplacementEnnemis(ennemis);
 //        }else {
-//            this->model->getNiveau()->getEnnemi()->deplacementEnnemis(ennemis);
+//            this->viewGame->getEnnemi()->deplacementEnnemis(ennemis);
 //        }
 //    }else if (ennemis->getDirection()=="left"){
 //        // pour la colision à gauche
-//    if ((this->view->getMapScene()->itemAt(ennemis->getPosX(),ennemis->getPosY(),QTransform())->zValue() == 5)||(this->view->getMapScene()->itemAt(ennemis->getPosX()-10,ennemis->getPosY()+20,QTransform())->zValue() == 5))
+//    if ((this->viewGame->getMapScene()->itemAt(ennemis->getPosX(),ennemis->getPosY(),QTransform())->zValue() == 5)||(this->viewGame->getMapScene()->itemAt(ennemis->getPosX()-10,ennemis->getPosY()+20,QTransform())->zValue() == 5))
 //    {
 //    // un mur
 //        ennemis->setDirection("right");
 //        this->model->getNiveau()->getEnnemi()->deplacementEnnemis(ennemis);
-//    }else if((this->view->getMapScene()->itemAt(ennemis->getPosX(),ennemis->getPosY(),QTransform())->zValue() == 1)||(this->view->getMapScene()->itemAt(ennemis->getPosX()-10,ennemis->getPosY()+20,QTransform())->zValue() == 1))
+//    }else if((this->viewGame->getMapScene()->itemAt(ennemis->getPosX(),ennemis->getPosY(),QTransform())->zValue() == 1)||(this->viewGame->getMapScene()->itemAt(ennemis->getPosX()-10,ennemis->getPosY()+20,QTransform())->zValue() == 1))
 //    {
 //        ennemis->setDirection("right");
-//        this->model->getNiveau()->getEnnemi()->deplacementEnnemis(ennemis);
+//        this->viewGame->getEnnemi()->deplacementEnnemis(ennemis);
 //    }else{
-//        this->model->getNiveau()->getEnnemi()->deplacementEnnemis(ennemis);
+//        this->viewGame->getEnnemi()->deplacementEnnemis(ennemis);
 //    }
 //    } else if (ennemis->getDirection()=="down"){
 //     // pour la colision en bas
-//    if ((this->view->getMapScene()->itemAt(ennemis->getPosX()+20,ennemis->getPosY()+30,QTransform())->zValue() == 5)||(this->view->getMapScene()->itemAt(ennemis->getPosX(),ennemis->getPosY()+30,QTransform())->zValue() == 5))
+//    if ((this->viewGame->getMapScene()->itemAt(ennemis->getPosX()+20,ennemis->getPosY()+30,QTransform())->zValue() == 5)||(this->viewGame->getMapScene()->itemAt(ennemis->getPosX(),ennemis->getPosY()+30,QTransform())->zValue() == 5))
 //    {
 //    // un mur
 //        ennemis->setDirection("up");
 //        this->model->getNiveau()->getEnnemi()->deplacementEnnemis(ennemis);
 //    }
-//    else if ((this->view->getMapScene()->itemAt(ennemis->getPosX()+20,ennemis->getPosY()+30,QTransform())->zValue() == 1)||(this->view->getMapScene()->itemAt(ennemis->getPosX(),ennemis->getPosY()+30,QTransform())->zValue() == 1))
+//    else if ((this->viewGame->getMapScene()->itemAt(ennemis->getPosX()+20,ennemis->getPosY()+30,QTransform())->zValue() == 1)||(this->viewGame->getMapScene()->itemAt(ennemis->getPosX(),ennemis->getPosY()+30,QTransform())->zValue() == 1))
 //    {
 //        ennemis->setDirection("up");
-//        this->model->getNiveau()->getEnnemi()->deplacementEnnemis(ennemis);
+//        this->viewGame->getEnnemi()->deplacementEnnemis(ennemis);
 //    }else{
-//        this->model->getNiveau()->getEnnemi()->deplacementEnnemis(ennemis);
+//        this->viewGame->getEnnemi()->deplacementEnnemis(ennemis);
 //    }
 //    } else if(ennemis->getDirection()=="up"){
 //            // pour la colision en haut
-//            if ((this->view->getMapScene()->itemAt(ennemis->getPosX()+20,ennemis->getPosY()-10,QTransform())->zValue() == 5)||(this->view->getMapScene()->itemAt(ennemis->getPosX(),ennemis->getPosY()-10,QTransform())->zValue() == 5))
+//            if ((this->viewGame->getMapScene()->itemAt(ennemis->getPosX()+20,ennemis->getPosY()-10,QTransform())->zValue() == 5)||(this->viewGame->getMapScene()->itemAt(ennemis->getPosX(),ennemis->getPosY()-10,QTransform())->zValue() == 5))
 //           {
 //           // un mur
 //               ennemis->setDirection("down");
 //               this->model->getNiveau()->getEnnemi()->deplacementEnnemis(ennemis);
-//           } else if ((this->view->getMapScene()->itemAt(ennemis->getPosX()+20,ennemis->getPosY()-10,QTransform())->zValue() == 1)||(this->view->getMapScene()->itemAt(ennemis->getPosX(),ennemis->getPosY()-10,QTransform())->zValue() == 1))
+//           } else if ((this->viewGame->getMapScene()->itemAt(ennemis->getPosX()+20,ennemis->getPosY()-10,QTransform())->zValue() == 1)||(this->viewGame->getMapScene()->itemAt(ennemis->getPosX(),ennemis->getPosY()-10,QTransform())->zValue() == 1))
 //           {
 //               ennemis->setDirection("down");
 //               this->model->getNiveau()->getEnnemi()->deplacementEnnemis(ennemis);
@@ -485,61 +502,71 @@ void Controller::pressKey(QString key)
 {
     if(levelCounter == 1)
     {
-        if(key=="right")
-        {
-            this->model->getLink()->setTile("right");
-//            //On vérifie la COLLISION
-//            if ((this->viewGame->getMapScene()->itemAt(this->model->getLink()->getPosX()+this->model->getLink()->getTile().width(), this->model->getLink()->getPosY()+this->model->getLink()->getTile().height()-10, QTransform())->zValue() == 5)||(this->view->getMapScene()->itemAt(this->model->getLink()->getPosX()+this->model->getLink()->getTile().width(), this->model->getLink()->getPosY(),QTransform())->zValue() == 5))
-//            {
-//                //si il ya collision avec un objet on fait rien
-//            }
-//            else {
-                this->model->getLink()->setPosX(this->model->getLink()->getPosX() + this->model->getLink()->getSpeed());
-                //this->viewGame->getCameraView()->setPosX(this->model->getLink()->getSpeed());
-//            }
-
-
-        }
-
-        else if(key=="left")
+        if(key=="left")
         {
             this->model->getLink()->setTile("left");
-//            if ((this->viewGame->getMapScene()->itemAt(this->model->getLink()->getPosX(),this->model->getLink()->getPosY(),QTransform())->zValue() == 5)||(this->view->getMapScene()->itemAt(this->model->getLink()->getPosX()-10,this->model->getLink()->getPosY()+this->model->getLink()->getTile().height()-10,QTransform())->zValue() == 5))
-//            {
-//                //si il ya collision avec un objet on fait rien
-//            }
-//            else{
+
+            if(this->model->getLink()->getPosX() > 50)
+            {
+                //            if ((this->viewGame->getMapScene()->itemAt(this->model->getLink()->getPosX(),this->model->getLink()->getPosY(),QTransform())->zValue() == 5)||(this->view->getMapScene()->itemAt(this->model->getLink()->getPosX()-10,this->model->getLink()->getPosY()+this->model->getLink()->getTile().height()-10,QTransform())->zValue() == 5))
+                //            {
+                //                //si il ya collision avec un objet on fait rien
+                //            }
+                //            else{
                 this->model->getLink()->setPosX(this->model->getLink()->getPosX() - this->model->getLink()->getSpeed());
                 //this->viewGame->getCameraView()->setPosX(this->model->getLink()->getPosX() - this->model->getLink()->getSpeed());
-//            }
+                //            }
+            }
+        }
+
+        else if(key=="right")
+        {
+            this->model->getLink()->setTile("right");
+
+            if(this->model->getLink()->getPosX() < this->viewGame->currentMap[0].size()*50 -100)
+            {
+                //            //On vérifie la COLLISION
+                //            if ((this->viewGame->getMapScene()->itemAt(this->model->getLink()->getPosX()+this->model->getLink()->getTile().width(), this->model->getLink()->getPosY()+this->model->getLink()->getTile().height()-10, QTransform())->zValue() == 5)||(this->view->getMapScene()->itemAt(this->model->getLink()->getPosX()+this->model->getLink()->getTile().width(), this->model->getLink()->getPosY(),QTransform())->zValue() == 5))
+                //            {
+                //                //si il ya collision avec un objet on fait rien
+                //            }
+                //            else {
+                this->model->getLink()->setPosX(this->model->getLink()->getPosX() + this->model->getLink()->getSpeed());
+                //this->viewGame->getCameraView()->setPosX(this->model->getLink()->getSpeed());
+                //            }
+            }
+        }
+
+        else if(key == "up")
+        {
+            this->model->getLink()->setTile("up");
+            if(this->model->getLink()->getPosY() > 50)
+            {
+                //            if ((this->viewGame->getMapScene()->itemAt(this->model->getLink()->getPosX()+this->model->getLink()->getTile().width()/1.5,this->model->getLink()->getPosY()-10,QTransform())->zValue() == 5)||(this->view->getMapScene()->itemAt(this->model->getLink()->getPosX(),this->model->getLink()->getPosY()-10,QTransform())->zValue() == 5)){
+                //                //si il ya collision avec un objet on fait rien
+                //            }
+                //            else
+                //            {
+                this->model->getLink()->setPosY(this->model->getLink()->getPosY() - this->model->getLink()->getSpeed());
+                //this->viewGame->getCameraView()->setPosY(this->model->getLink()->getPosY() - this->model->getLink()->getSpeed());
+                //            }
+            }
 
         }
 
         else if(key == "down")
         {
             this->model->getLink()->setTile("down");
-//            if ((this->viewGame->getMapScene()->itemAt(this->model->getZegetLinklda()->getPosX()+this->model->getLink()->getTile().width()/1.5,this->model->getLink()->getPosY()+this->model->getLink()->getTile().height(),QTransform())->zValue() == 5)||(this->view->getMapScene()->itemAt(this->model->getLink()->getPosX(),this->model->getLink()->getPosY()+this->model->getLink()->getTile().height(),QTransform())->zValue() == 5)){
-//                //si il ya collision avec un objet on fait rien
-//            }
-//            else{
+            if(this->model->getLink()->getPosY() < this->viewGame->currentMap.size()*50 -100)
+            {
+                //            if ((this->viewGame->getMapScene()->itemAt(this->model->getZegetLinklda()->getPosX()+this->model->getLink()->getTile().width()/1.5,this->model->getLink()->getPosY()+this->model->getLink()->getTile().height(),QTransform())->zValue() == 5)||(this->view->getMapScene()->itemAt(this->model->getLink()->getPosX(),this->model->getLink()->getPosY()+this->model->getLink()->getTile().height(),QTransform())->zValue() == 5)){
+                //                //si il ya collision avec un objet on fait rien
+                //            }
+                //            else{
                 this->model->getLink()->setPosY(this->model->getLink()->getPosY() + this->model->getLink()->getSpeed());
                 //this->viewGame->getCameraView()->setPosY(this->model->getLink()->getPosY() + this->model->getLink()->getSpeed());
-//            }
-
-        }
-
-
-        else if(key == "up")
-        {
-            this->model->getLink()->setTile("up");
-//            if ((this->viewGame->getMapScene()->itemAt(this->model->getLink()->getPosX()+this->model->getLink()->getTile().width()/1.5,this->model->getLink()->getPosY()-10,QTransform())->zValue() == 5)||(this->view->getMapScene()->itemAt(this->model->getLink()->getPosX(),this->model->getLink()->getPosY()-10,QTransform())->zValue() == 5)){
-//                //si il ya collision avec un objet on fait rien
-//            }
-//            else
-//            {
-                this->model->getLink()->setPosY(this->model->getLink()->getPosY() - this->model->getLink()->getSpeed());
-                //this->viewGame->getCameraView()->setPosY(this->model->getLink()->getPosY() - this->model->getLink()->getSpeed());
-//            }
+                //            }
+            }
 
         }
 

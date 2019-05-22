@@ -31,18 +31,18 @@ public:
 protected:
     void delay(int i);
 
-/*          attaques et Zelda        */
+/*          attaques et Link        */
     void attack_function(QString direction);//attaque de l'epee
     void attaque_hammer_function();//attaque du marteau
     void checkCollisionArrowsWithEnnemis();//pour checker la collision flech ennemie
     void faireAvancerArrow();//pour que les flechent se deplacent
 
-/*          Jeu et Zelda        */
+/*          Jeu et Link        */
     void game_over_procedure();//en cas de game over
     void game_finished_procedure();
     void linkCircularAttack();//toutes les 2 seconde le coup du hammer
 
-/*          Ennemis et Zelda        */
+/*          Ennemis et Link        */
     void toucheEnnemisQuandZeldaAttaque(class Ennemis *ennemi);
     void checkCollisionEnnemis(Ennemis *ennemis);
     void checkCollisionDecortWithEnnemi(Ennemis *ennemis);

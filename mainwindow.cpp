@@ -1,10 +1,12 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+#include <ennemis.h>
 #include "controller.h"
 
 #include <vector>
 #include <QKeyEvent>
+
+using namespace std;
 
 extern Controller *pointeurControlleur;
 static bool keepPlaying = true;
@@ -36,8 +38,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     currentMap.push_back("xww0000000000000000x");
     currentMap.push_back("xxxxxxxxxxxxxxxxxxxx");
 
-
-
+    this->monstres.push_back(new Ennemis(150,150));
+    this->monstres.push_back(new Ennemis(400,250));
+    this->monstres.push_back(new Ennemis(250,400));
+    this->monstres.push_back(new Ennemis(500,400));
+    this->monstres.push_back(new Ennemis(400,400));
+    this->monstres.push_back(new Ennemis(300,430));
+    this->monstres.push_back(new Ennemis(250,460));
+    this->monstres.push_back(new Ennemis(800,250));
 
 }
 
@@ -48,9 +56,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::resetView(){
     delete this->mapScene;
-    delete this->cameraView;
-    this->mapScene = new QGraphicsScene(); // fixe
-    this->cameraView = new Scene(); // "la camera mobile"
+    this->mapScene = new QGraphicsScene();
 }
 
 void MainWindow::displayMap()
@@ -86,9 +92,16 @@ void MainWindow::displayMap()
 
 void MainWindow::displayLink(Link *link)
 {
-    QGraphicsPixmapItem *apparencePersonnage =  new QGraphicsPixmapItem(link->getTile());
-    apparencePersonnage->setPos(link->getPosX(),link->getPosY());
-    this->mapScene->addItem(apparencePersonnage);
+    QGraphicsPixmapItem *tileLink =  new QGraphicsPixmapItem(link->getTile());
+    tileLink->setPos(link->getPosX(),link->getPosY());
+    this->mapScene->addItem(tileLink);
+}
+
+void MainWindow::displayEnnemis(Ennemis *ennemi)
+{
+    QGraphicsPixmapItem *tileEnnemi =  new QGraphicsPixmapItem(ennemi->getTile());
+    tileEnnemi->setPos(ennemi->getPosX(),ennemi->getPosY());
+    this->mapScene->addItem(tileEnnemi);
 }
 
 
@@ -186,4 +199,13 @@ void MainWindow::setCameraView(Scene *value)
     cameraView = value;
 }
 
+vector<Ennemis *> MainWindow::getMonstres() const
+{
+    return monstres;
+}
+
+void MainWindow::setMonstres(const vector<Ennemis*> &value)
+{
+    monstres = value;
+}
 
