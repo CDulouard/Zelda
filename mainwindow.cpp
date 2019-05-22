@@ -21,33 +21,53 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     this->mapScene = new QGraphicsScene();
     this->cameraView = new Scene(); // "la camera mobile"
 
+
+    currentMap.push_back("........................................");
+    currentMap.push_back("........................................");
+    currentMap.push_back("........................................");
+    currentMap.push_back("........................................");
+    currentMap.push_back("........................................");
+    currentMap.push_back("........................................");
+    currentMap.push_back("........................................");
+    currentMap.push_back("...........000000000000000000..........."); // first case : 11, 8
+    currentMap.push_back("...........000000000000000000...........");
+    currentMap.push_back("...........000000000000000000...........");
+    currentMap.push_back("...........000000000000000000...........");
+    currentMap.push_back("...........000000000000000000...........");
+    currentMap.push_back("...........000000wwwww0000000...........");
+    currentMap.push_back("...........00000wwwwwww000000...........");
+    currentMap.push_back("...........00000wwwwwww000000...........");
+    currentMap.push_back("...........00000wwwwwww000000...........");
+    currentMap.push_back("...........000000wwwww0000000...........");
+    currentMap.push_back("...........000000www000000000...........");
+    currentMap.push_back("...........00000ww00000000000...........");
+    currentMap.push_back("...........000www000000000000...........");
+    currentMap.push_back("...........www000000000000000...........");
+    currentMap.push_back("........................................");
+    currentMap.push_back("........................................");
+    currentMap.push_back("........................................");
+    currentMap.push_back("........................................");
+    currentMap.push_back("........................................");
+    currentMap.push_back("........................................");
+    currentMap.push_back("........................................");
+
     /*  Fit the cellTypes map with the type of all cells in the map */
     cellTypes["0"] = 1; /*  Ground (can walk on it) */
-    cellTypes["x"] = 0; /*  Wall (can't walk on it) */
+    cellTypes["."] = 0; /*  Wall (can't walk on it) */
     cellTypes["w"] = 0; /*  Water (can't walk on it) */
 
-    currentMap.push_back("xxxxxxxxxxxxxxxxxxxx");
-    currentMap.push_back("x000000000000000w00x");
-    currentMap.push_back("x000000000000000w00x");
-    currentMap.push_back("x000000000000000w00x");
-    currentMap.push_back("x000000000000000w00x");
-    currentMap.push_back("x000000000000000wwwx");
-    currentMap.push_back("x000000000000000000x");
-    currentMap.push_back("x000000000000000000x");
-    currentMap.push_back("x000000000000000000x");
-    currentMap.push_back("x000000000000000000x");
-    currentMap.push_back("xww0000000000000000x");
-    currentMap.push_back("xww0000000000000000x");
-    currentMap.push_back("xxxxxxxxxxxxxxxxxxxx");
+    pathLess.push_back(".");
+    pathLess.push_back("w");
 
-    this->ennemisList.push_back(new Ennemis(150,150));
-    this->ennemisList.push_back(new Ennemis(400,250));
-    this->ennemisList.push_back(new Ennemis(250,400));
-    this->ennemisList.push_back(new Ennemis(500,400));
-    this->ennemisList.push_back(new Ennemis(400,400));
-    this->ennemisList.push_back(new Ennemis(300,430));
-    this->ennemisList.push_back(new Ennemis(250,460));
-    this->ennemisList.push_back(new Ennemis(800,250));
+
+    this->ennemisList.push_back(new Ennemis(13 * 50 , 17 * 50));
+    this->ennemisList.push_back(new Ennemis(14 * 50 , 16 * 50));
+    this->ennemisList.push_back(new Ennemis(16 * 50 , 12 * 50));
+    this->ennemisList.push_back(new Ennemis(18 * 50 , 10 * 50));
+    this->ennemisList.push_back(new Ennemis(19 * 50 , 9 * 50));
+    this->ennemisList.push_back(new Ennemis(26 * 50 , 14 * 50));
+    this->ennemisList.push_back(new Ennemis(27 * 50 , 8 * 50));
+    this->ennemisList.push_back(new Ennemis(27 * 50 , 20 * 50));
 
 }
 
@@ -74,7 +94,7 @@ void MainWindow::displayMap()
                 grass->setPos(j*50,i*50);
                 this->mapScene -> addItem(grass);
             }
-            else if (currentMap[i][j] == "x"){
+            else if (currentMap[i][j] == "."){
                 QGraphicsPixmapItem *wall = new QGraphicsPixmapItem();
                 wall->setPixmap(QPixmap(":/terrain/Images/Terrain/wall.jpg"));
                 wall->setPos(j*50,i*50);
@@ -220,6 +240,21 @@ Scene *MainWindow::getCameraView() const
 void MainWindow::setCameraView(Scene *value)
 {
     cameraView = value;
+}
+
+std::vector<QString> MainWindow::getCurrentMap()
+{
+    return currentMap;
+}
+
+std::vector<QString> MainWindow::getPathLess()
+{
+    return pathLess;
+}
+
+std::map<QString, int> MainWindow::getCellTypes()
+{
+    return cellTypes;
 }
 
 vector<Ennemis *> MainWindow::getEnnemisList() const

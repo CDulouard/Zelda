@@ -48,6 +48,8 @@ protected:
     void lootAleatoireDesEnnemis(Ennemis *ennemis);
     void checkCollisionLinKZelda();
 
+    bool checkFieldForLink(QString direction);
+
 /*          Item et Link        */
     void checkCollisionItemsWithLink();//collision item link
     void zeldaRammasseUnCoeur(int i);//si zelda ramasse un coeur

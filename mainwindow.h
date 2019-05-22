@@ -35,12 +35,17 @@ public:
     Scene *getCameraView() const;
     void setCameraView(Scene *value);
 
+    std::vector<QString> getCurrentMap();
+
+    std::vector<QString> getPathLess();
+
+    std::map<QString, int> getCellTypes();
+
     std::vector<Ennemis*> getEnnemisList() const;
     void setEnnemisList(const std::vector<Ennemis*> &value);
 
     void ajouterItem(int posX,int posY, QString s);
 
-    std::vector<QString> currentMap;
 
 protected:
     Ui::MainWindow *ui;
@@ -55,6 +60,8 @@ protected:
 
     std::vector<class Item *> mapItems;
 
+    std::vector<QString> currentMap;
+    std::vector<QString> pathLess;
 
 };
 

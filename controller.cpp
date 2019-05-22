@@ -17,8 +17,7 @@ Controller::Controller(menu *menu, MainWindow *gameWindow, Model *model)
     this->timer =  new QTimer();
     timer->connect(timer, SIGNAL(timeout()), this, SLOT(displayScene()));
     this->levelCounter = 0;
-    this->model->getLink()->setPosX(50);
-    this->model->getLink()->setPosY(50);
+
 
 }
 
@@ -123,27 +122,35 @@ void Controller::mooveEnnemis(){
             if(randomNumber == 0){
                 switch (randomNumber2)
                 {
-                case (0):
+                case (0): // left
                 {
-                    if(this->viewGame->getEnnemisList()[i]->getPosX() > 50)
+                    QCharRef string1 = this->viewGame->getCurrentMap()[this->viewGame->getEnnemisList()[i]->getPosY()/50][this->viewGame->getEnnemisList()[i]->getPosX()/50 - 1];
+                    QString caseToMoveOn = QString(string1);
+                    if(this->viewGame->getCellTypes()[caseToMoveOn])
                         this->viewGame->getEnnemisList()[i]->moove("left");
                     break;
                 }
-                case (1):
+                case (1): // right
                 {
-                    if(this->viewGame->getEnnemisList()[i]->getPosX() < this->viewGame->currentMap[0].size()*50 -100)
+                    QCharRef string1 = this->viewGame->getCurrentMap()[this->viewGame->getEnnemisList()[i]->getPosY()/50][this->viewGame->getEnnemisList()[i]->getPosX()/50 + 1];
+                    QString caseToMoveOn = QString(string1);
+                    if(this->viewGame->getCellTypes()[caseToMoveOn])
                         this->viewGame->getEnnemisList()[i]->moove("right");
                     break;
                 }
-                case (2):
+                case (2): // up
                 {
-                    if(this->viewGame->getEnnemisList()[i]->getPosY() > 50)
+                    QCharRef string1 = this->viewGame->getCurrentMap()[this->viewGame->getEnnemisList()[i]->getPosY()/50 - 1][this->viewGame->getEnnemisList()[i]->getPosX()/50];
+                    QString caseToMoveOn = QString(string1);
+                    if(this->viewGame->getCellTypes()[caseToMoveOn])
                         this->viewGame->getEnnemisList()[i]->moove("up");
                     break;
                 }
-                case (3):
+                case (3): // down
                 {
-                    if(this->viewGame->getEnnemisList()[i]->getPosY() < this->viewGame->currentMap.size()*50 -100)
+                    QCharRef string1 = this->viewGame->getCurrentMap()[this->viewGame->getEnnemisList()[i]->getPosY()/50 + 1][this->viewGame->getEnnemisList()[i]->getPosX()/50];
+                    QString caseToMoveOn = QString(string1);
+                    if(this->viewGame->getCellTypes()[caseToMoveOn])
                         this->viewGame->getEnnemisList()[i]->moove("down");
                     break;
                 }
@@ -187,6 +194,36 @@ void Controller::checkCollisionLinKZelda()
 {
     if((this->model->getLink()->getPosX() == this->model->getZelda()->getPosX()) && (this->model->getLink()->getPosY() == this->model->getZelda()->getPosY()))
         game_finished_procedure();
+}
+
+
+
+bool Controller::checkFieldForLink(QString direction)
+{
+    if(direction == "left"){
+        QCharRef string1 = this->viewGame->getCurrentMap()[this->model->getLink()->getPosY()/50][this->model->getLink()->getPosX()/50 - 1];
+        QString caseToMoveOn = QString(string1);
+        return this->viewGame->getCellTypes()[caseToMoveOn];
+    }
+
+    else if(direction == "right"){
+        QCharRef string1 = this->viewGame->getCurrentMap()[this->model->getLink()->getPosY()/50][this->model->getLink()->getPosX()/50 + 1];
+        QString caseToMoveOn = QString(string1);
+        return this->viewGame->getCellTypes()[caseToMoveOn];
+    }
+
+    if(direction == "up"){
+        QCharRef string1 = this->viewGame->getCurrentMap()[this->model->getLink()->getPosY()/50 -1][this->model->getLink()->getPosX()/50];
+        QString caseToMoveOn = QString(string1);
+        return this->viewGame->getCellTypes()[caseToMoveOn];
+    }
+
+    if(direction == "down"){
+        QCharRef string1 = this->viewGame->getCurrentMap()[this->model->getLink()->getPosY()/50 + 1][this->model->getLink()->getPosX()/50];
+        QString caseToMoveOn = QString(string1);
+        return this->viewGame->getCellTypes()[caseToMoveOn];
+    }
+    return 0;
 }
 
 
@@ -509,7 +546,7 @@ void Controller::pressKey(QString key)
             this->model->getLink()->setTile("left");
             this->model->getLink()->setDirection("left");
 
-            if(this->model->getLink()->getPosX() > 50)
+            if(checkFieldForLink(key))
             {
                 //            if ((this->viewGame->getMapScene()->itemAt(this->model->getLink()->getPosX(),this->model->getLink()->getPosY(),QTransform())->zValue() == 5)||(this->view->getMapScene()->itemAt(this->model->getLink()->getPosX()-10,this->model->getLink()->getPosY()+this->model->getLink()->getTile().height()-10,QTransform())->zValue() == 5))
                 //            {
@@ -526,7 +563,7 @@ void Controller::pressKey(QString key)
             this->model->getLink()->setTile("right");
             this->model->getLink()->setDirection("right");
 
-            if(this->model->getLink()->getPosX() < this->viewGame->currentMap[0].size()*50 -100)
+            if(checkFieldForLink(key))
             {
                 //            //On vérifie la COLLISION
                 //            if ((this->viewGame->getMapScene()->itemAt(this->model->getLink()->getPosX()+this->model->getLink()->getTile().width(), this->model->getLink()->getPosY()+this->model->getLink()->getTile().height()-10, QTransform())->zValue() == 5)||(this->view->getMapScene()->itemAt(this->model->getLink()->getPosX()+this->model->getLink()->getTile().width(), this->model->getLink()->getPosY(),QTransform())->zValue() == 5))
@@ -544,7 +581,7 @@ void Controller::pressKey(QString key)
             this->model->getLink()->setTile("up");
             this->model->getLink()->setDirection("up");
 
-            if(this->model->getLink()->getPosY() > 50)
+            if(checkFieldForLink(key))
             {
                 //            if ((this->viewGame->getMapScene()->itemAt(this->model->getLink()->getPosX()+this->model->getLink()->getTile().width()/1.5,this->model->getLink()->getPosY()-10,QTransform())->zValue() == 5)||(this->view->getMapScene()->itemAt(this->model->getLink()->getPosX(),this->model->getLink()->getPosY()-10,QTransform())->zValue() == 5)){
                 //                //si il ya collision avec un objet on fait rien
@@ -562,7 +599,7 @@ void Controller::pressKey(QString key)
             this->model->getLink()->setTile("down");
             this->model->getLink()->setDirection("down");
 
-            if(this->model->getLink()->getPosY() < this->viewGame->currentMap.size()*50 -100)
+            if(checkFieldForLink(key))
             {
                 //            if ((this->viewGame->getMapScene()->itemAt(this->model->getZegetLinklda()->getPosX()+this->model->getLink()->getTile().width()/1.5,this->model->getLink()->getPosY()+this->model->getLink()->getTile().height(),QTransform())->zValue() == 5)||(this->view->getMapScene()->itemAt(this->model->getLink()->getPosX(),this->model->getLink()->getPosY()+this->model->getLink()->getTile().height(),QTransform())->zValue() == 5)){
                 //                //si il ya collision avec un objet on fait rien

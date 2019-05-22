@@ -9,8 +9,6 @@ Ennemis::Ennemis(int posXinit, int posYinit) // constructeur
     this->posXinitiale = posXinit;
     this->posYinitiale = posYinit;
 
-    this->life = 3;
-
     this->tile = (QPixmap(":/Character/Images/Characters/Ennemies/ennemie1.png"));
 
 }

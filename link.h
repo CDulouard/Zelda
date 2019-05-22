@@ -24,8 +24,8 @@ public:
 
 
 private:
-    int arrowQuantity = 5;
-    int energy = 3;
+    int arrowQuantity;
+    int energy;
 
 
 
