@@ -56,10 +56,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     cellTypes["."] = 0; /*  Wall (can't walk on it) */
     cellTypes["w"] = 0; /*  Water (can't walk on it) */
 
-    pathLess.push_back(".");
-    pathLess.push_back("w");
-
-
     this->ennemisList.push_back(new Ennemis(13 * 50 , 17 * 50));
     this->ennemisList.push_back(new Ennemis(14 * 50 , 16 * 50));
     this->ennemisList.push_back(new Ennemis(16 * 50 , 12 * 50));
@@ -119,20 +115,18 @@ void MainWindow::displayLink(Link *link)
     this->mapScene->addItem(tileLink);
 }
 
+void MainWindow::displayZelda(Zelda *zelda)
+{
+    QGraphicsPixmapItem *tileZelda =  new QGraphicsPixmapItem(zelda->getTile());
+    tileZelda->setPos(zelda->getPosX(),zelda->getPosY());
+    this->mapScene->addItem(tileZelda);
+}
+
 void MainWindow::displayEnnemis(Ennemis *ennemi)
 {
     QGraphicsPixmapItem *tileEnnemi =  new QGraphicsPixmapItem(ennemi->getTile());
     tileEnnemi->setPos(ennemi->getPosX(),ennemi->getPosY());
     this->mapScene->addItem(tileEnnemi);
-}
-
-void MainWindow::displayZelda(Zelda *Zelda)
-{
-    Zelda->setPosX(this->currentMap[0].size()*50 - 100);
-    Zelda->setPosY(this->currentMap.size() * 50 - 100);
-    QGraphicsPixmapItem *tileZelda =  new QGraphicsPixmapItem(Zelda->getTile());
-    tileZelda->setPos(Zelda->getPosX(),Zelda->getPosY());
-    this->mapScene->addItem(tileZelda);
 }
 
 void MainWindow::displayStats(int health, int arrowNmber, int energy)
@@ -245,11 +239,6 @@ void MainWindow::setCameraView(Scene *value)
 std::vector<QString> MainWindow::getCurrentMap()
 {
     return currentMap;
-}
-
-std::vector<QString> MainWindow::getPathLess()
-{
-    return pathLess;
 }
 
 std::map<QString, int> MainWindow::getCellTypes()

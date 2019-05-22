@@ -23,8 +23,8 @@ public:
 
     void displayMap();
     void displayLink(Link *link);
+    void displayZelda(class Zelda *zelda);
     void displayEnnemis(class Ennemis *ennemi);
-    void displayZelda(class Zelda *Zelda);
 
     void displayStats(int health, int arrowNmber, int energy);
 
@@ -36,8 +36,6 @@ public:
     void setCameraView(Scene *value);
 
     std::vector<QString> getCurrentMap();
-
-    std::vector<QString> getPathLess();
 
     std::map<QString, int> getCellTypes();
 
@@ -61,7 +59,6 @@ protected:
     std::vector<class Item *> mapItems;
 
     std::vector<QString> currentMap;
-    std::vector<QString> pathLess;
 
 };
 

@@ -6,10 +6,10 @@ Link::Link()
     this->setLife(5);
     this->setArrowQuantity(5);
     this->setEnergy(3);
-    this->setPosX(11*50);
-    this->setPosY(7*50);
     this->direction = "down";
     this->tile = QPixmap(":/Character/Images/Characters/Link/link_down.png");
+    this->setPosX(11*50);
+    this->setPosY(7*50);
 }
 
 int Link::getArrowQuantity() const

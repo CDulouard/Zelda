@@ -17,7 +17,8 @@ Controller::Controller(menu *menu, MainWindow *gameWindow, Model *model)
     this->timer =  new QTimer();
     timer->connect(timer, SIGNAL(timeout()), this, SLOT(displayScene()));
     this->levelCounter = 0;
-
+    this->model->getZelda()->setPosX((this->viewGame->getCurrentMap()[0].size() - 12) * 50);
+    this->model->getZelda()->setPosY(int(this->viewGame->getCurrentMap().size() - 8) * 50);
 
 }
 
@@ -93,8 +94,7 @@ void Controller::displayScene(){
         }
     }
     this->viewGame->displayZelda(this->getModel()->getZelda());
-
-    displayStats(this->model->getLink()->getLife(), this->model->getLink()->getArrowQuantity(), this->model->getLink()->getEnergy());
+    displayStats(int(this->model->getLink()->getLife()), this->model->getLink()->getArrowQuantity(), this->model->getLink()->getEnergy());
 
     mooveEnnemis();
     checkCollisionEnnemis();
@@ -171,7 +171,7 @@ void Controller::checkCollisionEnnemis()
             if((this->viewGame->getEnnemisList()[i]->getPosX() == this->model->getLink()->getPosX()) && (this->viewGame->getEnnemisList()[i]->getPosY() == this->model->getLink()->getPosY())){
                 //sound.setMedia(QUrl("un son de blessure"));
                 //sound.play();
-                this->model->getLink()->setLife(this->model->getLink()->getLife() - 1);
+                this->model->getLink()->setLife(int(this->model->getLink()->getLife()) - 1);
 
                 if(this->model->getLink()->getDirection() == "left")
                     this->model->getLink()->setPosX(this->model->getLink()->getPosX() +100);
