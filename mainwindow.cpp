@@ -88,7 +88,7 @@ void MainWindow::displayMap()
 
             if (currentMap[i][j] == "g"){
                 QGraphicsPixmapItem *grass = new QGraphicsPixmapItem();
-                grass->setPixmap(QPixmap(":/terrain/Images/Terrain/grass_12.png"));
+                grass->setPixmap(QPixmap(":/terrain/Images/Terrain/grass_10.png"));
                 grass->setPos(j*50,i*50);
                 this->mapScene -> addItem(grass);
             }

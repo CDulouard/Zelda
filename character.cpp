@@ -31,7 +31,7 @@ void Character::setLife(int life)
     this->life=life;//si la vie passe en dessous de 0 on met à 0
 }
 
-float Character::getLife()
+int Character::getLife()
 {
     return this->life;
 }

@@ -7,6 +7,7 @@ Item::Item(int posXinit, int posYinit, QString type_of_item)
     this->posXactuel=posXinit;
     this->posYactuel=posYinit;
     this->type_of_item = type_of_item;
+    this->itemLifeCounter = 3;
     setTile();
 }
 
@@ -105,4 +106,14 @@ int Item::getPosYactuel() const
 void Item::setPosYactuel(int value)
 {
     posYactuel = value;
+}
+
+int Item::getItemLifeCounter() const
+{
+    return itemLifeCounter;
+}
+
+void Item::setItemLifeCounter(int value)
+{
+    itemLifeCounter = value;
 }

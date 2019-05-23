@@ -36,16 +36,21 @@ public:
     int getPosYactuel() const;
     void setPosYactuel(int value);
 
+    int getItemLifeCounter() const;
+    void setItemLifeCounter(int value);
+
 
 
 private:
-    QPixmap tile; // attribut "tile" de type pixmax
+    QPixmap tile;
     int posXinitiale;
     int posYinitiale;
     int posXactuel;
     int posYactuel;
 
-QString type_of_item;
+    QString type_of_item;
+
+    int itemLifeCounter;
 };
 
 #endif // ITEM_H

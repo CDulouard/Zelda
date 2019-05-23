@@ -16,7 +16,7 @@ public:
     int getPosY();
     void setPosY(int j);
 
-    float getLife();
+    int getLife();
     void setLife(int life);
 
     int getSpeed() const;

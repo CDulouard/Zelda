@@ -34,28 +34,25 @@ public:
 
 protected:
     void delay(int i);
+    void itemDeleter();
 
-/*          attaques et Link        */
     void attack_function(QString direction);
-    void checkCollisionArrowsWithEnnemis();//pour checker la collision fleche ennemie
-    void mooveArrow();//pour que les flechent se deplacent
 
-/*          Jeu et Link        */
-    void game_over_procedure();
-    void game_finished_procedure();
+    void mooveArrow();
 
-/*          objets et Link        */
-    void checkCollisionEnnemis();
     void lootAleatoireDesEnnemis(class Ennemis *ennemis);
+
+    void checkCollisionLinkItems();
+    void checkCollisionLinkEnnemis();
     void checkCollisionLinKZelda();
 
     bool checkFieldForLink(QString direction);
 
-/*          Item et Link        */
-    void checkCollisionItemsWithLink();//collision item link
-    void linkRammasseUnCoeur(int i);//si zelda ramasse un coeur
-    void linkRammasseUneFleche(int i);//si zelda ramasse une fleche
+    void checkCollisionEnnemisArrows();
+    bool checkCollisionEnnemisEnnemis(QString direction, int nbMonster);
 
+    void game_over_procedure();
+    void game_finished_procedure();
 
 
 
@@ -76,7 +73,7 @@ private:
     QMediaPlayer arrowHitSound;
 
     int levelCounter;
-    unsigned int energyLoaderCounter;
+    unsigned int eventCounter;
 
 };
 

@@ -16,7 +16,7 @@ Controller::Controller(menu *menu, MainWindow *gameWindow, Model *model)
     this->timer =  new QTimer();
     timer->connect(timer, SIGNAL(timeout()), this, SLOT(displayScene()));
     this->levelCounter = 0;
-    this->energyLoaderCounter =0;
+    this->eventCounter = 0;
 
     this->hurtSound.setMedia(QUrl("qrc:/game/Sounds/link_hurt.mp3"));
     this->swordSound.setMedia(QUrl("qrc:/game/Sounds/sword_attack.mp3"));
@@ -68,7 +68,7 @@ void Controller::startGame()
 
 void Controller::displayScene(){
 
-    energyLoaderCounter++;
+    eventCounter++;
 
     this->viewGame->resetView();
     this->viewGame->displayMap();
@@ -84,14 +84,17 @@ void Controller::displayScene(){
     this->viewGame->displayZelda(this->getModel()->getZelda());
     displayStats(int(this->model->getLink()->getLife()), this->model->getLink()->getArrowQuantity(), this->model->getLink()->getEnergy());
 
-    if(energyLoaderCounter%150 == 0)
+    if(eventCounter%150 == 0){
         energyLoader();
+        itemDeleter();
+    }
 
     mooveArrow();
     mooveEnnemis();
-    checkCollisionArrowsWithEnnemis();
-    checkCollisionEnnemis();
+    checkCollisionEnnemisArrows();
+    checkCollisionLinkEnnemis();
     checkCollisionLinKZelda();
+    checkCollisionLinkItems();
 
 
     if (this->model->getLink()->getLife() > 0)
@@ -104,8 +107,6 @@ void Controller::displayScene(){
 void Controller::mooveEnnemis(){
     if (this->viewGame->getEnnemisList().size() != 0)
     {
-        //this->checkCollisionEnnemis(this->viewGame->getEnnemisList()[i]);
-
         for (unsigned long i=0; i<this->viewGame->getEnnemisList().size(); i++){
 
             int randomNumber = rand()%30;
@@ -116,34 +117,42 @@ void Controller::mooveEnnemis(){
                 {
                 case (0): // left
                 {
-                    QCharRef string1 = this->viewGame->getCurrentMap()[this->viewGame->getEnnemisList()[i]->getPosY()/50][this->viewGame->getEnnemisList()[i]->getPosX()/50 - 1];
-                    QString caseToMoveOn = QString(string1);
-                    if(this->viewGame->getCellTypes()[caseToMoveOn])
-                        this->viewGame->getEnnemisList()[i]->moove("left");
+                    if(checkCollisionEnnemisEnnemis("left", int(i))){
+                        QCharRef string1 = this->viewGame->getCurrentMap()[this->viewGame->getEnnemisList()[i]->getPosY()/50][this->viewGame->getEnnemisList()[i]->getPosX()/50 - 1];
+                        QString caseToMoveOn = QString(string1);
+                        if(this->viewGame->getCellTypes()[caseToMoveOn])
+                            this->viewGame->getEnnemisList()[i]->moove("left");
+                    }
                     break;
                 }
                 case (1): // right
                 {
-                    QCharRef string1 = this->viewGame->getCurrentMap()[this->viewGame->getEnnemisList()[i]->getPosY()/50][this->viewGame->getEnnemisList()[i]->getPosX()/50 + 1];
-                    QString caseToMoveOn = QString(string1);
-                    if(this->viewGame->getCellTypes()[caseToMoveOn])
-                        this->viewGame->getEnnemisList()[i]->moove("right");
+                    if(checkCollisionEnnemisEnnemis("right", int(i))){
+                        QCharRef string1 = this->viewGame->getCurrentMap()[this->viewGame->getEnnemisList()[i]->getPosY()/50][this->viewGame->getEnnemisList()[i]->getPosX()/50 + 1];
+                        QString caseToMoveOn = QString(string1);
+                        if(this->viewGame->getCellTypes()[caseToMoveOn])
+                            this->viewGame->getEnnemisList()[i]->moove("right");
+                    }
                     break;
                 }
                 case (2): // up
                 {
-                    QCharRef string1 = this->viewGame->getCurrentMap()[this->viewGame->getEnnemisList()[i]->getPosY()/50 - 1][this->viewGame->getEnnemisList()[i]->getPosX()/50];
-                    QString caseToMoveOn = QString(string1);
-                    if(this->viewGame->getCellTypes()[caseToMoveOn])
-                        this->viewGame->getEnnemisList()[i]->moove("up");
+                    if(checkCollisionEnnemisEnnemis("up", int(i))){
+                        QCharRef string1 = this->viewGame->getCurrentMap()[this->viewGame->getEnnemisList()[i]->getPosY()/50 - 1][this->viewGame->getEnnemisList()[i]->getPosX()/50];
+                        QString caseToMoveOn = QString(string1);
+                        if(this->viewGame->getCellTypes()[caseToMoveOn])
+                            this->viewGame->getEnnemisList()[i]->moove("up");
+                    }
                     break;
                 }
                 case (3): // down
                 {
-                    QCharRef string1 = this->viewGame->getCurrentMap()[this->viewGame->getEnnemisList()[i]->getPosY()/50 + 1][this->viewGame->getEnnemisList()[i]->getPosX()/50];
-                    QString caseToMoveOn = QString(string1);
-                    if(this->viewGame->getCellTypes()[caseToMoveOn])
-                        this->viewGame->getEnnemisList()[i]->moove("down");
+                    if(checkCollisionEnnemisEnnemis("down", int(i))){
+                        QCharRef string1 = this->viewGame->getCurrentMap()[this->viewGame->getEnnemisList()[i]->getPosY()/50 + 1][this->viewGame->getEnnemisList()[i]->getPosX()/50];
+                        QString caseToMoveOn = QString(string1);
+                        if(this->viewGame->getCellTypes()[caseToMoveOn])
+                            this->viewGame->getEnnemisList()[i]->moove("down");
+                    }
                     break;
                 }
                 default:
@@ -155,7 +164,7 @@ void Controller::mooveEnnemis(){
 }
 
 
-void Controller::checkCollisionEnnemis()
+void Controller::checkCollisionLinkEnnemis()
 {
     if (this->viewGame->getEnnemisList().size() != 0)
     {
@@ -225,11 +234,29 @@ bool Controller::checkFieldForLink(QString direction)
 }
 
 
+void Controller::itemDeleter()
+{
+    for(unsigned int i = 0 ; i < this->viewGame->getMapItems().size(); i++){
+        this->viewGame->getMapItems()[i]->setItemLifeCounter(this->viewGame->getMapItems()[i]->getItemLifeCounter() - 1);
+
+        if(this->viewGame->getMapItems()[i]->getItemLifeCounter() == 0)
+            this->viewGame->deleteItem(int(i));
+    }
+}
+
+
 void Controller::lootAleatoireDesEnnemis(Ennemis *ennemis)
 {
-    int randomNumber = rand() % 3;
-    if(randomNumber == 0)this->viewGame->ajouterItem(ennemis->getPosX(), ennemis->getPosY(), "heart" );
-    else if(randomNumber == 1)this->viewGame->ajouterItem(ennemis->getPosX(), ennemis->getPosY(), "arrow_item" );
+    int randomNumber = rand() % 2 + 1;
+    qDebug() << randomNumber;
+
+    if(randomNumber == 3)
+        randomNumber = 2;
+
+    if(randomNumber == 1)this->viewGame->ajouterItem(ennemis->getPosX(), ennemis->getPosY(), "heart" );
+    else if(randomNumber == 2)this->viewGame->ajouterItem(ennemis->getPosX(), ennemis->getPosY(), "arrow_item" );
+    else
+        return;
 }
 
 
@@ -256,7 +283,7 @@ void Controller::mooveArrow()
 
 
 //voir si les fleches touche les ennemis
-void Controller::checkCollisionArrowsWithEnnemis()
+void Controller::checkCollisionEnnemisArrows()
 {
     if (this->viewGame->getEnnemisList().size() > 0 && this->viewGame->getMapItems().size() > 0){
 
@@ -274,6 +301,49 @@ void Controller::checkCollisionArrowsWithEnnemis()
                 }
             }
         }
+    }
+}
+
+//this->viewGame->getEnnemisList()[nbMonster]->getPosX() == this->viewGame->getEnnemisList()[j]->getPosX() +50
+
+bool Controller::checkCollisionEnnemisEnnemis(QString direction, int nbMonster)
+{
+    for(unsigned int j = 0; j < this->viewGame->getEnnemisList().size() ; j++){
+        if(direction == "left"){
+            if((this->viewGame->getEnnemisList()[nbMonster]->getPosY() != this->viewGame->getEnnemisList()[j]->getPosY()) || (this->viewGame->getEnnemisList()[nbMonster]->getPosY() == this->viewGame->getEnnemisList()[j]->getPosY() && this->viewGame->getEnnemisList()[nbMonster]->getPosX() != this->viewGame->getEnnemisList()[j]->getPosX() + 50))
+                return true;
+            else {
+                return false;
+            }
+        }
+
+        else if(direction == "right"){
+            if((this->viewGame->getEnnemisList()[nbMonster]->getPosY() != this->viewGame->getEnnemisList()[j]->getPosY()) || (this->viewGame->getEnnemisList()[nbMonster]->getPosY() == this->viewGame->getEnnemisList()[j]->getPosY() && this->viewGame->getEnnemisList()[nbMonster]->getPosX() != this->viewGame->getEnnemisList()[j]->getPosX() - 50))
+                return true;
+            else {
+                return false;
+            }
+        }
+
+        else if(direction == "up"){
+            if((this->viewGame->getEnnemisList()[nbMonster]->getPosX() != this->viewGame->getEnnemisList()[j]->getPosX()) || (this->viewGame->getEnnemisList()[nbMonster]->getPosX() == this->viewGame->getEnnemisList()[j]->getPosX() && this->viewGame->getEnnemisList()[nbMonster]->getPosY() != this->viewGame->getEnnemisList()[j]->getPosY() + 50))
+                return true;
+            else {
+                return false;
+            }
+        }
+
+        else if(direction == "down"){
+            if((this->viewGame->getEnnemisList()[nbMonster]->getPosX() != this->viewGame->getEnnemisList()[j]->getPosX()) || (this->viewGame->getEnnemisList()[nbMonster]->getPosX() == this->viewGame->getEnnemisList()[j]->getPosX() && this->viewGame->getEnnemisList()[nbMonster]->getPosY() != this->viewGame->getEnnemisList()[j]->getPosY() - 50))
+                return true;
+            else {
+                return false;
+            }
+        }
+
+        else
+            return false;   // just in case
+
     }
 }
 
@@ -307,45 +377,32 @@ void Controller::attack_function(QString direction){
 }
 
 
-////fonction pour check la collision de Link avec les objets sur la map
-//void Controller::checkCollisionItemsWithLink()
-//{
-//    vector<item*> vec = this->viewGame->getMapItems();//plus simple à gérer
-//    for (unsigned long i=0; i<vec.size();i++){
-//    //check avec zelda et le monstre et retire des PV à zelda
-//        int diffX = (this->model->getLink()->getPosX() - vec[i]->getPosXinitiale());
-//        int diffY = (this->model->getLink()->getPosY() - vec[i]->getPosYinitiale());
-//        if(diffX>-30 && diffX<30 && diffY<30 && diffY>-30){//si il y a collision entre l'objet et zelda
-//            // si c une clef
-//            if (vec[i]->getType_of_item() == "keyaccesslevelup"){
-//                zeldaRammasseLaKey(i);
-//                return;
-//            //une vie ATTENTION on rajoute 1 a statut life zelda et non a son sac a dos EASTPACK
-//            }else if(vec[i]->getType_of_item() == "heart"){
-//                this->zeldaRammasseUnCoeur(i);
-//                return;
-//            }else if (vec[i]->getType_of_item() == "arrow_item"){
-//                this->zeldaRammasseUneFleche(i);
-//                return;
-//            }else if(vec[i]->getType_of_item() == "sword"){
-//                zeldaRammasseLaSword(i);
-//                return;
-//                //collision avec l'escalier
-//            }else if(vec[i]->getType_of_item() == "stair_orange_niveau_1_1"){
-//                this->view->getCameraView()->setPosX(200);
-//                this->model->getLink()->setPosX(200);
-//            }else if(vec[i]->getType_of_item() == "stair_orange_niveau_1_2"){
-//                this->view->getCameraView()->setPosX(-200);
-//                this->model->getLink()->setPosX(-200);
-//            }else if(vec[i]->getType_of_item() == "trou_noir"){
-//                this->checkObjectifNiveau();
-//            }else if(vec[i]->getType_of_item() == "porteDesEnfers"){
-//                this->checkObjectifNiveau();
-//                return;
-//            }
-//        }
-//    }
-//}
+void Controller::checkCollisionLinkItems()
+{
+    for (unsigned long i=0; i<this->viewGame->getMapItems().size();i++){
+
+        if((this->model->getLink()->getPosX() == this->viewGame->getMapItems()[i]->getPosXactuel()) && (this->model->getLink()->getPosY() == this->viewGame->getMapItems()[i]->getPosYactuel())){
+
+            if(this->viewGame->getMapItems()[i]->getType_of_item() == "heart"){
+                if(this->model->getLink()->getLife()<this->model->getLink()->getLifeMax()){
+                    //QSound::play("/Users/alexandremagne/Desktop/Zelda2/Musiques/LOZ/LOZ_Get_Heart.wav");
+                    this->model->getLink()->setLife(this->model->getLink()->getLife()+1);
+                    this->viewGame->deleteItem(int(i));
+                    return;
+                }
+            }
+
+            else if (this->viewGame->getMapItems()[i]->getType_of_item() == "arrow_item"){
+                if(this->model->getLink()->getArrowQuantity()<this->model->getLink()->getArrowQuantityMax()){
+                    //QSound::play("/Users/alexandremagne/Desktop/Zelda2/Musiques/LOZ/LOZ_Get_Heart.wav");
+                    this->model->getLink()->setArrowQuantity(this->model->getLink()->getArrowQuantity()+1);
+                    this->viewGame->deleteItem(int(i));
+                    return;
+                }
+            }
+        }
+    }
+}
 
 
 void Controller::game_over_procedure()
@@ -385,17 +442,6 @@ void Controller::game_finished_procedure()
     levelCounter--;
     this->startGame();
 }
-
-
-////void Controller::zeldaRammasseUnCoeur(int i)
-//{
-//    if(this->model->getLink()->getLife()<10){
-//        QSound::play("/Users/alexandremagne/Desktop/Zelda2/Musiques/LOZ/LOZ_Get_Heart.wav");
-//        this->model->getLink()->setLife(this->model->getLink()->getLife()+1);
-//        this->viewGame->deleteItem(i);
-//        return;
-//    }
-//}
 
 
 void Controller::pressKey(QString key)
