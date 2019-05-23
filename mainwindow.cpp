@@ -293,3 +293,21 @@ void MainWindow::deleteMonster(int nbMonster)
     this->ennemisList.erase(this->ennemisList.begin()+nbMonster);
 
 }
+
+void MainWindow::displayMapItems(std::vector<Item *> vec)
+{
+    if(vec.size()!=0){
+        for (unsigned long i = 0; i<vec.size(); i++){
+            QPixmap pix = vec[i]->getTile();
+            QGraphicsPixmapItem *item = new QGraphicsPixmapItem(pix);
+            item->setPos(vec[i]->getPosXactuel(),vec[i]->getPosYactuel());
+            item->setZValue(10);
+            this->mapScene->addItem(item);
+        }
+    }
+}
+
+std::vector<Item *> MainWindow::getMapItems() const
+{
+    return this->mapItems;
+}

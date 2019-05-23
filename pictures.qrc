@@ -8,16 +8,11 @@
     </qresource>
     <qresource prefix="/Character">
         <file>Images/Characters/Zelda/Zelda.png</file>
-        <file>Images/Characters/Link/arrow_right.png</file>
-        <file>Images/Characters/Link/arrow_down.png</file>
-        <file>Images/Characters/Link/arrow_left.png</file>
-        <file>Images/Characters/Link/arrow_up.png</file>
         <file>Images/Characters/Ennemies/ennemie1.png</file>
         <file>Images/Characters/Link/link_down.png</file>
         <file>Images/Characters/Link/link_up.png</file>
         <file>Images/Characters/Link/link_left.png</file>
         <file>Images/Characters/Link/link_right.png</file>
-        <file>Images/Characters/heart.png</file>
     </qresource>
     <qresource prefix="/Menu">
         <file>Images/SplashScreen.png</file>
@@ -49,7 +44,13 @@
         <file>Images/Terrain/water_5.png</file>
         <file>Images/Terrain/water_6.png</file>
         <file>Images/Terrain/water_7.png</file>
-        <file>Images/Terrain/Water.jpg</file>
         <file>Images/Terrain/tree.png</file>
+    </qresource>
+    <qresource prefix="/Items">
+        <file>Images/Items/arrow_down.png</file>
+        <file>Images/Items/arrow_left.png</file>
+        <file>Images/Items/arrow_right.png</file>
+        <file>Images/Items/arrow_up.png</file>
+        <file>Images/Items/heart.png</file>
     </qresource>
 </RCC>

@@ -17,6 +17,7 @@ Controller::Controller(menu *menu, MainWindow *gameWindow, Model *model)
     this->timer =  new QTimer();
     timer->connect(timer, SIGNAL(timeout()), this, SLOT(displayScene()));
     this->levelCounter = 0;
+    this->energyLoaderCounter =0;
 
     this->hurtSound.setMedia(QUrl("qrc:/game/Sounds/link_hurt.mp3"));
     this->swordSound.setMedia(QUrl("qrc:/game/Sounds/sword_attack.mp3"));
@@ -67,12 +68,14 @@ void Controller::startGame()
 
 void Controller::displayScene(){
 
+    energyLoaderCounter++;
+
     this->viewGame->resetView();
     this->viewGame->displayMap();
     this->viewGame->getCameraView()->setPosX(this->model->getLink()->getPosX()-250);
     this->viewGame->getCameraView()->setPosY(this->model->getLink()->getPosY()-250);
     this->viewGame->displayLink(this->getModel()->getLink());
-    //this->viewGame->afficherItemsMap(this->model->getNiveau()->getMapItems());
+    this->viewGame->displayMapItems(this->viewGame->getMapItems());
     if (this->viewGame->getEnnemisList().size() != 0){
         for(unsigned long i = 0; i<this->viewGame->getEnnemisList().size(); i++){
             this->viewGame->displayEnnemis(this->viewGame->getEnnemisList()[i]);
@@ -80,6 +83,9 @@ void Controller::displayScene(){
     }
     this->viewGame->displayZelda(this->getModel()->getZelda());
     displayStats(int(this->model->getLink()->getLife()), this->model->getLink()->getArrowQuantity(), this->model->getLink()->getEnergy());
+
+    if(energyLoaderCounter%150 == 0)
+        energyLoader();
 
     mooveEnnemis();
     checkCollisionEnnemis();
@@ -177,7 +183,14 @@ void Controller::checkCollisionEnnemis()
 void Controller::checkCollisionLinKZelda()
 {
     if((this->model->getLink()->getPosX() == this->model->getZelda()->getPosX()) && (this->model->getLink()->getPosY() == this->model->getZelda()->getPosY()))
-        game_finished_procedure();
+    {
+        this->model->getLink()->setPosX(this->model->getZelda()->getPosX() - 50);
+        this->model->getLink()->setPosY(this->model->getZelda()->getPosY());
+        this->model->getLink()->setTile("down");
+
+        if(this->viewGame->getEnnemisList().size() == 0)
+            game_finished_procedure();
+    }
 }
 
 
@@ -209,69 +222,6 @@ bool Controller::checkFieldForLink(QString direction)
     }
     return 0;
 }
-
-
-////void Controller::checkCollisionDecortWithEnnemi(Ennemis *ennemis)
-//{
-//    if(ennemis->getDirection()=="right"){
-//            // pour la colision à droite
-//        if ((this->viewGame->getMapScene()->itemAt(ennemis->getPosX()+30,ennemis->getPosY()+20, QTransform())->zValue() == 5)||(this->viewGame->getMapScene()->itemAt(ennemis->getPosX()+30, ennemis->getPosY(),QTransform())->zValue() == 5))
-//        { // un mur
-//            ennemis->setDirection("left");
-//            this->model->getNiveau()->getEnnemi()->deplacementEnnemis(ennemis);
-//        }else if((this->viewGame->getMapScene()->itemAt(ennemis->getPosX()+30,ennemis->getPosY()+20, QTransform())->zValue() == 1)||(this->viewGame->getMapScene()->itemAt(ennemis->getPosX()+30, ennemis->getPosY(),QTransform())->zValue() == 1))
-//        {
-//            // de l'eau
-//            ennemis->setDirection("left");
-//            this->viewGame->getEnnemi()->deplacementEnnemis(ennemis);
-//        }else {
-//            this->viewGame->getEnnemi()->deplacementEnnemis(ennemis);
-//        }
-//    }else if (ennemis->getDirection()=="left"){
-//        // pour la colision à gauche
-//    if ((this->viewGame->getMapScene()->itemAt(ennemis->getPosX(),ennemis->getPosY(),QTransform())->zValue() == 5)||(this->viewGame->getMapScene()->itemAt(ennemis->getPosX()-10,ennemis->getPosY()+20,QTransform())->zValue() == 5))
-//    {
-//    // un mur
-//        ennemis->setDirection("right");
-//        this->model->getNiveau()->getEnnemi()->deplacementEnnemis(ennemis);
-//    }else if((this->viewGame->getMapScene()->itemAt(ennemis->getPosX(),ennemis->getPosY(),QTransform())->zValue() == 1)||(this->viewGame->getMapScene()->itemAt(ennemis->getPosX()-10,ennemis->getPosY()+20,QTransform())->zValue() == 1))
-//    {
-//        ennemis->setDirection("right");
-//        this->viewGame->getEnnemi()->deplacementEnnemis(ennemis);
-//    }else{
-//        this->viewGame->getEnnemi()->deplacementEnnemis(ennemis);
-//    }
-//    } else if (ennemis->getDirection()=="down"){
-//     // pour la colision en bas
-//    if ((this->viewGame->getMapScene()->itemAt(ennemis->getPosX()+20,ennemis->getPosY()+30,QTransform())->zValue() == 5)||(this->viewGame->getMapScene()->itemAt(ennemis->getPosX(),ennemis->getPosY()+30,QTransform())->zValue() == 5))
-//    {
-//    // un mur
-//        ennemis->setDirection("up");
-//        this->model->getNiveau()->getEnnemi()->deplacementEnnemis(ennemis);
-//    }
-//    else if ((this->viewGame->getMapScene()->itemAt(ennemis->getPosX()+20,ennemis->getPosY()+30,QTransform())->zValue() == 1)||(this->viewGame->getMapScene()->itemAt(ennemis->getPosX(),ennemis->getPosY()+30,QTransform())->zValue() == 1))
-//    {
-//        ennemis->setDirection("up");
-//        this->viewGame->getEnnemi()->deplacementEnnemis(ennemis);
-//    }else{
-//        this->viewGame->getEnnemi()->deplacementEnnemis(ennemis);
-//    }
-//    } else if(ennemis->getDirection()=="up"){
-//            // pour la colision en haut
-//            if ((this->viewGame->getMapScene()->itemAt(ennemis->getPosX()+20,ennemis->getPosY()-10,QTransform())->zValue() == 5)||(this->viewGame->getMapScene()->itemAt(ennemis->getPosX(),ennemis->getPosY()-10,QTransform())->zValue() == 5))
-//           {
-//           // un mur
-//               ennemis->setDirection("down");
-//               this->model->getNiveau()->getEnnemi()->deplacementEnnemis(ennemis);
-//           } else if ((this->viewGame->getMapScene()->itemAt(ennemis->getPosX()+20,ennemis->getPosY()-10,QTransform())->zValue() == 1)||(this->viewGame->getMapScene()->itemAt(ennemis->getPosX(),ennemis->getPosY()-10,QTransform())->zValue() == 1))
-//           {
-//               ennemis->setDirection("down");
-//               this->model->getNiveau()->getEnnemi()->deplacementEnnemis(ennemis);
-//           }else{
-//               this->model->getNiveau()->getEnnemi()->deplacementEnnemis(ennemis);
-//           }
-//    }
-//}
 
 
 void Controller::lootAleatoireDesEnnemis(Ennemis *ennemis)
@@ -336,22 +286,22 @@ void Controller::attack_function(QString direction){
 
         for (unsigned long i=0; i<this->viewGame->getEnnemisList().size(); i++){
 
-            if((direction == "left") && (this->viewGame->getEnnemisList()[i]->getPosX() == this->model->getLink()->getPosX() - 50)){
+            if((direction == "left") && (this->viewGame->getEnnemisList()[i]->getPosX() == this->model->getLink()->getPosX() - 50) && (this->viewGame->getEnnemisList()[i]->getPosY() == this->model->getLink()->getPosY())){
                 this->lootAleatoireDesEnnemis(this->viewGame->getEnnemisList()[i]);
                 this->viewGame->deleteMonster(int(i));
             }
 
-            else if((direction == "right") && (this->viewGame->getEnnemisList()[i]->getPosX() == this->model->getLink()->getPosX() + 50)){
+            else if((direction == "right") && (this->viewGame->getEnnemisList()[i]->getPosX() == this->model->getLink()->getPosX() + 50) && (this->viewGame->getEnnemisList()[i]->getPosY() == this->model->getLink()->getPosY())){
                 this->lootAleatoireDesEnnemis(this->viewGame->getEnnemisList()[i]);
                 this->viewGame->deleteMonster(int(i));
             }
 
-            else if((direction == "up") && (this->viewGame->getEnnemisList()[i]->getPosY() == this->model->getLink()->getPosY() - 50)){
+            else if((direction == "up") && (this->viewGame->getEnnemisList()[i]->getPosY() == this->model->getLink()->getPosY() - 50) && (this->viewGame->getEnnemisList()[i]->getPosX() == this->model->getLink()->getPosX())){
                 this->lootAleatoireDesEnnemis(this->viewGame->getEnnemisList()[i]);
                 this->viewGame->deleteMonster(int(i));
             }
 
-            else if((direction == "down") && (this->viewGame->getEnnemisList()[i]->getPosY() == this->model->getLink()->getPosY() + 50)){
+            else if((direction == "down") && (this->viewGame->getEnnemisList()[i]->getPosY() == this->model->getLink()->getPosY() + 50) && (this->viewGame->getEnnemisList()[i]->getPosX() == this->model->getLink()->getPosX())){
                 this->lootAleatoireDesEnnemis(this->viewGame->getEnnemisList()[i]);
                 this->viewGame->deleteMonster(int(i));
             }
@@ -542,7 +492,7 @@ void Controller::pressKey(QString key)
             if(this->model->getLink()->getEnergy() > 0)
             {
                 swordSound.play();
-                //this->model->getLink()->setEnergy(this->model->getLink()->getEnergy()-1);
+                this->model->getLink()->setEnergy(this->model->getLink()->getEnergy()-1);
                 this->attack_function(this->model->getLink()->getDirection());
             }
         }
@@ -591,6 +541,12 @@ Model *Controller::getModel() const
 void Controller::displayStats(int health, int arrowNumber, int energy)
 {
     this->viewGame->displayStats(health, arrowNumber, energy);
+}
+
+void Controller::energyLoader()
+{
+    if(this->model->getLink()->getEnergy() < this->model->getLink()->getEnergyMax())
+        this->model->getLink()->setEnergy(this->model->getLink()->getEnergy() + 1);
 }
 void Controller::setModel(Model *value)
 {

@@ -46,6 +46,8 @@ public:
 
     void deleteMonster(int nbMonster);
 
+    void displayMapItems( std::vector<class Item*> vec);
+    std::vector<Item *> getMapItems() const;
 
 protected:
     Ui::MainWindow *ui;

@@ -12,7 +12,7 @@ class Item
 public:
     Item(int posXinitiale, int posYinitiale, QString type_of_item);
     Item(QString s);
-    void setTilefaismain(); // définie l'image à charger
+    void setTile();
     int faireAvancerFleche();
 
 

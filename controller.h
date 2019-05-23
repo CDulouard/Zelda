@@ -26,6 +26,9 @@ public:
     Model *getModel() const;
 
     void displayStats(int health, int arrowNumber, int energy);
+
+    void energyLoader();
+
     void mooveEnnemis();
 
 
@@ -33,26 +36,26 @@ protected:
     void delay(int i);
 
 /*          attaques et Link        */
-    void attack_function(QString direction);//attaque de l'epee
+    void attack_function(QString direction);
     void checkCollisionArrowsWithEnnemis();//pour checker la collision fleche ennemie
     void faireAvancerArrow();//pour que les flechent se deplacent
 
 /*          Jeu et Link        */
-    void game_over_procedure();//en cas de game over
+    void game_over_procedure();
     void game_finished_procedure();
 
 /*          objets et Link        */
     void checkCollisionEnnemis();
-    void checkCollisionDecortWithEnnemi(class Ennemis *ennemis);
-    void lootAleatoireDesEnnemis(Ennemis *ennemis);
+    void lootAleatoireDesEnnemis(class Ennemis *ennemis);
     void checkCollisionLinKZelda();
 
     bool checkFieldForLink(QString direction);
 
 /*          Item et Link        */
     void checkCollisionItemsWithLink();//collision item link
-    void zeldaRammasseUnCoeur(int i);//si zelda ramasse un coeur
-    void zeldaRammasseUneFleche(int i);//si zelda ramasse une fleche
+    void linkRammasseUnCoeur(int i);//si zelda ramasse un coeur
+    void linkRammasseUneFleche(int i);//si zelda ramasse une fleche
+
 
 
 
@@ -72,6 +75,7 @@ private:
     QMediaPlayer bowSound;
 
     int levelCounter;
+    unsigned int energyLoaderCounter;
 
 };
 

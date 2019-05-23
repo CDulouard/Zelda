@@ -7,25 +7,22 @@ Item::Item(int posXinit, int posYinit, QString type_of_item)
     this->posXactuel=posXinit;
     this->posYactuel=posYinit;
     this->type_of_item = type_of_item;
-    setTilefaismain();
+    setTile();
 }
 
 Item::Item(QString s)
 {
     this->type_of_item = s;
-    setTilefaismain();
+    setTile();
 }
 
-void Item::setTilefaismain(){
+void Item::setTile(){
 
     if ((this->getType_of_item() == "arrow_left") || (this->getType_of_item() == "arrow_right") || (this->getType_of_item() == "arrow_up") || (this->getType_of_item() == "arrow_down"))
-        this->tile = QPixmap(":/Character/Images/Characters/Link/" + this->getType_of_item() + ".png");
-
-    else if (this->getType_of_item()!="hammer_hole")
-        this->tile = QPixmap("/Users/alexandremagne/Desktop/Zelda2/Tiles/items/" + this->getType_of_item() + ".png").scaled(30,30);
+        this->tile = QPixmap(":/Items/Images/Items/" + this->getType_of_item() + ".png");
 
     else
-        this->tile = QPixmap("/Users/alexandremagne/Desktop/Zelda2/Tiles/items/" + this->getType_of_item() + ".png");
+        this->tile = QPixmap(":/Items/Images/Items/" + this->getType_of_item() + ".png");
 }
 
 int Item::faireAvancerFleche()

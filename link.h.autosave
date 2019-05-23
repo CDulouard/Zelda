@@ -20,13 +20,17 @@ public:
     int getEnergy() const;
     void setEnergy(int value);
 
+    int getLifeMax() const;
     int getEnergyMax() const;
+    int getArrowQuantityMax() const;
 
     void shoot();
 
 
 private:
+    int lifeMax;
     int arrowQuantity;
+    int arrowQuantityMax;
     int energy;
     int energyMax;
 
