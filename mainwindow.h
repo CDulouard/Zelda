@@ -44,6 +44,8 @@ public:
 
     void ajouterItem(int posX,int posY, QString s);
 
+    void deleteMonster(int nbMonster);
+
 
 protected:
     Ui::MainWindow *ui;

@@ -274,18 +274,12 @@ bool Controller::checkFieldForLink(QString direction)
 //}
 
 
-////void Controller::lootAleatoireDesEnnemis(Ennemis *ennemis)
-//{
-//    if(ennemis->getType_of_monstre() == "final_boss_"){
-//        //si boss final on laisse une clef par terre
-//        this->model->getNiveau()->ajouterItem(ennemis->getPosX(), ennemis->getPosY(), "keyaccesslevelup" );
-//    }
-//    else if(ennemis->getType_of_monstre() != "lambeau_boss_niveau_2_" && ennemis->getType_of_monstre() != "boule_de_feu_"&& ennemis->getType_of_monstre() != "chauve_souris_bleu_"){
-//    int v1 = rand() % 3;// si on tue un ennemi, une chance sur 5 quil laisse un coeur
-//    if(v1 == 2)this->model->getNiveau()->ajouterItem(ennemis->getPosX(), ennemis->getPosY(), "heart" );
-//    if(v1 == 1)this->model->getNiveau()->ajouterItem(ennemis->getPosX(), ennemis->getPosY(), "arrow_item" );
-//    }
-//}
+void Controller::lootAleatoireDesEnnemis(Ennemis *ennemis)
+{
+    int randomNumber = rand() % 3;
+    if(randomNumber == 0)this->viewGame->ajouterItem(ennemis->getPosX(), ennemis->getPosY(), "heart" );
+    else if(randomNumber == 1)this->viewGame->ajouterItem(ennemis->getPosX(), ennemis->getPosY(), "arrow_item" );
+}
 
 
 ////faire bouger les flèches
@@ -336,87 +330,34 @@ bool Controller::checkFieldForLink(QString direction)
 //    }
 //}
 
-////attquer avec l'épée
-//void Controller::attack_function(QString direction){
-// if (this->model->getNiveau()->getEnnemisList().size() != 0){
+//attquer avec l'épée
+void Controller::attack_function(QString direction){
+    if (this->viewGame->getEnnemisList().size() != 0){
 
-//        for (unsigned long i = 0; i<this->model->getNiveau()->getEnnemisList().size(); i++){
+        for (unsigned long i=0; i<this->viewGame->getEnnemisList().size(); i++){
 
-//            int diffX = (this->model->getLink()->getPosX() - this->model->getNiveau()->getEnnemisList()[i]->getPosX());
-//            int diffY = (this->model->getLink()->getPosY() - this->model->getNiveau()->getEnnemisList()[i]->getPosY());
-//            if((direction == "right" && diffX<0 && diffX>-60 && diffY>-20 && diffY<20) || (direction == "left" && diffX>0 && diffX<50 && diffY>-20 && diffY<20) || (direction == "up" && diffX>-20 && diffX<20 && diffY>0 && diffY<50) || (direction == "down" && diffX>-20 && diffX<20 && diffY<0 && diffY>-60))
-//            {
-//                this->model->getNiveau()->ajouterItem(this->model->getNiveau()->getEnnemisList()[i]->getPosX(),this->model->getNiveau()->getEnnemisList()[i]->getPosY(),"explosion");
-//                this->model->getNiveau()->getEnnemisList()[i]->setLifeStatue(this->model->getNiveau()->getEnnemisList()[i]->getLifeStatue()-1);
-//                this->toucheEnnemisQuandZeldaAttaque(this->model->getNiveau()->getEnnemisList()[i]);
-//                 QSound::play("/Users/alexandremagne/Desktop/Zelda2/Musiques/LOZ/LOZ_Hit.wav");
-//                if(this->model->getNiveau()->getEnnemisList()[i]->getLifeStatue()==0){
-//                   this->lootAleatoireDesEnnemis(this->model->getNiveau()->getEnnemisList()[i]);
-//                    this->model->getNiveau()->deleteMonstre(i);
-//                    return;
-//                }
-//            }
-//        }
-// }
-//}
+            if((direction == "left") && (this->viewGame->getEnnemisList()[i]->getPosX() == this->model->getLink()->getPosX() - 50)){
+                this->lootAleatoireDesEnnemis(this->viewGame->getEnnemisList()[i]);
+                this->viewGame->deleteMonster(int(i));
+            }
 
+            else if((direction == "right") && (this->viewGame->getEnnemisList()[i]->getPosX() == this->model->getLink()->getPosX() + 50)){
+                this->lootAleatoireDesEnnemis(this->viewGame->getEnnemisList()[i]);
+                this->viewGame->deleteMonster(int(i));
+            }
 
-////void Controller::toucheEnnemisQuandZeldaAttaque(Ennemis *ennemi)
-//{
-//    if(ennemi->getType_of_monstre() == "final_boss_"){
-//        if (ennemi->getLife() >=8 && ennemi->getLife() <=10)
-//        {
-//                ennemi->setSpeed(ennemi->getSpeed()+2);
-//                this->model->getNiveau()->ajouterItem(ennemi->getPosX()+50,ennemi->getPosY()+100,"heart");
-//                this->model->getNiveau()->ajouterItem(ennemi->getPosX()+70,ennemi->getPosY()+100,"arrow_item");
-//                this->model->getNiveau()->ajouterMonstre(ennemi->getPosX(),ennemi->getPosY(),"down","boule_de_feu_");
-//                this->model->getNiveau()->ajouterMonstre(ennemi->getPosX(),ennemi->getPosY(),"up","boule_de_feu_");
-//                this->model->getNiveau()->ajouterMonstre(ennemi->getPosX(),ennemi->getPosY(),"right","boule_de_feu_");
-//                this->model->getNiveau()->ajouterMonstre(ennemi->getPosX(),ennemi->getPosY(),"left","boule_de_feu_");
-//                this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()+100,ennemi->getPosY(),"down","boule_de_feu_");
-//                this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()-100,ennemi->getPosY(),"up","boule_de_feu_");
-//                this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()+150,ennemi->getPosY(),"right","boule_de_feu_");
-//                this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()-150,ennemi->getPosY(),"left","boule_de_feu_");
+            else if((direction == "up") && (this->viewGame->getEnnemisList()[i]->getPosY() == this->model->getLink()->getPosY() - 50)){
+                this->lootAleatoireDesEnnemis(this->viewGame->getEnnemisList()[i]);
+                this->viewGame->deleteMonster(int(i));
+            }
 
-//        }else if  (ennemi->getLife() >=5 && ennemi->getLife() <8)
-//        {
-//            ennemi->setSpeed(1);
-//            this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()+200,ennemi->getPosY()+30,"left","boule_de_feu_");
-//            this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()+200,ennemi->getPosY()+60,"left","boule_de_feu_");
-//            this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()+200,ennemi->getPosY()-30,"left","boule_de_feu_");
-//            this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()+200,ennemi->getPosY()-60,"left","boule_de_feu_");
-//            this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()+200,ennemi->getPosY(),"left","boule_de_feu_");
-//            this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()+200,ennemi->getPosY()+90,"left","boule_de_feu_");
-//            this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()+200,ennemi->getPosY()-90,"left","boule_de_feu_");
-//            this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()+200,ennemi->getPosY()+120,"left","boule_de_feu_");
-//            this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()+200,ennemi->getPosY()-120,"left","boule_de_feu_");
-//        }else if  (ennemi->getLife() >=3 && ennemi->getLife() <5)
-//        {
-//            this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()+200,ennemi->getPosY()+30,"left","boule_de_feu_");
-//            this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()+200,ennemi->getPosY()+60,"left","boule_de_feu_");
-//            this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()+200,ennemi->getPosY()-30,"left","boule_de_feu_");
-//            this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()+200,ennemi->getPosY()-60,"left","boule_de_feu_");
-//            this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()+200,ennemi->getPosY(),"left","boule_de_feu_");
-//            this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()+200,ennemi->getPosY()+90,"left","boule_de_feu_");
-//            this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()+200,ennemi->getPosY()-90,"left","boule_de_feu_");
-//            this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()+200,ennemi->getPosY()+120,"left","boule_de_feu_");
-//            this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()+200,ennemi->getPosY()-120,"left","boule_de_feu_");
-
-//            this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()-200,ennemi->getPosY()+30,"right","boule_de_feu_");
-//            this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()-200,ennemi->getPosY()+60,"right","boule_de_feu_");
-//            this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()-200,ennemi->getPosY()-30,"right","boule_de_feu_");
-//            this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()-200,ennemi->getPosY()-60,"right","boule_de_feu_");
-//            this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()-200,ennemi->getPosY(),"right","boule_de_feu_");
-//            this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()-200,ennemi->getPosY()+90,"right","boule_de_feu_");
-//            this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()-200,ennemi->getPosY()-90,"right","boule_de_feu_");
-//            this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()-200,ennemi->getPosY()+120,"right","boule_de_feu_");
-//            this->model->getNiveau()->ajouterMonstre(ennemi->getPosX()-200,ennemi->getPosY()-120,"right","boule_de_feu_");
-//        }else if  (ennemi->getLife() >0 && ennemi->getLife() <3){
-
-//        }
-
-//    }
-//}
+            else if((direction == "down") && (this->viewGame->getEnnemisList()[i]->getPosY() == this->model->getLink()->getPosY() + 50)){
+                this->lootAleatoireDesEnnemis(this->viewGame->getEnnemisList()[i]);
+                this->viewGame->deleteMonster(int(i));
+            }
+        }
+    }
+}
 
 
 ////fonction pour check la collision de Link avec les objets sur la map
@@ -601,40 +542,8 @@ void Controller::pressKey(QString key)
             if(this->model->getLink()->getEnergy() > 0)
             {
                 swordSound.play();
-                this->model->getLink()->setEnergy(this->model->getLink()->getEnergy()-1);
-
-                if(this->model->getLink()->getDirection() == "left"){
-                    for (unsigned long i=0; i<this->viewGame->getEnnemisList().size(); i++){
-                        if(this->viewGame->getEnnemisList()[i]->getPosX() == this->model->getLink()->getPosX() - 50)
-                            delete this->viewGame->getEnnemisList()[i];
-                            //this->viewGame->getEnnemisList().erase(this->viewGame->getEnnemisList().begin()+i);
-                    }
-                }
-
-                if(this->model->getLink()->getDirection() == "right"){
-                    for (unsigned long i=0; i<this->viewGame->getEnnemisList().size(); i++){
-                        if(this->viewGame->getEnnemisList()[i]->getPosX() == this->model->getLink()->getPosX() + 50)
-                            delete this->viewGame->getEnnemisList()[i];
-                            //this->viewGame->getEnnemisList().erase(this->viewGame->getEnnemisList().begin()+i);
-                    }
-                }
-
-                if(this->model->getLink()->getDirection() == "up"){
-                    for (unsigned long i=0; i<this->viewGame->getEnnemisList().size(); i++){
-                        if(this->viewGame->getEnnemisList()[i]->getPosY() == this->model->getLink()->getPosY() - 50)
-                            delete this->viewGame->getEnnemisList()[i];
-                            //this->viewGame->getEnnemisList().erase(this->viewGame->getEnnemisList().begin()+i);
-                    }
-                }
-
-                if(this->model->getLink()->getDirection() == "down"){
-                    for (unsigned long i=0; i<this->viewGame->getEnnemisList().size(); i++){
-                        if(this->viewGame->getEnnemisList()[i]->getPosY() == this->model->getLink()->getPosY() + 50)
-                            delete this->viewGame->getEnnemisList()[i];
-                            //this->viewGame->getEnnemisList().erase(this->viewGame->getEnnemisList().begin()+i);
-                    }
-                }
-
+                //this->model->getLink()->setEnergy(this->model->getLink()->getEnergy()-1);
+                this->attack_function(this->model->getLink()->getDirection());
             }
         }
         else if(key=="j")

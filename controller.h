@@ -42,9 +42,8 @@ protected:
     void game_finished_procedure();
 
 /*          objets et Link        */
-    void toucheEnnemisQuandZeldaAttaque(class Ennemis *ennemi);
     void checkCollisionEnnemis();
-    void checkCollisionDecortWithEnnemi(Ennemis *ennemis);
+    void checkCollisionDecortWithEnnemi(class Ennemis *ennemis);
     void lootAleatoireDesEnnemis(Ennemis *ennemis);
     void checkCollisionLinKZelda();
 
