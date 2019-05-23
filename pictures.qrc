@@ -26,12 +26,30 @@
         <file>Images/victory.jpg</file>
     </qresource>
     <qresource prefix="/terrain">
-        <file>Images/Terrain/Grass.jpg</file>
         <file>Images/Terrain/wall.jpg</file>
-        <file>Images/Terrain/Water.jpg</file>
         <file>Images/Terrain/dirt.jpg</file>
         <file>Images/Terrain/house.jpg</file>
         <file>Images/Terrain/Sand.jpg</file>
         <file>Images/Terrain/tree.jpg</file>
+        <file>Images/Terrain/grass_1.png</file>
+        <file>Images/Terrain/grass_2.png</file>
+        <file>Images/Terrain/grass_3.png</file>
+        <file>Images/Terrain/grass_4.png</file>
+        <file>Images/Terrain/grass_5.png</file>
+        <file>Images/Terrain/grass_6.png</file>
+        <file>Images/Terrain/grass_7.png</file>
+        <file>Images/Terrain/grass_8.png</file>
+        <file>Images/Terrain/grass_9.png</file>
+        <file>Images/Terrain/grass_10.png</file>
+        <file>Images/Terrain/grass_11.png</file>
+        <file>Images/Terrain/grass_12.png</file>
+        <file>Images/Terrain/water_1.png</file>
+        <file>Images/Terrain/water_2.png</file>
+        <file>Images/Terrain/water_3.png</file>
+        <file>Images/Terrain/water_4.png</file>
+        <file>Images/Terrain/water_5.png</file>
+        <file>Images/Terrain/water_6.png</file>
+        <file>Images/Terrain/water_7.png</file>
+        <file>Images/Terrain/Water.jpg</file>
     </qresource>
 </RCC>
