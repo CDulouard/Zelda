@@ -1,8 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMediaPlayer>
+#include "item.h"
 
+#include <QMediaPlayer>
 #include <QMainWindow>
 #include <link.h>
 #include <scene.h>
@@ -43,10 +44,11 @@ public:
     void setEnnemisList(const std::vector<Ennemis*> &value);
 
     void ajouterItem(int posX,int posY, QString s);
+    void deleteItem(int nbItem);
 
     void deleteMonster(int nbMonster);
 
-    void displayMapItems( std::vector<class Item*> vec);
+    void displayMapItems( std::vector<Item*> vec);
     std::vector<Item *> getMapItems() const;
 
 protected:

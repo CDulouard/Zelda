@@ -30,7 +30,6 @@ SOURCES += \
     ennemis.cpp \
     item.cpp \
         main.cpp \
-    arrow.cpp \
     menu.cpp \
     link.cpp \
     mainwindow.cpp \
@@ -40,7 +39,6 @@ SOURCES += \
     zelda.cpp
 
 HEADERS += \
-    arrow.h \
     controller.h \
     ennemis.h \
     item.h \

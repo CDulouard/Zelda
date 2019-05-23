@@ -287,6 +287,14 @@ void MainWindow::ajouterItem(int posX, int posY, QString s)
     this->mapItems.push_back(new Item(posX, posY, s));
 }
 
+void MainWindow::deleteItem(int nbItem)
+{
+    if(this->mapItems.size()!=0){
+        delete this->mapItems[nbItem];
+        this->mapItems.erase(this->mapItems.begin()+nbItem);
+    }
+}
+
 void MainWindow::deleteMonster(int nbMonster)
 {
     delete this->ennemisList[nbMonster];

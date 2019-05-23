@@ -4,7 +4,6 @@
 #include "model.h"
 #include "zelda.h"
 #include "ennemis.h"
-#include "arrow.h"
 
 #include <QDebug>
 #include <QSplashScreen>
@@ -22,6 +21,7 @@ Controller::Controller(menu *menu, MainWindow *gameWindow, Model *model)
     this->hurtSound.setMedia(QUrl("qrc:/game/Sounds/link_hurt.mp3"));
     this->swordSound.setMedia(QUrl("qrc:/game/Sounds/sword_attack.mp3"));
     this->bowSound.setMedia(QUrl("qrc:/game/Sounds/arrow_shoot.mp3"));
+    this->arrowHitSound.setMedia(QUrl("qrc:/game/Sounds/arrow_hit.mp3"));
 
 }
 
@@ -87,11 +87,12 @@ void Controller::displayScene(){
     if(energyLoaderCounter%150 == 0)
         energyLoader();
 
+    mooveArrow();
     mooveEnnemis();
+    checkCollisionArrowsWithEnnemis();
     checkCollisionEnnemis();
     checkCollisionLinKZelda();
 
-    //faireAvancerArrow(); //fais avancer la fleche et supprime l'ennemi en cas de collision
 
     if (this->model->getLink()->getLife() > 0)
         timer->start(20);
@@ -232,53 +233,49 @@ void Controller::lootAleatoireDesEnnemis(Ennemis *ennemis)
 }
 
 
-////faire bouger les flèches
-//void Controller::faireAvancerArrow()
-//{
-//    if(this->model->getNiveau()->getMapItems().size()>0){
-//        for (unsigned long i=0;i<this->model->getNiveau()->getMapItems().size();i++){
-//          int result = this->model->getNiveau()->getMapItems()[i]->faireAvancerFleche();//retourn 1 si on supprimer la fleche
-//          if (result==1) {
-//              //on supprime la fleche si == 1
-//              this->model->getNiveau()->deleteItem(i);
-//              return;
-//          }else checkCollisionArrowsWithEnnemis();
-//        }
-//    }
-//}
+//faire bouger les flèches
+void Controller::mooveArrow()
+{
+    if(this->viewGame->getMapItems().size()>0){
+        for (unsigned long i=0;i<this->viewGame->getMapItems().size();i++){
+            if (this->viewGame->getMapItems()[i]->getType_of_item() == "arrow_left")
+                this->viewGame->getMapItems()[i]->setPosXactuel(this->viewGame->getMapItems()[i]->getPosXactuel() - 50);
+
+            else if (this->viewGame->getMapItems()[i]->getType_of_item() == "arrow_right")
+                this->viewGame->getMapItems()[i]->setPosXactuel(this->viewGame->getMapItems()[i]->getPosXactuel() + 50);
+
+            else if (this->viewGame->getMapItems()[i]->getType_of_item() == "arrow_up")
+                this->viewGame->getMapItems()[i]->setPosYactuel(this->viewGame->getMapItems()[i]->getPosYactuel() - 50);
+
+            else if (this->viewGame->getMapItems()[i]->getType_of_item() == "arrow_down")
+                this->viewGame->getMapItems()[i]->setPosYactuel(this->viewGame->getMapItems()[i]->getPosYactuel() + 50);
+        }
+    }
+}
 
 
 
-////voir si les fleches touche les ennemis
-//void Controller::checkCollisionArrowsWithEnnemis()
-//{
-//    if (this->model->getNiveau()->getEnnemisList().size() != 0 && this->model->getNiveau()->getMapItems().size() !=0){
-//        //on verifie toujours si les vecteurs existent
-//        for (unsigned long i=0;i<this->model->getNiveau()->getMapItems().size();i++){
-//            if (this->model->getNiveau()->getMapItems()[i]->getType_of_item() == "arrow_right"||this->model->getNiveau()->getMapItems()[i]->getType_of_item() == "arrow_left"||this->model->getNiveau()->getMapItems()[i]->getType_of_item() == "arrow_down"||this->model->getNiveau()->getMapItems()[i]->getType_of_item() == "arrow_up")
-//            {//si on parle d'une Arrow (fleche)
-//               for (unsigned long j = 0; j<this->model->getNiveau()->getEnnemisList().size(); j++){
-//                    //pour tous les monstres on regarde si ca touche avec la fleche en question
-//                   int diffX = (this->model->getNiveau()->getMapItems()[i]->getPosXactuel() - this->model->getNiveau()->getEnnemisList()[j]->getPosX());
-//                   int diffY = (this->model->getNiveau()->getMapItems()[i]->getPosYactuel() - this->model->getNiveau()->getEnnemisList()[j]->getPosY());
-//                   if((this->model->getNiveau()->getMapItems()[i]->getType_of_item() == "arrow_right" && diffX<0 && diffX>-30 && diffY>-20 && diffY<20) || (this->model->getNiveau()->getMapItems()[i]->getType_of_item() == "arrow_left" && diffX>0 && diffX<30 && diffY>-20 && diffY<20) || (this->model->getNiveau()->getMapItems()[i]->getType_of_item() == "arrow_up" && diffX>-20 && diffX<20 && diffY>0 && diffY<30) || (this->model->getNiveau()->getMapItems()[i]->getType_of_item() == "arrow_down" && diffX>-20 && diffX<20 && diffY<0 && diffY>-30))
-//                   {
-//                       QSound::play("/Users/alexandremagne/Desktop/Zelda2/Musiques/LOZ/LOZ_Hit.wav");
-//                       this->model->getNiveau()->ajouterItem(this->model->getNiveau()->getEnnemisList()[j]->getPosX(),this->model->getNiveau()->getEnnemisList()[j]->getPosY(),"explosion");
-//                       this->model->getNiveau()->getEnnemisList()[j]->setLifeStatue(this->model->getNiveau()->getEnnemisList()[j]->getLifeStatue()-1);
-//                       this->toucheEnnemisQuandZeldaAttaque(this->model->getNiveau()->getEnnemisList()[j]);
-//                       if(this->model->getNiveau()->getEnnemisList()[j]->getLifeStatue()==0){
-//                          this->lootAleatoireDesEnnemis(this->model->getNiveau()->getEnnemisList()[j]);
-//                           this->model->getNiveau()->deleteMonstre(j);
-//                        }
-//                       this->model->getNiveau()->deleteItem(i);
-//                       return;
-//                   }
-//               }
-//            }
-//        }
-//    }
-//}
+//voir si les fleches touche les ennemis
+void Controller::checkCollisionArrowsWithEnnemis()
+{
+    if (this->viewGame->getEnnemisList().size() > 0 && this->viewGame->getMapItems().size() > 0){
+
+        for (unsigned long i=0;i<this->viewGame->getMapItems().size();i++){
+            if (this->viewGame->getMapItems()[i]->getType_of_item() == "arrow_right"||this->viewGame->getMapItems()[i]->getType_of_item() == "arrow_left"||this->viewGame->getMapItems()[i]->getType_of_item() == "arrow_down"||this->viewGame->getMapItems()[i]->getType_of_item() == "arrow_up")
+            {
+                for (unsigned long j = 0; j<this->viewGame->getEnnemisList().size(); j++){
+
+                    if((this->viewGame->getMapItems()[i]->getPosXactuel() == this->viewGame->getEnnemisList()[j]->getPosX()) && (this->viewGame->getMapItems()[i]->getPosYactuel() == this->viewGame->getEnnemisList()[j]->getPosY())){
+                        this->arrowHitSound.play();
+                        this->lootAleatoireDesEnnemis(this->viewGame->getEnnemisList()[j]);
+                        this->viewGame->deleteMonster(int(j));
+                        this->viewGame->deleteItem(int(i));
+                    }
+                }
+            }
+        }
+    }
+}
 
 //attquer avec l'épée
 void Controller::attack_function(QString direction){
@@ -313,7 +310,7 @@ void Controller::attack_function(QString direction){
 ////fonction pour check la collision de Link avec les objets sur la map
 //void Controller::checkCollisionItemsWithLink()
 //{
-//    vector<item*> vec = this->model->getNiveau()->getMapItems();//plus simple à gérer
+//    vector<item*> vec = this->viewGame->getMapItems();//plus simple à gérer
 //    for (unsigned long i=0; i<vec.size();i++){
 //    //check avec zelda et le monstre et retire des PV à zelda
 //        int diffX = (this->model->getLink()->getPosX() - vec[i]->getPosXinitiale());
@@ -395,18 +392,7 @@ void Controller::game_finished_procedure()
 //    if(this->model->getLink()->getLife()<10){
 //        QSound::play("/Users/alexandremagne/Desktop/Zelda2/Musiques/LOZ/LOZ_Get_Heart.wav");
 //        this->model->getLink()->setLife(this->model->getLink()->getLife()+1);
-//        this->model->getNiveau()->deleteItem(i);
-//        return;
-//    }
-//}
-
-////void Controller::zeldaRammasseUneFleche(int i)
-//{
-//    int compteurFleche = this->model->getLink()->arrowCounter();
-//    if (compteurFleche<7){//zelda ne peut pas avoir plus de 7 fleche
-//        QSound::play("/Users/alexandremagne/Desktop/Zelda2/Musiques/LOZ/LOZ_Get_Rupee.wav");
-//      this->model->getLink()->ajouterItem(this->model->getNiveau()->getMapItems()[i]->getType_of_item());//on ajoute une clef a zelda
-//        this->model->getNiveau()->deleteItem(i);//on supprimer la clef de la carte
+//        this->viewGame->deleteItem(i);
 //        return;
 //    }
 //}
@@ -423,13 +409,7 @@ void Controller::pressKey(QString key)
 
             if(checkFieldForLink(key))
             {
-                //            if ((this->viewGame->getMapScene()->itemAt(this->model->getLink()->getPosX(),this->model->getLink()->getPosY(),QTransform())->zValue() == 5)||(this->view->getMapScene()->itemAt(this->model->getLink()->getPosX()-10,this->model->getLink()->getPosY()+this->model->getLink()->getTile().height()-10,QTransform())->zValue() == 5))
-                //            {
-                //                //si il ya collision avec un objet on fait rien
-                //            }
-                //            else{
                 this->model->getLink()->moove("left");
-                //            }
             }
         }
 
@@ -440,14 +420,7 @@ void Controller::pressKey(QString key)
 
             if(checkFieldForLink(key))
             {
-                //            //On vérifie la COLLISION
-                //            if ((this->viewGame->getMapScene()->itemAt(this->model->getLink()->getPosX()+this->model->getLink()->getTile().width(), this->model->getLink()->getPosY()+this->model->getLink()->getTile().height()-10, QTransform())->zValue() == 5)||(this->view->getMapScene()->itemAt(this->model->getLink()->getPosX()+this->model->getLink()->getTile().width(), this->model->getLink()->getPosY(),QTransform())->zValue() == 5))
-                //            {
-                //                //si il ya collision avec un objet on fait rien
-                //            }
-                //            else {
                 this->model->getLink()->moove("right");
-                //            }
             }
         }
 
@@ -458,13 +431,7 @@ void Controller::pressKey(QString key)
 
             if(checkFieldForLink(key))
             {
-                //            if ((this->viewGame->getMapScene()->itemAt(this->model->getLink()->getPosX()+this->model->getLink()->getTile().width()/1.5,this->model->getLink()->getPosY()-10,QTransform())->zValue() == 5)||(this->view->getMapScene()->itemAt(this->model->getLink()->getPosX(),this->model->getLink()->getPosY()-10,QTransform())->zValue() == 5)){
-                //                //si il ya collision avec un objet on fait rien
-                //            }
-                //            else
-                //            {
                 this->model->getLink()->moove("up");
-                //            }
             }
 
         }
@@ -476,12 +443,7 @@ void Controller::pressKey(QString key)
 
             if(checkFieldForLink(key))
             {
-                //            if ((this->viewGame->getMapScene()->itemAt(this->model->getZegetLinklda()->getPosX()+this->model->getLink()->getTile().width()/1.5,this->model->getLink()->getPosY()+this->model->getLink()->getTile().height(),QTransform())->zValue() == 5)||(this->view->getMapScene()->itemAt(this->model->getLink()->getPosX(),this->model->getLink()->getPosY()+this->model->getLink()->getTile().height(),QTransform())->zValue() == 5)){
-                //                //si il ya collision avec un objet on fait rien
-                //            }
-                //            else{
                 this->model->getLink()->moove("down");
-                //            }
             }
 
         }
@@ -501,9 +463,6 @@ void Controller::pressKey(QString key)
             if(this->model->getLink()->getArrowQuantity()>0){
                 bowSound.play();
                 this->model->getLink()->setArrowQuantity(this->model->getLink()->getArrowQuantity()-1);
-                Arrow *arrow = new Arrow(this->model->getLink()->getDirection());
-                arrow->setPos(x(),y());
-                this->viewGame->getMapScene()->addItem(arrow);
                 this->viewGame->ajouterItem(this->model->getLink()->getPosX(),this->model->getLink()->getPosY(),"arrow_"+this->model->getLink()->getDirection());
             }
         }

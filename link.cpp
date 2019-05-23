@@ -37,7 +37,7 @@ void Link::setEnergy(int value)
 
 int Link::getLifeMax() const
 {
-    return lifeMaxl
+    return lifeMax;
 }
 
 int Link::getEnergyMax() const

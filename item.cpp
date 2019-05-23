@@ -21,6 +21,9 @@ void Item::setTile(){
     if ((this->getType_of_item() == "arrow_left") || (this->getType_of_item() == "arrow_right") || (this->getType_of_item() == "arrow_up") || (this->getType_of_item() == "arrow_down"))
         this->tile = QPixmap(":/Items/Images/Items/" + this->getType_of_item() + ".png");
 
+    else if (this->getType_of_item() == "arrow_item")
+        this->tile = QPixmap(":/Items/Images/Items/arrow_down.png");
+
     else
         this->tile = QPixmap(":/Items/Images/Items/" + this->getType_of_item() + ".png");
 }

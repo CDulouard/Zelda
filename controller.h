@@ -38,7 +38,7 @@ protected:
 /*          attaques et Link        */
     void attack_function(QString direction);
     void checkCollisionArrowsWithEnnemis();//pour checker la collision fleche ennemie
-    void faireAvancerArrow();//pour que les flechent se deplacent
+    void mooveArrow();//pour que les flechent se deplacent
 
 /*          Jeu et Link        */
     void game_over_procedure();
@@ -73,6 +73,7 @@ private:
     QMediaPlayer hurtSound;
     QMediaPlayer swordSound;
     QMediaPlayer bowSound;
+    QMediaPlayer arrowHitSound;
 
     int levelCounter;
     unsigned int energyLoaderCounter;
