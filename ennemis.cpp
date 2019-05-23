@@ -34,4 +34,3 @@ void Ennemis::setPosYinitiale(int value)
     posYinitiale = value;
     setPosY(value);
 }
-

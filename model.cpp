@@ -33,6 +33,3 @@ void Model::resetModel()
     this->link = new Link();
     this->zelda = new Zelda();
 }
-
-
-

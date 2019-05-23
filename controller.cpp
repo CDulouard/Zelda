@@ -687,4 +687,3 @@ void Controller::setModel(Model *value)
 {
     model = value;
 }
-

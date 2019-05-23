@@ -106,6 +106,3 @@ void Item::setPosYactuel(int value)
 {
     posYactuel = value;
 }
-
-
-
