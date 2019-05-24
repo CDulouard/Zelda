@@ -51,6 +51,8 @@ public:
     void displayMapItems( std::vector<Item*> vec);
     std::vector<Item *> getMapItems() const;
 
+    void mapGenerator();
+
 protected:
     Ui::MainWindow *ui;
 

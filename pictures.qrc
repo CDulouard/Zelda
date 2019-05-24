@@ -45,12 +45,17 @@
         <file>Images/Terrain/water_6.png</file>
         <file>Images/Terrain/water_7.png</file>
         <file>Images/Terrain/tree.png</file>
+        <file>Images/Terrain/fog_1.png</file>
+        <file>Images/Terrain/fog_2.png</file>
+        <file>Images/Terrain/void.png</file>
     </qresource>
     <qresource prefix="/Items">
         <file>Images/Items/arrow_down.png</file>
         <file>Images/Items/arrow_left.png</file>
         <file>Images/Items/arrow_right.png</file>
         <file>Images/Items/arrow_up.png</file>
+        <file>Images/Items/empty.png</file>
+        <file>Images/Items/arrow_item.png</file>
         <file>Images/Items/heart.png</file>
     </qresource>
 </RCC>

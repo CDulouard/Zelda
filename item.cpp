@@ -23,7 +23,7 @@ void Item::setTile(){
         this->tile = QPixmap(":/Items/Images/Items/" + this->getType_of_item() + ".png");
 
     else if (this->getType_of_item() == "arrow_item")
-        this->tile = QPixmap(":/Items/Images/Items/arrow_down.png");
+        this->tile = QPixmap(":/Items/Images/Items/arrow_item.png");
 
     else
         this->tile = QPixmap(":/Items/Images/Items/" + this->getType_of_item() + ".png");

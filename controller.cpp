@@ -74,13 +74,13 @@ void Controller::displayScene(){
     this->viewGame->displayMap();
     this->viewGame->getCameraView()->setPosX(this->model->getLink()->getPosX()-250);
     this->viewGame->getCameraView()->setPosY(this->model->getLink()->getPosY()-250);
-    this->viewGame->displayLink(this->getModel()->getLink());
     this->viewGame->displayMapItems(this->viewGame->getMapItems());
     if (this->viewGame->getEnnemisList().size() != 0){
         for(unsigned long i = 0; i<this->viewGame->getEnnemisList().size(); i++){
             this->viewGame->displayEnnemis(this->viewGame->getEnnemisList()[i]);
         }
     }
+    this->viewGame->displayLink(this->getModel()->getLink());
     this->viewGame->displayZelda(this->getModel()->getZelda());
     displayStats(int(this->model->getLink()->getLife()), this->model->getLink()->getArrowQuantity(), this->model->getLink()->getEnergy());
 
@@ -247,16 +247,16 @@ void Controller::itemDeleter()
 
 void Controller::lootAleatoireDesEnnemis(Ennemis *ennemis)
 {
-    int randomNumber = rand() % 2 + 1;
-    qDebug() << randomNumber;
+    int randomNumber = rand() % 5 + 1;
 
-    if(randomNumber == 3)
-        randomNumber = 2;
+    if(randomNumber == 1)
+        this->viewGame->ajouterItem(ennemis->getPosX(), ennemis->getPosY(), "heart" );
 
-    if(randomNumber == 1)this->viewGame->ajouterItem(ennemis->getPosX(), ennemis->getPosY(), "heart" );
-    else if(randomNumber == 2)this->viewGame->ajouterItem(ennemis->getPosX(), ennemis->getPosY(), "arrow_item" );
+    else if(randomNumber == 2)
+        this->viewGame->ajouterItem(ennemis->getPosX(), ennemis->getPosY(), "arrow_item" );
+
     else
-        return;
+        this->viewGame->ajouterItem(ennemis->getPosX(), ennemis->getPosY(), "empty" );
 }
 
 
@@ -308,67 +308,62 @@ void Controller::checkCollisionEnnemisArrows()
 
 bool Controller::checkCollisionEnnemisEnnemis(QString direction, int nbMonster)
 {
-    for(unsigned int j = 0; j < this->viewGame->getEnnemisList().size() ; j++){
-        if(direction == "left"){
-            if((this->viewGame->getEnnemisList()[nbMonster]->getPosY() != this->viewGame->getEnnemisList()[j]->getPosY()) || (this->viewGame->getEnnemisList()[nbMonster]->getPosY() == this->viewGame->getEnnemisList()[j]->getPosY() && this->viewGame->getEnnemisList()[nbMonster]->getPosX() != this->viewGame->getEnnemisList()[j]->getPosX() + 50))
-                return true;
-            else {
-                return false;
+    if(this->viewGame->getEnnemisList().size() > 1){
+
+        for(unsigned int j = 0 ; j < this->viewGame->getEnnemisList().size() ; j++){
+            if(direction == "left"){
+                if((this->viewGame->getEnnemisList()[nbMonster]->getPosY() != this->viewGame->getEnnemisList()[j]->getPosY()) || (this->viewGame->getEnnemisList()[nbMonster]->getPosY() == this->viewGame->getEnnemisList()[j]->getPosY() && this->viewGame->getEnnemisList()[nbMonster]->getPosX() != this->viewGame->getEnnemisList()[j]->getPosX() + 50))
+                    return true;
             }
-        }
 
-        else if(direction == "right"){
-            if((this->viewGame->getEnnemisList()[nbMonster]->getPosY() != this->viewGame->getEnnemisList()[j]->getPosY()) || (this->viewGame->getEnnemisList()[nbMonster]->getPosY() == this->viewGame->getEnnemisList()[j]->getPosY() && this->viewGame->getEnnemisList()[nbMonster]->getPosX() != this->viewGame->getEnnemisList()[j]->getPosX() - 50))
-                return true;
-            else {
-                return false;
+            else if(direction == "right"){
+                if((this->viewGame->getEnnemisList()[nbMonster]->getPosY() != this->viewGame->getEnnemisList()[j]->getPosY()) || (this->viewGame->getEnnemisList()[nbMonster]->getPosY() == this->viewGame->getEnnemisList()[j]->getPosY() && this->viewGame->getEnnemisList()[nbMonster]->getPosX() != this->viewGame->getEnnemisList()[j]->getPosX() - 50))
+                    return true;
             }
-        }
 
-        else if(direction == "up"){
-            if((this->viewGame->getEnnemisList()[nbMonster]->getPosX() != this->viewGame->getEnnemisList()[j]->getPosX()) || (this->viewGame->getEnnemisList()[nbMonster]->getPosX() == this->viewGame->getEnnemisList()[j]->getPosX() && this->viewGame->getEnnemisList()[nbMonster]->getPosY() != this->viewGame->getEnnemisList()[j]->getPosY() + 50))
-                return true;
-            else {
-                return false;
+            else if(direction == "up"){
+                if((this->viewGame->getEnnemisList()[nbMonster]->getPosX() != this->viewGame->getEnnemisList()[j]->getPosX()) || (this->viewGame->getEnnemisList()[nbMonster]->getPosX() == this->viewGame->getEnnemisList()[j]->getPosX() && this->viewGame->getEnnemisList()[nbMonster]->getPosY() != this->viewGame->getEnnemisList()[j]->getPosY() + 50))
+                    return true;
             }
-        }
 
-        else if(direction == "down"){
-            if((this->viewGame->getEnnemisList()[nbMonster]->getPosX() != this->viewGame->getEnnemisList()[j]->getPosX()) || (this->viewGame->getEnnemisList()[nbMonster]->getPosX() == this->viewGame->getEnnemisList()[j]->getPosX() && this->viewGame->getEnnemisList()[nbMonster]->getPosY() != this->viewGame->getEnnemisList()[j]->getPosY() - 50))
-                return true;
-            else {
-                return false;
+            else if(direction == "down"){
+                if((this->viewGame->getEnnemisList()[nbMonster]->getPosX() != this->viewGame->getEnnemisList()[j]->getPosX()) || (this->viewGame->getEnnemisList()[nbMonster]->getPosX() == this->viewGame->getEnnemisList()[j]->getPosX() && this->viewGame->getEnnemisList()[nbMonster]->getPosY() != this->viewGame->getEnnemisList()[j]->getPosY() - 50))
+                    return true;
             }
+
+            else
+                return false;
         }
-
-        else
-            return false;   // just in case
-
     }
+    return false;
 }
 
-//attquer avec l'épée
+
 void Controller::attack_function(QString direction){
     if (this->viewGame->getEnnemisList().size() != 0){
 
         for (unsigned long i=0; i<this->viewGame->getEnnemisList().size(); i++){
 
             if((direction == "left") && (this->viewGame->getEnnemisList()[i]->getPosX() == this->model->getLink()->getPosX() - 50) && (this->viewGame->getEnnemisList()[i]->getPosY() == this->model->getLink()->getPosY())){
+
                 this->lootAleatoireDesEnnemis(this->viewGame->getEnnemisList()[i]);
                 this->viewGame->deleteMonster(int(i));
             }
 
             else if((direction == "right") && (this->viewGame->getEnnemisList()[i]->getPosX() == this->model->getLink()->getPosX() + 50) && (this->viewGame->getEnnemisList()[i]->getPosY() == this->model->getLink()->getPosY())){
+
                 this->lootAleatoireDesEnnemis(this->viewGame->getEnnemisList()[i]);
                 this->viewGame->deleteMonster(int(i));
             }
 
             else if((direction == "up") && (this->viewGame->getEnnemisList()[i]->getPosY() == this->model->getLink()->getPosY() - 50) && (this->viewGame->getEnnemisList()[i]->getPosX() == this->model->getLink()->getPosX())){
+
                 this->lootAleatoireDesEnnemis(this->viewGame->getEnnemisList()[i]);
                 this->viewGame->deleteMonster(int(i));
             }
 
             else if((direction == "down") && (this->viewGame->getEnnemisList()[i]->getPosY() == this->model->getLink()->getPosY() + 50) && (this->viewGame->getEnnemisList()[i]->getPosX() == this->model->getLink()->getPosX())){
+
                 this->lootAleatoireDesEnnemis(this->viewGame->getEnnemisList()[i]);
                 this->viewGame->deleteMonster(int(i));
             }
@@ -418,6 +413,7 @@ void Controller::game_over_procedure()
     splash->close();
 
     this->viewGame->resetView();
+    this->viewGame->mapGenerator();
     this->model->resetModel();
 
     levelCounter--;
@@ -437,6 +433,7 @@ void Controller::game_finished_procedure()
     splash->close();
 
     this->viewGame->resetView();
+    this->viewGame->mapGenerator();
     this->model->resetModel();
 
     levelCounter--;

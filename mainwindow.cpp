@@ -19,28 +19,36 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     this->mapScene = new QGraphicsScene();
     this->cameraView = new Scene();
 
+    mapGenerator();
+
+}
+
+void MainWindow::mapGenerator()
+{
+    // first case of the map (not the rim) is (11,7)
+
     currentMap.push_back("..........................................");
     currentMap.push_back("..........................................");
     currentMap.push_back("..........................................");
     currentMap.push_back("..........................................");
     currentMap.push_back("..........................................");
     currentMap.push_back("..........................................");
-    currentMap.push_back("..........................................");
-    currentMap.push_back("...........gggggggggggggggggggg...........");
-    currentMap.push_back("...........ggggggggggwwwwwwwwww...........");
-    currentMap.push_back("...........gggggggggwwwwwwwwwww...........");
-    currentMap.push_back("...........gggggggggwwwwwwwwwww...........");
-    currentMap.push_back("...........ggggggggggwwwwwwwwww...........");
-    currentMap.push_back("...........gggggggggggggwwwwwww...........");
-    currentMap.push_back("...........gggggggggggggssggggg...........");
-    currentMap.push_back("...........gggggggggggggwwggggg...........");
-    currentMap.push_back("...........ggggggggggggwwgggggg...........");
-    currentMap.push_back("...........gggggggggggwwwgggggg...........");
-    currentMap.push_back("...........tttttttggggwwwgggggg...........");
-    currentMap.push_back("...........dhddddtggggwwwgggggg...........");
-    currentMap.push_back("...........hdddddtgggwwwggggggg...........");
-    currentMap.push_back("...........hdddddgggwwwgggggggg...........");
-    currentMap.push_back("..........................................");
+    currentMap.push_back("..........rrrrrrrrrrrrrrrrrrrrrr..........");
+    currentMap.push_back("..........rggggggggggggggggggggr..........");
+    currentMap.push_back("..........rggggggggggwwwwwwwwwwr..........");
+    currentMap.push_back("..........rgggggggggwwwwwwwwwwwr..........");
+    currentMap.push_back("..........rgggggggggwwwwwwwwwwwr..........");
+    currentMap.push_back("..........rggggggggggwwwwwwwwwwr..........");
+    currentMap.push_back("..........rgggggggggggggwwwwwwwr..........");
+    currentMap.push_back("..........rgggggggggggggssgggggr..........");
+    currentMap.push_back("..........rgggggggggggggwwgggggr..........");
+    currentMap.push_back("..........rggggggggggggwwggggggr..........");
+    currentMap.push_back("..........rttttgggggggwwwggggggr..........");
+    currentMap.push_back("..........rtttttttggggwwwggggggr..........");
+    currentMap.push_back("..........rdhdddttggggwwwggggggr..........");
+    currentMap.push_back("..........rhdddddtgggwwwgggggggr..........");
+    currentMap.push_back("..........rhdddddgggwwwggggggggr..........");
+    currentMap.push_back("..........rrrrrrrrrrrrrrrrrrrrrr..........");
     currentMap.push_back("..........................................");
     currentMap.push_back("..........................................");
     currentMap.push_back("..........................................");
@@ -53,21 +61,41 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     cellTypes["g"] = 1; /* Grass (can walk on it) */
     cellTypes["s"] = 1; /* Sand (can walk on it) */
     cellTypes["d"] = 1; /* dirt (can walk on it) */
-    cellTypes["."] = 0; /* Wall (can't walk on it) */
+    cellTypes["."] = 0; /* void (can't walk on it) */
+    cellTypes["r"] = 0; /* rims (can't walk on it) */
     cellTypes["w"] = 0; /* Water (can't walk on it) */
     cellTypes["t"] = 0; /* Tree (can't walk on it) */
     cellTypes["h"] = 0; /* House (can't walk on it) */
 
-    this->ennemisList.push_back(new Ennemis(13 * 50 , 17 * 50));
-    this->ennemisList.push_back(new Ennemis(14 * 50 , 16 * 50));
-    this->ennemisList.push_back(new Ennemis(16 * 50 , 12 * 50));
-    this->ennemisList.push_back(new Ennemis(18 * 50 , 10 * 50));
-    this->ennemisList.push_back(new Ennemis(19 * 50 , 9 * 50));
-    this->ennemisList.push_back(new Ennemis(26 * 50 , 14 * 50));
-    this->ennemisList.push_back(new Ennemis(27 * 50 , 8 * 50));
-    this->ennemisList.push_back(new Ennemis(27 * 50 , 20 * 50));
+    if(this->getMapItems().size() > 0){
+        for (unsigned int i = 0 ; i < this->getMapItems().size() ; i++ ){
+            this->deleteItem(int(i));
+            qDebug() << "ça narche1";
+        }
+    }
+
+    if(this->getEnnemisList().size() > 0){
+        for (unsigned int i = 0 ; i < this->getEnnemisList().size() ; i++ ){
+            this->deleteMonster(int(i));
+            qDebug() << "ça marche2";
+        }
+    }
+
+    this->ennemisList.push_back(new Ennemis(12 * 50 , 19 * 50));
+    this->ennemisList.push_back(new Ennemis(13 * 50 , 19 * 50));
+    this->ennemisList.push_back(new Ennemis(14 * 50 , 19 * 50));
+    this->ennemisList.push_back(new Ennemis(15 * 50 , 19 * 50));
+    this->ennemisList.push_back(new Ennemis(16 * 50 , 19 * 50));
+
+    this->ennemisList.push_back(new Ennemis(12 * 50 , 20 * 50));
+    this->ennemisList.push_back(new Ennemis(13 * 50 , 20 * 50));
+    this->ennemisList.push_back(new Ennemis(14 * 50 , 20 * 50));
+    this->ennemisList.push_back(new Ennemis(15 * 50 , 20 * 50));
+    this->ennemisList.push_back(new Ennemis(16 * 50 , 20 * 50));
+
 
 }
+
 
 MainWindow::~MainWindow()
 {
@@ -77,6 +105,7 @@ MainWindow::~MainWindow()
 void MainWindow::resetView(){
     delete this->mapScene;
     this->mapScene = new QGraphicsScene();
+
 }
 
 void MainWindow::displayMap()
@@ -93,10 +122,16 @@ void MainWindow::displayMap()
                 this->mapScene -> addItem(grass);
             }
             else if (currentMap[i][j] == "."){
-                QGraphicsPixmapItem *wall = new QGraphicsPixmapItem();
-                wall->setPixmap(QPixmap(":/terrain/Images/Terrain/wall.jpg"));
-                wall->setPos(j*50,i*50);
-                this->mapScene -> addItem(wall);
+                QGraphicsPixmapItem *fogOfWar = new QGraphicsPixmapItem();
+                fogOfWar->setPixmap(QPixmap(":/terrain/Images/Terrain/void.png"));
+                fogOfWar->setPos(j*50,i*50);
+                this->mapScene -> addItem(fogOfWar);
+            }
+            else if (currentMap[i][j] == "r"){
+                QGraphicsPixmapItem *fogOfWar = new QGraphicsPixmapItem();
+                fogOfWar->setPixmap(QPixmap(":/terrain/Images/Terrain/wall.jpg"));
+                fogOfWar->setPos(j*50,i*50);
+                this->mapScene -> addItem(fogOfWar);
             }
             else if (currentMap[i][j] == "w"){
                 QGraphicsPixmapItem *water = new QGraphicsPixmapItem();
@@ -319,3 +354,5 @@ std::vector<Item *> MainWindow::getMapItems() const
 {
     return this->mapItems;
 }
+
+

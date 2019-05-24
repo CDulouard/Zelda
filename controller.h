@@ -25,16 +25,13 @@ public:
     void setModel(Model *value);
     Model *getModel() const;
 
-    void displayStats(int health, int arrowNumber, int energy);
-
-    void energyLoader();
-
-    void mooveEnnemis();
-
-
 protected:
     void delay(int i);
     void itemDeleter();
+
+    void displayStats(int health, int arrowNumber, int energy);
+    void energyLoader();
+    void mooveEnnemis();
 
     void attack_function(QString direction);
 
@@ -53,7 +50,6 @@ protected:
 
     void game_over_procedure();
     void game_finished_procedure();
-
 
 
 public slots:
