@@ -48,6 +48,9 @@
         <file>Images/Terrain/fog_1.png</file>
         <file>Images/Terrain/fog_2.png</file>
         <file>Images/Terrain/void.png</file>
+        <file>Images/Terrain/bridge.png</file>
+        <file>Images/Terrain/bridge_left.jpg</file>
+        <file>Images/Terrain/bridge_right.jpg</file>
     </qresource>
     <qresource prefix="/Items">
         <file>Images/Items/arrow_down.png</file>

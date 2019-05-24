@@ -27,40 +27,70 @@ void MainWindow::mapGenerator()
 {
     // first case of the map (not the rim) is (11,7)
 
-    currentMap.push_back("..........................................");
-    currentMap.push_back("..........................................");
-    currentMap.push_back("..........................................");
-    currentMap.push_back("..........................................");
-    currentMap.push_back("..........................................");
-    currentMap.push_back("..........................................");
-    currentMap.push_back("..........rrrrrrrrrrrrrrrrrrrrrr..........");
-    currentMap.push_back("..........rggggggggggggggggggggr..........");
-    currentMap.push_back("..........rggggggggggwwwwwwwwwwr..........");
-    currentMap.push_back("..........rgggggggggwwwwwwwwwwwr..........");
-    currentMap.push_back("..........rgggggggggwwwwwwwwwwwr..........");
-    currentMap.push_back("..........rggggggggggwwwwwwwwwwr..........");
-    currentMap.push_back("..........rgggggggggggggwwwwwwwr..........");
-    currentMap.push_back("..........rgggggggggggggssgggggr..........");
-    currentMap.push_back("..........rgggggggggggggwwgggggr..........");
-    currentMap.push_back("..........rggggggggggggwwggggggr..........");
-    currentMap.push_back("..........rttttgggggggwwwggggggr..........");
-    currentMap.push_back("..........rtttttttggggwwwggggggr..........");
-    currentMap.push_back("..........rdhdddttggggwwwggggggr..........");
-    currentMap.push_back("..........rhdddddtgggwwwgggggggr..........");
-    currentMap.push_back("..........rhdddddgggwwwggggggggr..........");
-    currentMap.push_back("..........rrrrrrrrrrrrrrrrrrrrrr..........");
-    currentMap.push_back("..........................................");
-    currentMap.push_back("..........................................");
-    currentMap.push_back("..........................................");
-    currentMap.push_back("..........................................");
-    currentMap.push_back("..........................................");
-    currentMap.push_back("..........................................");
+    currentMap.push_back("......................................................................");
+    currentMap.push_back("......................................................................");
+    currentMap.push_back("......................................................................");
+    currentMap.push_back("......................................................................");
+    currentMap.push_back("......................................................................");
+    currentMap.push_back("......................................................................");
+    currentMap.push_back("..........rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr..........");
+    currentMap.push_back("..........rggggggtttttttgggggttggggtttgggswwwwwsggggtttttttr..........");
+    currentMap.push_back("..........rtgggggtttggtgggggggggggggtgggswwwwwsggggggttttttr..........");
+    currentMap.push_back("..........rtgggggggtgggggggtgggggggggggswwwwwsggggggtttttttr..........");
+    currentMap.push_back("..........rggggggggggggtggggggggggggggggswwwwwsgggggggtttttr..........");
+    currentMap.push_back("..........rgggggggggdddddgggggggtgggggggswwwwwsggggggggggttr..........");
+    currentMap.push_back("..........rgggggggdddhddhddgggtggggggggswwwwwsgggggggggggggr..........");
+    currentMap.push_back("..........rgggggddddddhddddhdggggggggtsswwwwwsggddttgggggggr..........");
+    currentMap.push_back("..........rttgggggddddddddhgggggtgggggsswwwwssgddhdddggggtgr..........");
+    currentMap.push_back("..........rtggggggddhddddtgggggggggggssswwwssshddddddddggggr..........");
+    currentMap.push_back("..........rgggggggggddddggggggggggggggsswwwssddddddhddgggggr..........");
+    currentMap.push_back("..........rttggggggggggggggtttgggggggggswwwsgddhdddddggggggr..........");
+    currentMap.push_back("..........rttttggggggggggtttttttttggggg12223ggdddhddgggggggr..........");
+    currentMap.push_back("..........rtttttttggggggtttttttttttttggswwwssgggdddggggttggr..........");
+    currentMap.push_back("..........rggttttttttggtttttttttttttttswwwwwssgggggggtttttgr..........");
+    currentMap.push_back("..........rggggttttggggtttttttttttttttwwwwwwwwssggggtttttttr..........");
+    currentMap.push_back("..........rgggttttggtggggttttttttttggswwwwwwwwwssggggttttttr..........");
+    currentMap.push_back("..........rtgggttgggttggttggttttttggsswwwwwwwwwsssggggggtttr..........");
+    currentMap.push_back("..........rttggtggggtggggggggttgggsswwwwwwwwwwwwssgtgggggttr..........");
+    currentMap.push_back("..........rtggggggtggggtttgggggggsswwwwwwwwwwwwwwwssggggggtr..........");
+    currentMap.push_back("..........rggggggtttggggtgggggggswwwwwwwwwwwwwwwwsssgggggggr..........");
+    currentMap.push_back("..........rggggggtgtgggggggggggswwwwwwwwwwwwwwwwwwsgggggtggr..........");
+    currentMap.push_back("..........rggggggggggggggggggggswwwwwwwwwwwwwwwwwssggggggggr..........");
+    currentMap.push_back("..........rssggggggggggggggggggswwwwwwwwwwwwwwwwwwsggtgggggr..........");
+    currentMap.push_back("..........rwwsgggggggggggggggggsswwwwwwwwwwwwwwwwssggggggggr..........");
+    currentMap.push_back("..........rwwwsssggddgggggggggggsswwwwwwwwwwwwwwssggttgggtgr..........");
+    currentMap.push_back("..........rwwwwwwshddhdggggggggggssswwwwwwwwwwwwssgggtgggggr..........");
+    currentMap.push_back("..........rwwwwwssdddddggggtggggggswwwwwwwwwwwwsssgggggggggr..........");
+    currentMap.push_back("..........rwwwwssddhddggggggggggtswwwwwwwwwwwwsggggggtgggggr..........");
+    currentMap.push_back("..........rwwwssggddhgggtgggggggswwwwwwwwwwwsssgggtggggggggr..........");
+    currentMap.push_back("..........rwwssggggddgggggggggggswwwwwwwwwwssggggggggggggggr..........");
+    currentMap.push_back("..........rsssggggggggggttgggggggswwwwwwwwssgggggggttggggggr..........");
+    currentMap.push_back("..........rgggggggggggggtggggggggswwwwwwwssgggggggddhdgggggr..........");
+    currentMap.push_back("..........rgggggggggggggggggggggggswwwwwssgggggggdhddddtgggr..........");
+    currentMap.push_back("..........rggggggggggggggggggggggggswwwssgggggggggdddtttgggr..........");
+    currentMap.push_back("..........rggggggggttttgggggggggggggswwssggggggggggggttttttr..........");
+    currentMap.push_back("..........rggggggggggtttggggggggggggswwsgggggggggggtttttgggr..........");
+    currentMap.push_back("..........rttgggggggtttggggggggggggswwsggggggggggttttttttttr..........");
+    currentMap.push_back("..........rtgggggggtttggggggggggggswwsgggggggggttttttttttttr..........");
+    currentMap.push_back("..........rtttgggtttttttggggggggggswwsgggggttttttttttttttttr..........");
+    currentMap.push_back("..........rtttttttttttttttddhdtttttswwsgtttttttttttttttttttr..........");
+    currentMap.push_back("..........rttttttttttttttttddtttttwwwttttttttttttttttttttttr..........");
+    currentMap.push_back("..........rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr..........");
+    currentMap.push_back("......................................................................");
+    currentMap.push_back("......................................................................");
+    currentMap.push_back("......................................................................");
+    currentMap.push_back("......................................................................");
+    currentMap.push_back("......................................................................");
+    currentMap.push_back("......................................................................");
 
 
     /*  Fit the cellTypes map with the type of all cells in the map */
     cellTypes["g"] = 1; /* Grass (can walk on it) */
     cellTypes["s"] = 1; /* Sand (can walk on it) */
     cellTypes["d"] = 1; /* dirt (can walk on it) */
+    cellTypes["1"] = 1; /* bridge (can walk on it) */
+    cellTypes["2"] = 1; /* bridge (can walk on it) */
+    cellTypes["3"] = 1; /* bridge (can walk on it) */
     cellTypes["."] = 0; /* void (can't walk on it) */
     cellTypes["r"] = 0; /* rims (can't walk on it) */
     cellTypes["w"] = 0; /* Water (can't walk on it) */
@@ -81,18 +111,29 @@ void MainWindow::mapGenerator()
         }
     }
 
-    this->ennemisList.push_back(new Ennemis(12 * 50 , 19 * 50));
-    this->ennemisList.push_back(new Ennemis(13 * 50 , 19 * 50));
-    this->ennemisList.push_back(new Ennemis(14 * 50 , 19 * 50));
-    this->ennemisList.push_back(new Ennemis(15 * 50 , 19 * 50));
-    this->ennemisList.push_back(new Ennemis(16 * 50 , 19 * 50));
 
-    this->ennemisList.push_back(new Ennemis(12 * 50 , 20 * 50));
-    this->ennemisList.push_back(new Ennemis(13 * 50 , 20 * 50));
-    this->ennemisList.push_back(new Ennemis(14 * 50 , 20 * 50));
-    this->ennemisList.push_back(new Ennemis(15 * 50 , 20 * 50));
-    this->ennemisList.push_back(new Ennemis(16 * 50 , 20 * 50));
+//    this->ennemisList.push_back(new Ennemis(12 * 50 , 53 * 50));
+//    this->ennemisList.push_back(new Ennemis(14 * 50 , 43 * 50));
+//    this->ennemisList.push_back(new Ennemis(17 * 50 , 47 * 50));
+//    this->ennemisList.push_back(new Ennemis(26 * 50 , 57 * 50));
+//    this->ennemisList.push_back(new Ennemis(25 * 50 , 46 * 50));
+//    this->ennemisList.push_back(new Ennemis(27 * 50 , 41 * 50));
+//    this->ennemisList.push_back(new Ennemis(35 * 50 , 53 * 50));
+//    this->ennemisList.push_back(new Ennemis(38 * 50 , 57 * 50));
+//    this->ennemisList.push_back(new Ennemis(44 * 50 , 42 * 50));
+//    this->ennemisList.push_back(new Ennemis(46 * 50 , 55 * 50));
+//    this->ennemisList.push_back(new Ennemis(12 * 50 , 19 * 50));
 
+//    this->ennemisList.push_back(new Ennemis(18 * 50 , 77 * 50));
+//    this->ennemisList.push_back(new Ennemis(13 * 50 , 79 * 50));
+//    this->ennemisList.push_back(new Ennemis(19 * 50 , 85 * 50));
+//    this->ennemisList.push_back(new Ennemis(31 * 50 , 83 * 50));
+//    this->ennemisList.push_back(new Ennemis(40 * 50 , 85 * 50));
+//    this->ennemisList.push_back(new Ennemis(44 * 50 , 71 * 50));
+
+
+    this->ennemisList.push_back(new Ennemis(15 * 50 , 15 * 50));
+    this->ennemisList.push_back(new Ennemis(20 * 50 , 20 * 50));
 
 }
 
@@ -162,6 +203,27 @@ void MainWindow::displayMap()
                 water->setPixmap(QPixmap(":/terrain/Images/Terrain/house.jpg"));
                 water->setPos(j*50,i*50);
                 this->mapScene -> addItem(water);
+            }
+
+            else if (currentMap[i][j] == "1"){
+                QGraphicsPixmapItem *bridge1 = new QGraphicsPixmapItem();
+                bridge1->setPixmap(QPixmap(":/terrain/Images/Terrain/bridge_left.jpg"));
+                bridge1->setPos(j*50,i*50);
+                this->mapScene -> addItem(bridge1);
+            }
+
+            else if (currentMap[i][j] == "2"){
+                QGraphicsPixmapItem *bridge2 = new QGraphicsPixmapItem();
+                bridge2->setPixmap(QPixmap(":/terrain/Images/Terrain/bridge.png"));
+                bridge2->setPos(j*50,i*50);
+                this->mapScene -> addItem(bridge2);
+            }
+
+            else if (currentMap[i][j] == "3"){
+                QGraphicsPixmapItem *bridge3 = new QGraphicsPixmapItem();
+                bridge3->setPixmap(QPixmap(":/terrain/Images/Terrain/bridge_right.jpg"));
+                bridge3->setPos(j*50,i*50);
+                this->mapScene -> addItem(bridge3);
             }
         }
     }
@@ -252,30 +314,21 @@ void MainWindow::keyPressEvent(QKeyEvent *event)// je gére quand j'appuie sur u
         pointeurControlleur->pressKey("up");
         break;
     }
-    case Qt::Key_H:
-    {
-        if(event->isAutoRepeat())
-            break;
-        else {
-            pointeurControlleur->pressKey("h");
-            break;
-        }
-    }
-    case Qt::Key_J:
-    {
-        if(event->isAutoRepeat())
-            break;
-        else {
-            pointeurControlleur->pressKey("j");
-            break;
-        }
-    }
     case Qt::Key_K:
     {
         if(event->isAutoRepeat())
             break;
         else {
             pointeurControlleur->pressKey("k");
+            break;
+        }
+    }
+    case Qt::Key_L:
+    {
+        if(event->isAutoRepeat())
+            break;
+        else {
+            pointeurControlleur->pressKey("l");
             break;
         }
     }
