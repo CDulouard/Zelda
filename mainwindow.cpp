@@ -112,28 +112,28 @@ void MainWindow::mapGenerator()
     }
 
 
-//    this->ennemisList.push_back(new Ennemis(12 * 50 , 53 * 50));
-//    this->ennemisList.push_back(new Ennemis(14 * 50 , 43 * 50));
-//    this->ennemisList.push_back(new Ennemis(17 * 50 , 47 * 50));
-//    this->ennemisList.push_back(new Ennemis(26 * 50 , 57 * 50));
-//    this->ennemisList.push_back(new Ennemis(25 * 50 , 46 * 50));
-//    this->ennemisList.push_back(new Ennemis(27 * 50 , 41 * 50));
-//    this->ennemisList.push_back(new Ennemis(35 * 50 , 53 * 50));
-//    this->ennemisList.push_back(new Ennemis(38 * 50 , 57 * 50));
-//    this->ennemisList.push_back(new Ennemis(44 * 50 , 42 * 50));
-//    this->ennemisList.push_back(new Ennemis(46 * 50 , 55 * 50));
-//    this->ennemisList.push_back(new Ennemis(12 * 50 , 19 * 50));
-
-//    this->ennemisList.push_back(new Ennemis(18 * 50 , 77 * 50));
-//    this->ennemisList.push_back(new Ennemis(13 * 50 , 79 * 50));
-//    this->ennemisList.push_back(new Ennemis(19 * 50 , 85 * 50));
-//    this->ennemisList.push_back(new Ennemis(31 * 50 , 83 * 50));
-//    this->ennemisList.push_back(new Ennemis(40 * 50 , 85 * 50));
-//    this->ennemisList.push_back(new Ennemis(44 * 50 , 71 * 50));
-
-
+    // left island
     this->ennemisList.push_back(new Ennemis(15 * 50 , 15 * 50));
-    this->ennemisList.push_back(new Ennemis(20 * 50 , 20 * 50));
+    this->ennemisList.push_back(new Ennemis(21 * 50 , 20 * 50));
+    this->ennemisList.push_back(new Ennemis(14 * 50 , 41 * 50));
+    this->ennemisList.push_back(new Ennemis(26 * 50 , 42 * 50));
+    this->ennemisList.push_back(new Ennemis(31 * 50 , 40 * 50));
+    this->ennemisList.push_back(new Ennemis(26 * 50 , 29 * 50));
+    this->ennemisList.push_back(new Ennemis(29 * 50 , 34 * 50));
+
+    //  bridge
+    this->ennemisList.push_back(new Ennemis(38 * 50 , 18 * 50));
+    this->ennemisList.push_back(new Ennemis(44 * 50 , 18 * 50));
+
+    // right bridge
+    this->ennemisList.push_back(new Ennemis(55 * 50 , 35 * 50));
+    this->ennemisList.push_back(new Ennemis(55 * 50 , 31 * 50));
+    this->ennemisList.push_back(new Ennemis(54 * 50 , 25 * 50));
+    this->ennemisList.push_back(new Ennemis(56 * 50 , 16 * 50));
+    this->ennemisList.push_back(new Ennemis(50 * 50 , 11 * 50));
+    this->ennemisList.push_back(new Ennemis(43 * 50 , 43 * 50));
+    this->ennemisList.push_back(new Ennemis(43 * 50 , 41 * 50));
+    this->ennemisList.push_back(new Ennemis(45 * 50 , 41 * 50));
 
 }
 

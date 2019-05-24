@@ -41,8 +41,8 @@ void Controller::delay(int i)//attend un nombre de MS
 
 void Controller::startGame()
 {
-    this->model->getZelda()->setPosX(13 *50);
-    this->model->getZelda()->setPosY(13 * 50);
+    this->model->getZelda()->setPosX(45 * 50);
+    this->model->getZelda()->setPosY(43 * 50);
 
 
     // Lauching
@@ -71,6 +71,7 @@ void Controller::displayScene(){
     eventCounter++;
 
     this->viewGame->resetView();
+
     this->viewGame->displayMap();
     this->viewGame->getCameraView()->setPosX(this->model->getLink()->getPosX()-250);
     this->viewGame->getCameraView()->setPosY(this->model->getLink()->getPosY()-250);
@@ -84,7 +85,7 @@ void Controller::displayScene(){
     this->viewGame->displayZelda(this->getModel()->getZelda());
     displayStats(int(this->model->getLink()->getLife()), this->model->getLink()->getArrowQuantity(), this->model->getLink()->getEnergy());
 
-    if(eventCounter%150 == 0){
+    if(eventCounter%100 == 0){
         energyLoader();
         itemDeleter();
     }
@@ -304,7 +305,6 @@ void Controller::checkCollisionEnnemisArrows()
     }
 }
 
-//this->viewGame->getEnnemisList()[nbMonster]->getPosX() == this->viewGame->getEnnemisList()[j]->getPosX() +50
 
 bool Controller::checkCollisionEnnemisEnnemis(QString direction, int nbMonster)
 {

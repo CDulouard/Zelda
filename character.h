@@ -29,7 +29,6 @@ public:
 
     void moove(QString direction);
 
-
 protected:
     int posX;
     int posY;
@@ -37,7 +36,6 @@ protected:
 
     QPixmap tile;
     QString direction;
-
 
 };
 
